@@ -1,0 +1,18 @@
+== How to Use This Book
+
+
+=== Who This Book Is For
+
+This book is intended for anyone involved or interested in messaging systems—developers, architects, system engineers, tech leads, or even students aspiring to understand and build message-driven architectures. Whether you're new to messaging systems or an experienced professional looking to unify or expand your understanding, this guide has something valuable for you.
+
+=== Navigating the Book
+
+This book is structured clearly, enabling you to approach it according to your background, needs, and interests:
+
+- If you're new to messaging systems or uncertain about core concepts like queues, topics, delivery semantics, or broker architectures, you should begin with **Part I: Messaging Fundamentals**. This section establishes essential terminology, patterns, and design principles you'll need to grasp to benefit fully from the rest of the book.
+
+- If you're looking to dive into a specific messaging technology (for example, RabbitMQ, Kafka, AWS SQS, NATS, or others), feel free to jump directly into **Part II: Deep Dive into Messaging Brokers**. Each chapter stands alone, providing comprehensive coverage of individual brokers and their integration with OmniQueue.
+
+- For readers with hands-on experience working with messaging systems in production, **Parts III, IV, and V** cover advanced topics, real-world implementations, and extending OmniQueue. These chapters assume familiarity with practical messaging concepts and address common challenges, advanced patterns, scalability considerations, operational practices, and community contribution.
+
+You can approach the book sequentially, jump to chapters relevant to your current projects, or revisit sections as a reference guide. Use the table of contents and quick-reference appendices to navigate efficiently according to your specific needs and level of experience.

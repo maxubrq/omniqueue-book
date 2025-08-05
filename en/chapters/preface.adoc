@@ -1,0 +1,18 @@
+[preface]
+== Preface
+
+Messaging systems sit at the heart of modern software infrastructure. From microservices that power daily applications to complex data pipelines and real-time analytics, effective communication is essential. Yet, despite their importance, messaging systems are notoriously fragmented. Developers often find themselves navigating multiple incompatible APIs, varied delivery guarantees, and broker-specific quirks.
+
+I've encountered this complexity firsthand, and it led me to ask a simple yet challenging question: Could we unify these diverse messaging systems into a single, elegant abstraction?
+
+This is how OmniQueue was born.
+
+OmniQueue began as an experiment to bridge the gaps between various messaging brokers—RabbitMQ, Kafka, NATS, AWS SQS, Azure Service Bus, and even brokerless solutions like ZeroMQ. It quickly evolved from a coding project into a broader architectural vision: simplifying message-driven architectures by abstracting away complexity, while preserving flexibility and performance.
+
+This book captures everything I've learned along the way. It's intended to serve not just as a technical manual but as a practical guide, offering you clear explanations, detailed examples, and real-world insights into building unified messaging architectures.
+
+Whether you're an engineer dealing daily with messaging complexity, a team lead aiming to streamline your organization's messaging infrastructure, or simply curious about how messaging works behind the scenes—this book is for you.
+
+Welcome to OmniQueue.
+
+Darius Max (@maxubrq)
