@@ -1,5 +1,7 @@
-= OmniQueue: Unified Messaging Architecture
-Hung Tran (maxubrq) <hungtp.play@gmail.com>
+:front-cover-image: image:book-cover.png[]
+
+= Unified Messaging with OmniQueue: A Comprehensive Guide to Broker-Agnostic Messaging Systems and Practical Implementations
+Darius Max
 :doctype: book
 :toc: left
 :toclevels: 3
@@ -9,6 +11,13 @@ Hung Tran (maxubrq) <hungtp.play@gmail.com>
 :chapter-label:
 :imagesdir: images
 
+// Front matter (unnumbered)
+:sectnums!:
+include::chapters/preface.adoc[]
+include::chapters/how-to-use-this-book.adoc[]
+:sectnums:
+
+// Main chapters (numbered)
 include::chapters/01-intro.adoc[]
 include::chapters/02-architecture.adoc[]
 include::chapters/03-api.adoc[]

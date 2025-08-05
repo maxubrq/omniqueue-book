@@ -1,0 +1,17 @@
+== Cách sử dụng quyển sách này
+
+=== Quyển sách này dành cho ai
+
+Quyển sách này được viết cho tất cả những ai đang tham gia hoặc quan tâm đến các hệ thống nhắn tin (messaging systems)—bao gồm lập trình viên, kiến trúc sư phần mềm, kỹ sư hệ thống, trưởng nhóm kỹ thuật, hoặc kể cả sinh viên muốn tìm hiểu và xây dựng các kiến trúc hướng thông điệp (message-driven architectures). Dù bạn là người mới làm quen với các hệ thống nhắn tin hay đã có nhiều kinh nghiệm và muốn thống nhất hoặc mở rộng thêm hiểu biết của mình, cuốn sách này đều có những điều giá trị dành cho bạn.
+
+=== Cách đọc quyển sách này
+
+Quyển sách được cấu trúc rõ ràng để bạn có thể lựa chọn cách tiếp cận phù hợp nhất với trình độ, nhu cầu và sở thích của mình:
+
+- Nếu bạn chưa quen với các hệ thống nhắn tin hoặc chưa chắc chắn về những khái niệm cơ bản như queues, topics, delivery semantics hay kiến trúc của các broker, bạn nên bắt đầu từ **Phần I: Những nền tảng cơ bản về Messaging**. Phần này cung cấp những thuật ngữ thiết yếu, các mẫu thiết kế (patterns) và nguyên tắc quan trọng mà bạn cần nắm vững trước khi tiếp tục với những phần còn lại.
+
+- Nếu bạn đang muốn tìm hiểu ngay một công nghệ nhắn tin cụ thể (ví dụ như RabbitMQ, Kafka, AWS SQS, NATS hay các hệ thống khác), hãy thoải mái chuyển trực tiếp đến **Phần II: Tìm hiểu sâu về các Messaging Broker**. Mỗi chương trong phần này đều độc lập, cung cấp kiến thức toàn diện về từng loại broker riêng biệt và cách chúng được tích hợp vào OmniQueue.
+
+- Với những độc giả đã có kinh nghiệm thực tế với các hệ thống nhắn tin trong môi trường production, **Phần III, IV và V** sẽ đi sâu vào các chủ đề nâng cao, những trường hợp sử dụng thực tế và cách mở rộng OmniQueue. Các chương này đòi hỏi bạn đã quen thuộc với những khái niệm messaging thực tế, đồng thời sẽ đề cập đến những thách thức phổ biến, các mẫu thiết kế nâng cao, những cân nhắc về khả năng mở rộng, các thực hành vận hành hệ thống và đóng góp cho cộng đồng.
+
+Bạn có thể đọc sách theo thứ tự từng phần, từng chương, hoặc truy cập nhanh đến những phần bạn đang quan tâm trong các dự án hiện tại. Hãy tận dụng mục lục và các phụ lục tham khảo nhanh để điều hướng một cách hiệu quả, phù hợp với nhu cầu và trình độ của bản thân.

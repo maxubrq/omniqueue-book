@@ -1,0 +1,18 @@
+[preface]
+== Lời nói đầu
+
+Các hệ thống nhắn tin (messaging systems) đóng vai trò quan trọng trong hạ tầng phần mềm hiện đại. Từ các microservices vận hành ứng dụng hàng ngày cho đến các luồng xử lý dữ liệu phức tạp và phân tích thời gian thực, việc trao đổi thông tin hiệu quả là điều thiết yếu. Tuy nhiên, dù rất quan trọng, các hệ thống nhắn tin hiện nay lại vô cùng phân mảnh. Lập trình viên thường phải đối mặt với nhiều API (Application Programming Interface) không tương thích, những cam kết về độ tin cậy khác nhau và đặc điểm riêng biệt của từng broker.
+
+Tôi đã từng gặp phải sự phức tạp này và tự đặt ra một câu hỏi đơn giản nhưng đầy thách thức: Liệu chúng ta có thể thống nhất những hệ thống nhắn tin đa dạng này vào một lớp trừu tượng duy nhất, gọn gàng và thanh lịch hay không?
+
+Đó là khởi đầu của OmniQueue.
+
+Ban đầu OmniQueue chỉ là một thử nghiệm nhỏ để xóa nhòa ranh giới giữa các broker khác nhau như RabbitMQ, Kafka, NATS, AWS SQS, Azure Service Bus, và thậm chí cả các giải pháp không dùng broker như ZeroMQ. Tuy nhiên, dự án nhanh chóng phát triển vượt khỏi một thử thách lập trình đơn thuần để trở thành một tầm nhìn kiến trúc rộng hơn: Đơn giản hóa kiến trúc hướng thông điệp bằng cách che giấu đi những chi tiết phức tạp, nhưng vẫn duy trì sự linh hoạt và hiệu năng cần thiết.
+
+Cuốn sách này tổng hợp tất cả những kiến thức mà tôi đã đúc kết trong hành trình đó. Nó không chỉ là một tài liệu kỹ thuật, mà còn là một hướng dẫn thực tiễn, cung cấp cho bạn những giải thích rõ ràng, những ví dụ chi tiết, và các bài học kinh nghiệm thực tế khi xây dựng một kiến trúc nhắn tin thống nhất.
+
+Dù bạn là một kỹ sư hàng ngày đối mặt với các hệ thống nhắn tin phức tạp, một trưởng nhóm kỹ thuật đang muốn chuẩn hóa hạ tầng nhắn tin trong tổ chức, hay đơn giản chỉ là một người tò mò muốn tìm hiểu cách thức hoạt động đằng sau các hệ thống này—cuốn sách này chính là dành cho bạn.
+
+Chào mừng bạn đến với OmniQueue.
+
+Darius Max (@maxubrq)
