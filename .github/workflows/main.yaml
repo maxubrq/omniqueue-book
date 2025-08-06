@@ -1,0 +1,66 @@
+name: Build & Commit Books
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+    # OPTIONAL: ignore your generated folders to avoid double-runs on commit
+    # Adjust these to match where your build outputs land.
+    paths-ignore:
+      - 'docs/**'
+    #   - 'build/**'
+    #   - 'dist/**'
+
+permissions:
+  contents: write   # needed to push back to the repo
+
+concurrency:
+  group: build-books-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # needed to push commits
+
+      - name: Ensure scripts are executable
+        run: |
+          chmod +x ./scripts/install.sh || true
+          chmod +x ./scripts/build.en.sh || true
+          chmod +x ./scripts/build.vi.sh || true
+
+      - name: Install dependencies
+        run: ./scripts/install.sh
+
+      - name: Build (English)
+        run: ./scripts/build.en.sh
+
+      - name: Build (Vietnamese)
+        run: ./scripts/build.vi.sh
+
+      - name: Configure Git user
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Commit changes (if any)
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          # Stage only what changed
+          git add -A
+          # If nothing staged, exit early
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          TS=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          git commit -m "chore(book): rebuild outputs [skip ci] (${TS}, ${SHORT_SHA})"
+          git push origin "HEAD:${BRANCH}"
