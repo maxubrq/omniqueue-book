@@ -12,7 +12,7 @@ FONTS_DIR="$THEME_DIR/fonts"
 
 mkdir -p "$OUT_DIR/en"
 
-asciidoctor -a stylesheet=../theme/oreilly-theme.css -o "$OUT_DIR/en/book.html" "$SRC"
+asciidoctor -o "$OUT_DIR/en/book.html" "$SRC"
 
 asciidoctor-pdf \
   -a pdf-theme="$THEME" \
