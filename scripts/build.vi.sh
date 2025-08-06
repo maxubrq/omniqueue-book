@@ -1,11 +1,24 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
-asciidoctor -o docs/vi/book.html ./vi/book.adoc
+ENV="${1:-dev}"
+OUT_DIR="docs"
+[[ "$ENV" == "dev" ]] && OUT_DIR="docs-dev"
+
+SRC="vi/book.adoc"
+THEME_DIR="theme"
+THEME="$THEME_DIR/oreilly-theme.yml"
+FONTS_DIR="$THEME_DIR/fonts"
+
+mkdir -p "$OUT_DIR/vi"
+
+asciidoctor -o "$OUT_DIR/vi/book.html" "$SRC"
+
 asciidoctor-pdf \
-  -a pdf-theme=./theme/orstyle-theme.yml \
-  -a pdf-fontsdir=./fonts \
-  -o docs/vi/book.pdf ./vi/book.adoc
-asciidoctor-epub3 -o docs/vi/book.epub ./vi/book.adoc
+  -a pdf-theme="$THEME" \
+  -a pdf-fontsdir="$FONTS_DIR" \
+  -o "$OUT_DIR/vi/book.pdf" "$SRC"
 
-echo "✅ Build complete: docs/vi/{book.html, book.pdf, book.epub}"
+asciidoctor-epub3 -o "$OUT_DIR/vi/book.epub" "$SRC"
+
+echo "✅ Build complete: $OUT_DIR/vi/{book.html, book.pdf, book.epub} (env=$ENV)"

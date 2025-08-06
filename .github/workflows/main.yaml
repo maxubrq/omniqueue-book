@@ -34,10 +34,10 @@ jobs:
         run: ./scripts/install.sh
 
       - name: Build (English)
-        run: ./scripts/build.en.sh
+        run: ./scripts/build.en.sh production
 
       - name: Build (Vietnamese)
-        run: ./scripts/build.vi.sh
+        run: ./scripts/build.vi.sh production
 
       - name: Prepare GitHub Pages index
         run: |
