@@ -1,0 +1,133 @@
+:root {
+  --accent-color: #B52498;
+  --heading-color: #111111;
+  --subtitle-color: #666666;
+  --author-color: #181818;
+  --inline-code-bg: #F7F7F7;
+  --inline-code-color: #B12146;
+  --code-block-bg: #F5F5F5;
+  --code-border: #CCCCCC;
+  --quote-border: #CCCCCC;
+  --table-border: #DDDDDD;
+  --table-head-bg: #F0F0F0;
+  --table-stripe-bg: #F9F9F9;
+  --hr-color: #999999;
+}
+
+/* --- LINKS --- */
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+/* --- HEADINGS --- */
+h1 {
+  color: var(--heading-color);
+  font-weight: bold;
+  font-size: 2.6em;
+  margin-top: 0.4em;
+  margin-bottom: 0.9em;
+}
+h2 {
+  color: var(--heading-color);
+  font-weight: bold;
+  font-size: 2.15em;
+}
+h3 {
+  color: var(--heading-color);
+  font-weight: bold;
+  font-size: 1.7em;
+}
+h4 {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+h5 {
+  font-size: 1em;
+}
+h6 {
+  font-size: 0.9em;
+  color: #555;
+}
+
+/* --- TITLE PAGE STYLE (if used via class) --- */
+.title-page h1 {
+  color: var(--accent-color);
+  text-align: right;
+}
+.title-page .subtitle {
+  font-weight: bold;
+  font-style: italic;
+  color: var(--subtitle-color);
+  text-align: right;
+}
+.title-page .author {
+  color: var(--author-color);
+  text-align: right;
+}
+
+/* --- INLINE CODE --- */
+code {
+  background-color: var(--inline-code-bg);
+  color: var(--inline-code-color);
+  padding: 0.2em 0.4em;
+  border-radius: 0.25em;
+  font-family: monospace;
+}
+
+/* --- CODE BLOCKS --- */
+pre {
+  background-color: var(--code-block-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 0.25em;
+  padding: 1em;
+  overflow-x: auto;
+}
+
+/* --- ADMONITIONS --- */
+.admonitionblock .title {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+/* --- QUOTES --- */
+blockquote {
+  font-size: 1.2em;
+  border-left: 4px solid var(--quote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #444;
+}
+blockquote cite {
+  display: block;
+  font-size: 0.9em;
+  color: var(--subtitle-color);
+  margin-top: 0.5em;
+}
+
+/* --- TABLES --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--table-border);
+}
+thead {
+  background-color: var(--table-head-bg);
+  font-weight: bold;
+  border-bottom: 2px solid var(--table-border);
+}
+tbody tr:nth-child(even) {
+  background-color: var(--table-stripe-bg);
+}
+th, td {
+  padding: 0.5em;
+  border: 1px solid var(--table-border);
+}
+
+/* --- HORIZONTAL RULE --- */
+hr {
+  border: none;
+  border-top: 1px solid var(--hr-color);
+  margin: 2em 0;
+}
