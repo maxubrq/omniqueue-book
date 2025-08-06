@@ -4,15 +4,12 @@ on:
   workflow_dispatch: {}
   push:
     branches: [ main ]
-    # OPTIONAL: ignore your generated folders to avoid double-runs on commit
-    # Adjust these to match where your build outputs land.
+    # Avoid loop when we commit generated docs back
     paths-ignore:
       - 'docs/**'
-    #   - 'build/**'
-    #   - 'dist/**'
 
 permissions:
-  contents: write   # needed to push back to the repo
+  contents: write
 
 concurrency:
   group: build-books-${{ github.ref }}
@@ -25,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # needed to push commits
+          fetch-depth: 0
 
       - name: Ensure scripts are executable
         run: |
@@ -42,7 +39,12 @@ jobs:
       - name: Build (Vietnamese)
         run: ./scripts/build.vi.sh
 
-      - name: Configure Git user
+      - name: Prepare GitHub Pages index
+        run: |
+          test -f docs/en/book.html || { echo "docs/en/book.html not found"; exit 1; }
+          cp -f docs/en/book.html docs/index.html
+
+      - name: Configure Git
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -52,15 +54,12 @@ jobs:
         env:
           BRANCH: ${{ github.ref_name }}
         run: |
-          # Stage only what changed
-          git add -A
-          # If nothing staged, exit early
+          git add docs/
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
           fi
-
           SHORT_SHA=$(git rev-parse --short HEAD)
           TS=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-          git commit -m "chore(book): rebuild outputs [skip ci] (${TS}, ${SHORT_SHA})"
+          git commit -m "chore(docs): rebuild book outputs [skip ci] (${TS}, ${SHORT_SHA})"
           git push origin "HEAD:${BRANCH}"
