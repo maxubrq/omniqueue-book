@@ -4,7 +4,7 @@ set -e
 asciidoctor -o output/vi/book.html ./vi/book.adoc
 asciidoctor-pdf \
   -a pdf-theme=./theme/orstyle-theme.yml \
-  -a pdf-fontsdir=./theme/fonts \
+  -a pdf-fontsdir=./fonts \
   -o output/vi/book.pdf ./vi/book.adoc
 asciidoctor-epub3 -o output/vi/book.epub ./vi/book.adoc
 

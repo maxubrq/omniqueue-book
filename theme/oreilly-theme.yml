@@ -1,0 +1,93 @@
+extends: default
+
+# --- Accent color (classic O'Reilly red) ---
+link:
+  font_color: B52498
+
+admonition:
+  label:
+    text_transform: uppercase
+    font_style: bold
+    font_color: B52498
+  # keep default column rule; looks clean
+
+# --- Headings: strong hierarchy, serif, dark ---
+heading:
+  text_align: left
+  font_color: 111111
+  font_style: bold
+  # sizes stick to default multipliers but you can tweak slightly
+  h1_font_size: floor($base_font_size * 2.6)
+  h2_font_size: floor($base_font_size * 2.15)
+  h3_font_size: round($base_font_size * 1.7)
+  h4_font_size: $base_font_size_large
+  h5_font_size: $base_font_size
+  h6_font_size: $base_font_size_small
+  line_height: 1
+  margin_top: $vertical_rhythm * 0.4
+  margin_bottom: $vertical_rhythm * 0.9
+  min_height_after: $base_line_height_length * 1.5
+
+# --- Title page: red title, restrained subtitle/authors ---
+title_page:
+  text_align: right
+  title:
+    font_color: B52498
+    # keep size/position from default unless you want changes:
+    # font_size: $heading_h1_font_size
+    top: 33%
+  subtitle:
+    font_style: bold_italic
+    font_color: 9A9DA1
+  authors:
+    font_color: 181818
+
+# --- Inline code (monospace chip) ---
+codespan:
+  # keep default monospace and size, just soften background
+  background_color: F7F7F7
+  font_color: B12146        # default is fine; adjust if you prefer darker
+  border_radius: $base_border_radius
+  # small padding looks more like a chip than a highlight band
+  # (Asciidoctor PDF uses codespan for mono phrases & table cells)
+  
+# --- Code blocks (literal/listing/source) ---
+code:
+  background_color: F5F5F5
+  border_color: CCCCCC
+  border_width: 0.75
+  border_radius: $base_border_radius
+  line_gap: 3.8
+  # keep default font family from default (M+ 1mn) for widest coverage
+
+# --- Quotes: subtle vertical rule on left ---
+quote:
+  font_size: $base_font_size_large
+  border_color: $base_border_color
+  border_width: 0
+  border_left_width: $horizontal_rhythm / 3
+  padding: [$vertical_rhythm / 4, $horizontal_rhythm, $vertical_rhythm / 4, $horizontal_rhythm + $quote_border_left_width / 2]
+  cite:
+    font_size: $base_font_size_small
+    font_color: $role_subtitle_font_color
+
+# --- Tables: neutral grid, light header, subtle stripe ---
+table:
+  background_color: $page_background_color
+  border_color: DDDDDD
+  border_width: $base_border_width
+  grid_width: $base_border_width
+  cell_padding: 3
+  head:
+    font_style: bold
+    border_bottom_width: $base_border_width * 2.5
+    # light gray head background for scannability
+    background_color: F0F0F0
+  body:
+    stripe_background_color: F9F9F9
+
+# --- Horizontal rule ---
+thematic_break:
+  border_color: 999999
+  border_style: solid
+  border_width: $base_border_width
