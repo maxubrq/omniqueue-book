@@ -12,7 +12,9 @@ FONTS_DIR="$THEME_DIR/fonts"
 
 mkdir -p "$OUT_DIR/en"
 
-asciidoctor -a stylesheet=../theme/default-theme.css -o "$OUT_DIR/en/book.html" "$SRC"
+asciidoctor \
+  -r asciidoctor-diagram \
+  -a stylesheet=../theme/default-theme.css -o "$OUT_DIR/en/book.html" "$SRC"
 
 asciidoctor-pdf \
   -r asciidoctor-diagram \

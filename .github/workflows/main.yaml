@@ -43,6 +43,7 @@ jobs:
         run: |
           test -f docs/en/book.html || { echo "docs/en/book.html not found"; exit 1; }
           cp -f docs/en/book.html docs/index.html
+          cp -rf docs/en/images docs/images
 
       - name: Configure Git
         run: |
