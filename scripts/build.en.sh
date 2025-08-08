@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# -------------------------
 # Colors
-# -------------------------
 if [[ -t 1 ]]; then
   RED="\033[31m"; GREEN="\033[32m"; YELLOW="\033[33m"; BLUE="\033[34m"; BOLD="\033[1m"; RESET="\033[0m"
 else
@@ -23,75 +21,51 @@ THEME_DIR="theme"
 THEME="$THEME_DIR/oreilly-theme.yml"
 FONTS_DIR="$THEME_DIR/fonts"
 
-# -------------------------
-# Browser: MUST be injected by CI step:
-#   env:
-#     PUPPETEER_EXECUTABLE_PATH: ${{ env.CHROME_PATH }}
-# -------------------------
-if [[ -z "${PUPPETEER_EXECUTABLE_PATH:-}" ]]; then
-  if command -v google-chrome >/dev/null 2>&1; then
-    PUPPETEER_EXECUTABLE_PATH="$(command -v google-chrome)"
-  elif command -v chromium >/dev/null 2>&1; then
-    PUPPETEER_EXECUTABLE_PATH="$(command -v chromium)"
-  fi
-fi
-
-if [[ ! -x "$PUPPETEER_EXECUTABLE_PATH" ]]; then
-  err "PUPPETEER_EXECUTABLE_PATH is not an executable: $PUPPETEER_EXECUTABLE_PATH"
-  exit 1
-fi
-log "Using browser: $PUPPETEER_EXECUTABLE_PATH"
-
-# -------------------------
-# Puppeteer config (absolute path so asciidoctor-diagram finds it)
-# -------------------------
-REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
-PUPPETEER_CFG="${REPO_ROOT}/.puppeteerrc.cjs"
-if [[ ! -f "$PUPPETEER_CFG" ]]; then
-  warn "Puppeteer config not found at ${PUPPETEER_CFG}; proceeding without it."
-  MERMAID_OPTS="--executablePath=${PUPPETEER_EXECUTABLE_PATH}"
-else
-  MERMAID_OPTS="--executablePath=${PUPPETEER_EXECUTABLE_PATH} --puppeteerConfigFile=${PUPPETEER_CFG}"
-fi
+# Kroki attrs:
+# - Use public kroki.io (you can self-host later)
+# - Force PNG so PDF has raster images
+# - fetch-diagram downloads the rendered images into imagesoutdir
+KROKI_ATTRS=(
+  -a kroki-server-url=https://kroki.io
+  -a kroki-default-format=png
+  -a kroki-fetch-diagram
+  -a kroki-timeout=60
+)
 
 log "${BOLD}Building (${ENV}) → ${OUT_DIR}${RESET}"
 mkdir -p "$OUT_DIR/en"
 
-# -------------------------
 # HTML
-# -------------------------
-log "HTML (asciidoctor + diagram)"
+log "HTML (asciidoctor + kroki)"
 asciidoctor \
-  -r asciidoctor-diagram \
-  -a mermaid-cli-opts="$MERMAID_OPTS" \
+  -r asciidoctor-kroki \
   -a source-highlighter=rouge \
   -a rouge-theme=github \
   -a stylesheet=../theme/default-theme.css \
   -a imagesoutdir="$OUT_DIR/en/images" \
+  "${KROKI_ATTRS[@]}" \
   -o "$OUT_DIR/en/book.html" "$SRC"
 ok "HTML → $OUT_DIR/en/book.html"
 
-# -------------------------
 # PDF
-# -------------------------
-log "PDF (asciidoctor-pdf + diagram)"
+log "PDF (asciidoctor-pdf + kroki)"
 asciidoctor-pdf \
-  -r asciidoctor-diagram \
-  -a mermaid-cli-opts="$MERMAID_OPTS" \
+  -r asciidoctor-kroki \
   -a source-highlighter=rouge \
   -a pdf-theme="$THEME" \
   -a pdf-fontsdir="$FONTS_DIR" \
   -a imagesoutdir="$OUT_DIR/en/images" \
+  "${KROKI_ATTRS[@]}" \
   -o "$OUT_DIR/en/book.pdf" "$SRC"
 ok "PDF → $OUT_DIR/en/book.pdf"
 
-# -------------------------
 # EPUB
-# -------------------------
-log "EPUB3"
+log "EPUB3 (asciidoctor-epub3 + kroki)"
 asciidoctor-epub3 \
+  -r asciidoctor-kroki \
   -a source-highlighter=rouge \
   -a imagesoutdir="$OUT_DIR/en/images" \
+  "${KROKI_ATTRS[@]}" \
   -o "$OUT_DIR/en/book.epub" "$SRC"
 ok "EPUB → $OUT_DIR/en/book.epub"
 
