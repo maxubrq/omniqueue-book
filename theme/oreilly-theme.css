@@ -2258,149 +2258,219 @@ print {
 }
 
 /* === O'REILLY-INSPIRED OVERRIDES =============================== */
-:root{
-  --accent: #B52498;
-  --heading: #111111;
-  --subtitle: #666666;
-  --author: #181818;
-  --inline-code-bg: #F7F7F7;
-  --inline-code-fg: #B12146;
-  --code-bg: #F5F5F5;
-  --code-border: #CCCCCC;
-  --quote-border: #CCCCCC;
-  --table-border: #DDDDDD;
-  --table-head-bg: #F0F0F0;
-  --table-stripe: #F9F9F9;
-  --hr: #999999;
+:root {
+    --accent: #B52498;
+    --heading: #111111;
+    --subtitle: #666666;
+    --author: #181818;
+    --inline-code-bg: #F7F7F7;
+    --inline-code-fg: #B12146;
+    --code-bg: #F5F5F5;
+    --code-border: #CCCCCC;
+    --quote-border: #CCCCCC;
+    --table-border: #DDDDDD;
+    --table-head-bg: #F0F0F0;
+    --table-stripe: #F9F9F9;
+    --hr: #999999;
 }
 
 /* LINKS: classic red, no underline by default */
-a { color: var(--accent); text-decoration: none; }
-a:hover, a:focus { color: #990000; text-decoration: underline; }
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    color: #990000;
+    text-decoration: underline;
+}
 
 /* HEADINGS: strong hierarchy, serif, dark */
-h1, h2, h3, h4, h5, h6 {
-  color: var(--heading) !important;
-  font-family: "Noto Serif","DejaVu Serif",serif;  /* match PDF feel */
-  font-weight: 700;  /* bold */
-  line-height: 1.1;
-  margin-top: .4em;
-  margin-bottom: .9em;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--heading) !important;
+    font-family: "Noto Serif", "DejaVu Serif", serif;
+    /* match PDF feel */
+    font-weight: 700;
+    /* bold */
+    line-height: 1.1;
+    margin-top: .4em;
+    margin-bottom: .9em;
 }
-h1 { font-size: 2.6em; }
-h2 { font-size: 2.15em; }
-h3 { font-size: 1.7em; }
-h4 { font-size: 1.25em; }
-h5 { font-size: 1em; }
-h6 { font-size: .9em; color: #555 !important; }
+
+h1 {
+    font-size: 2.6em;
+}
+
+h2 {
+    font-size: 2.15em;
+}
+
+h3 {
+    font-size: 1.7em;
+}
+
+h4 {
+    font-size: 1.25em;
+}
+
+h5 {
+    font-size: 1em;
+}
+
+h6 {
+    font-size: .9em;
+    color: #555 !important;
+}
 
 /* Remove default colored self-link style inside headings */
-#content h1 > a.link,
-#content h2 > a.link,
-#content h3 > a.link,
-#content h4 > a.link,
-#content h5 > a.link,
-#content h6 > a.link { color: inherit !important; }
+#content h1>a.link,
+#content h2>a.link,
+#content h3>a.link,
+#content h4>a.link,
+#content h5>a.link,
+#content h6>a.link {
+    color: inherit !important;
+}
 
 /* Optional: Title at top in accent red (like PDF title page) */
-#header > h1:first-child { color: var(--accent) !important; }
+#header>h1:first-child {
+    color: var(--accent) !important;
+}
 
 /* ADMONITIONS: uppercase, bold, red */
-.admonitionblock td.content > .title {
-  text-transform: uppercase;
-  font-weight: 700;
-  color: var(--accent);
+.admonitionblock td.content>.title {
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent);
 }
 
 /* INLINE CODE: chip style */
-:not(pre):not([class^=L]) > code {
-  background: var(--inline-code-bg) !important;
-  color: var(--inline-code-fg) !important;
-  padding: .2em .45em !important;
-  border-radius: .25em !important;
-  font-family: "Droid Sans Mono","DejaVu Sans Mono",monospace;
-  font-size: .95em;
+:not(pre):not([class^=L])>code {
+    background: var(--inline-code-bg) !important;
+    color: var(--inline-code-fg) !important;
+    padding: .2em .45em !important;
+    border-radius: .25em !important;
+    font-family: "Droid Sans Mono", "DejaVu Sans Mono", monospace;
+    font-size: .95em;
 }
 
 /* CODE BLOCKS: soft box with thin border */
 .literalblock pre,
-.listingblock > .content > pre,
+.listingblock>.content>pre,
 pre {
-  background: var(--code-bg) !important;
-  border: 1px solid var(--code-border) !important;
-  border-radius: .25em !important;
-  padding: 1em !important;
-  line-height: 1.45;
-  overflow-x: auto;
+    background: var(--code-bg) !important;
+    border: 1px solid var(--code-border) !important;
+    border-radius: .25em !important;
+    padding: 1em !important;
+    line-height: 1.45;
+    overflow-x: auto;
 }
 
 /* QUOTES: remove big curly mark, use subtle left rule */
-.quoteblock blockquote::before { content: none !important; }
-blockquote,
-.quoteblock.excerpt > blockquote,
-.quoteblock .quoteblock > blockquote {
-  border-left: 4px solid var(--quote-border) !important;
-  padding-left: 1em !important;
-  margin: 1em 0 !important;
+.quoteblock blockquote::before {
+    content: none !important;
 }
+
+blockquote,
+.quoteblock.excerpt>blockquote,
+.quoteblock .quoteblock>blockquote {
+    border-left: 4px solid var(--quote-border) !important;
+    padding-left: 1em !important;
+    margin: 1em 0 !important;
+}
+
 .quoteblock blockquote,
-blockquote { font-size: 1.2em; color: #444; }
-.quoteblock .attribution { color: var(--subtitle); }
+blockquote {
+    font-size: 1.2em;
+    color: #444;
+}
+
+.quoteblock .attribution {
+    color: var(--subtitle);
+}
 
 /* TABLES: neutral grid, light header, subtle stripes */
 table {
-  border: 1px solid var(--table-border) !important;
-  border-collapse: collapse !important;
-  width: 100%;
+    border: 1px solid var(--table-border) !important;
+    border-collapse: collapse !important;
+    width: 100%;
 }
-table thead, table tfoot {
-  background: var(--table-head-bg) !important;
+
+table thead,
+table tfoot {
+    background: var(--table-head-bg) !important;
 }
-th, td {
-  border: 1px solid var(--table-border) !important;
-  padding: .5em !important;
+
+th,
+td {
+    border: 1px solid var(--table-border) !important;
+    padding: .5em !important;
 }
-tbody tr:nth-child(even) { background: var(--table-stripe) !important; }
+
+tbody tr:nth-child(even) {
+    background: var(--table-stripe) !important;
+}
 
 /* HR: thinner, neutral gray */
 hr {
-  border: none !important;
-  border-top: 1px solid var(--hr) !important;
-  margin: 2em 0 !important;
+    border: none !important;
+    border-top: 1px solid var(--hr) !important;
+    margin: 2em 0 !important;
 }
 
 /* TOC title color tweak (optional) */
-#toctitle { color: var(--accent) !important; }
+#toctitle {
+    color: var(--accent) !important;
+}
 
 /* Figure / block titles: keep restrained serif, but neutral color */
-.admonitionblock td.content > .title,
-.audioblock > .title,
-.exampleblock > .title,
-.imageblock > .title,
-.listingblock > .title,
-.literalblock > .title,
-.stemblock > .title,
-.openblock > .title,
-.paragraph > .title,
-.quoteblock > .title,
-table.tableblock > .title,
-.verseblock > .title,
-.videoblock > .title,
-.dlist > .title,
-.olist > .title,
-.ulist > .title,
-.qlist > .title,
-.hdlist > .title {
-  color: #333 !important;
-  font-family: "Noto Serif","DejaVu Serif",serif;
-  font-weight: 600;
-  font-style: italic;
+.admonitionblock td.content>.title,
+.audioblock>.title,
+.exampleblock>.title,
+.imageblock>.title,
+.listingblock>.title,
+.literalblock>.title,
+.stemblock>.title,
+.openblock>.title,
+.paragraph>.title,
+.quoteblock>.title,
+table.tableblock>.title,
+.verseblock>.title,
+.videoblock>.title,
+.dlist>.title,
+.olist>.title,
+.ulist>.title,
+.qlist>.title,
+.hdlist>.title {
+    color: #333 !important;
+    font-family: "Noto Serif", "DejaVu Serif", serif;
+    font-weight: 600;
+    font-style: italic;
 }
 
 /* Optional “title page” block for HTML exports */
-.title-page h1 { color: var(--accent); text-align: right; }
-.title-page .subtitle { color: var(--subtitle); font-weight: 700; font-style: italic; text-align: right; }
-.title-page .author { color: var(--author); text-align: right; }
+.title-page h1 {
+    color: var(--accent);
+    text-align: right;
+}
+
+.title-page .subtitle {
+    color: var(--subtitle);
+    font-weight: 700;
+    font-style: italic;
+    text-align: right;
+}
+
+.title-page .author {
+    color: var(--author);
+    text-align: right;
+}
 
 /* === SPACING & TYPOGRAPHY — MATCH PDF THEME === */
 
@@ -2410,68 +2480,164 @@ table.tableblock > .title,
 */
 
 /* Reset generic heading spacing */
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1 !important; /* YAML: heading.line_height */
-  margin-top: 0.4em !important; /* YAML: heading.margin_top */
-  margin-bottom: 0.9em !important; /* YAML: heading.margin_bottom */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1 !important;
+    /* YAML: heading.line_height */
+    margin-top: 0.4em !important;
+    /* YAML: heading.margin_top */
+    margin-bottom: 0.9em !important;
+    /* YAML: heading.margin_bottom */
 }
 
 /* Chapter title (=) */
 h1 {
-  margin-top: 3em !important;  /* YAML: $vertical_rhythm * 3 */
-  margin-bottom: 24em !important; /* YAML: * 24 — big breathing room after title */
+    margin-top: 3em !important;
+    /* YAML: $vertical_rhythm * 3 */
+    margin-bottom: 24em !important;
+    /* YAML: * 24 — big breathing room after title */
 }
 
 /* Section (==) */
 h2 {
-  margin-top: 3em !important;
-  margin-bottom: 12em !important;
+    margin-top: 3em !important;
+    margin-bottom: 12em !important;
 }
 
 /* Subsection (===) */
 h3 {
-  margin-top: 1em !important;
-  margin-bottom: 3em !important;
+    margin-top: 1em !important;
+    margin-bottom: 3em !important;
 }
 
 /* Sub-subsection (====) */
 h4 {
-  margin-top: 1em !important;
-  margin-bottom: 1em !important;
+    margin-top: 1em !important;
+    margin-bottom: 1em !important;
 }
 
 /* Inline code matches codespan padding from YAML */
-:not(pre):not([class^=L]) > code {
-  padding: 0.2em 0.45em !important; /* YAML: codespan small padding */
-  border-radius: 0.25em !important;
+:not(pre):not([class^=L])>code {
+    padding: 0.2em 0.45em !important;
+    /* YAML: codespan small padding */
+    border-radius: 0.25em !important;
 }
 
 /* Code blocks: match YAML line_gap (~ extra vertical padding) */
 .literalblock pre,
-.listingblock > .content > pre,
+.listingblock>.content>pre,
 pre {
-  line-height: 1.45 !important; /* already close to YAML’s style */
-  padding: 1em !important;
-  margin-top: 1.25em !important;
-  margin-bottom: 1.25em !important;
+    line-height: 1.45 !important;
+    /* already close to YAML’s style */
+    padding: 1em !important;
+    margin-top: 1.25em !important;
+    margin-bottom: 1.25em !important;
 }
 
 /* Quotes: YAML border + padding */
 blockquote,
-.quoteblock.excerpt > blockquote,
-.quoteblock .quoteblock > blockquote {
-  border-left: calc(1em / 3) solid var(--quote-border) !important; /* YAML: $horizontal_rhythm/3 */
-  padding: 0.25em 1em !important; /* YAML: vertical_rhythm/4, horizontal_rhythm */
-  margin: 1em 0 !important;
+.quoteblock.excerpt>blockquote,
+.quoteblock .quoteblock>blockquote {
+    border-left: calc(1em / 3) solid var(--quote-border) !important;
+    /* YAML: $horizontal_rhythm/3 */
+    padding: 0.25em 1em !important;
+    /* YAML: vertical_rhythm/4, horizontal_rhythm */
+    margin: 1em 0 !important;
 }
 
 /* Table cell padding from YAML: 3pt ≈ 0.1875em */
-th, td {
-  padding: 0.1875em !important;
+th,
+td {
+    padding: 0.1875em !important;
 }
 
 /* Horizontal rule matches YAML thematic_break */
 hr {
-  border-top: 1px solid var(--hr) !important;
-  margin: 2em 0 !important;
+    border-top: 1px solid var(--hr) !important;
+    margin: 2em 0 !important;
+}
+
+/* === YAML → HTML SPACING OVERRIDES (append at end) =================== */
+:root {
+    /* Map YAML rhythm to HTML. Tweak these two to tune all spacing. */
+    --vr: 1.25rem;
+    /* $vertical_rhythm */
+    --hrhythm: 1.25rem;
+    /* $horizontal_rhythm */
+}
+
+/* Headings: base spacing from YAML (line_height: 1, mt: .4*vr, mb: .9*vr) */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1 !important;
+    margin-top: calc(var(--vr) * 0.4) !important;
+    margin-bottom: calc(var(--vr) * 0.9) !important;
+}
+
+/* Per-level overrides (YAML heading.h1..h4) */
+h1 {
+    margin-top: calc(var(--vr) * 3) !important;
+    margin-bottom: calc(var(--vr) * 24) !important;
+    /* big breathing room */
+}
+
+h2 {
+    margin-top: calc(var(--vr) * 3) !important;
+    margin-bottom: calc(var(--vr) * 12) !important;
+}
+
+h3 {
+    margin-top: calc(var(--vr) * 1) !important;
+    margin-bottom: calc(var(--vr) * 3) !important;
+}
+
+h4 {
+    margin-top: calc(var(--vr) * 1) !important;
+    margin-bottom: calc(var(--vr) * 1) !important;
+}
+
+/* Codespan (inline code “chip”) — YAML padding + radius */
+:not(pre):not([class^=L])>code {
+    padding: .2em .45em !important;
+    border-radius: .25em !important;
+}
+
+/* Quote block — YAML border & padding
+   border-left-width: $horizontal_rhythm/3
+   padding: [vr/4, hr, vr/4, hr + border_left_width/2]
+*/
+.quoteblock blockquote,
+.quoteblock.excerpt>blockquote,
+.quoteblock .quoteblock>blockquote,
+blockquote {
+    border-left-width: calc(var(--hrhythm) / 3) !important;
+    border-left-style: solid !important;
+    padding-top: calc(var(--vr) / 4) !important;
+    padding-right: var(--hrhythm) !important;
+    padding-bottom: calc(var(--vr) / 4) !important;
+    padding-left: calc(var(--hrhythm) + (var(--hrhythm) / 6)) !important;
+    /* hr + (hr/3)/2 */
+    margin: 1em 0 !important;
+}
+
+/* Tables — YAML cell_padding: 3pt ≈ 4px ≈ 0.25rem */
+table th,
+table td {
+    padding: 0.25rem !important;
+}
+
+/* Thematic break — YAML border style */
+hr {
+    border: none !important;
+    border-top: 1px solid var(--hr) !important;
+    margin: calc(var(--vr) * 1.6) 0 !important;
+    /* keep generous rhythm */
 }

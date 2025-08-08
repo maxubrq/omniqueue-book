@@ -64,7 +64,7 @@ asciidoctor \
   -r asciidoctor-kroki \
   -a source-highlighter=rouge \
   -a rouge-theme=github \
-  -a stylesheet=../theme/default-theme.css \
+  -a stylesheet=../theme/oreilly-theme.css \
   -a imagesoutdir="$OUT_IMAGES" \
   -a imagesdir="images/images" \
   "${KROKI_ATTRS[@]}" \
