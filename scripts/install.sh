@@ -37,13 +37,11 @@ sudo gem install asciidoctor-epub3
 echo "==> Installing Asciidoctor Diagram (optional)..."
 sudo gem install asciidoctor-diagram
 
-echo "==> Install Browser (optional)..."
-sudo wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
+echo "==> Installing Puperteer (optional)..."
+sudo npm -g install puppeteer
+npx puppeteer browsers install chrome
 
 echo "==> Installing Mermaid CLI (optional)..."
-sudo npm -g install puppeteer
-sudo npx  puppeteer browsers install chrome-headless-shell
 sudo npm install -g @mermaid-js/mermaid-cli
 
 echo "==> Setup complete!"
