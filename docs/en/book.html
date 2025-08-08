@@ -3044,66 +3044,9 @@ Each <strong>consumer group</strong> subscribed to that topic receives a copy of
 <div class="paragraph">
 <p>Handlers acknowledge with <code>ack()</code> or <code>nack(requeue?: boolean)</code>.</p>
 </div>
-<div class="listingblock">
+<div class="imageblock kroki">
 <div class="content">
-<pre>Failed to generate image: mmdc failed:
-Error: Failed to launch the browser process!
-[2863:2863:0808/074016.900980:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:132] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
-[0808/074016.908022:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: No such file or directory (2)
-[0808/074016.908054:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq: No such file or directory (2)
-Received signal 6
-#0 0x562f75fa93ba (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x6ad83b9)
-#1 0x562f7a12d504 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac5c503)
-#2 0x7fe919245330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)
-#3 0x7fe91924527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)
-#4 0x7fe9192288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)
-#5 0x562f7a125535 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac54534)
-#6 0x562f7a0eca9d (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba9c)
-#7 0x562f7a0eca37 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba36)
-#8 0x562f74229ee5 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4d58ee4)
-#9 0x562f74d68a49 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5897a48)
-#10 0x562f7430fef6 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4e3eef5)
-#11 0x562f796eae64 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xa219e63)
-#12 0x562f74be86b4 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x57176b3)
-#13 0x562f74be7d2f (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5716d2e)
-#14 0x7fe91922a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)
-#15 0x7fe91922a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)
-#16 0x562f765ceb1a (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x70fdb19)
-  r8: 000036180013c263  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246
- r12: 0000000000000006 r13: 0000000000000264 r14: 0000000000000016 r15: 00007fffa9dd6a88
-  di: 0000000000000b2f  si: 0000000000000b2f  bp: 00007fffa9dd6400  bx: 0000000000000b2f
-  dx: 0000000000000006  ax: 0000000000000000  cx: 00007fe91929eb2c  sp: 00007fffa9dd63c0
-  ip: 00007fe91929eb2c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000
- trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000
-[end of stack trace]
-
-
-TROUBLESHOOTING: https://pptr.dev/troubleshooting
-
-    at Interface.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
-    at Interface.emit (node:events:530:35)
-    at Interface.close (node:internal/readline/interface:534:10)
-    at Socket.onend (node:internal/readline/interface:260:10)
-    at Socket.emit (node:events:530:35)
-    at endReadableNT (node:internal/streams/readable:1698:12)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
-
-
-flowchart LR
-    subgraph Producers
-      P1[Producer A] --&gt;|publish| T[Topic: orders]
-      P2[Producer B] --&gt;|publish| T
-    end
-
-    subgraph Consumers
-      G1[Group: order-service] --&gt;|subscribe| T
-      G2[Group: fraud-check] --&gt;|subscribe| T
-    end
-
-    T --&gt;|fanout copy| C11[Consumer 1 in order-service]
-    T --&gt;|fanout copy| C21[Consumer 1 in fraud-check]
-    T -. work-sharing .-&gt; C12[Consumer 2 in order-service]
-    T -. work-sharing .-&gt; C22[Consumer 2 in fraud-check]</pre>
+<img src="images/overview-diag-8bdac522ef0e3db1a564af0bb0d6c9c313dc393e613889706fb41591ac599055.png" alt="overview-diag" width="600" height="600">
 </div>
 </div>
 <div class="paragraph">
@@ -3415,62 +3358,9 @@ Consumers track their own <strong>offset</strong> (position) and can replay olde
 </tr>
 </tbody>
 </table>
-<div class="listingblock">
+<div class="imageblock kroki">
 <div class="content">
-<pre>Failed to generate image: mmdc failed:
-Error: Failed to launch the browser process!
-[2895:2895:0808/074017.476830:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:132] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
-[0808/074017.484683:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: No such file or directory (2)
-[0808/074017.484730:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq: No such file or directory (2)
-Received signal 6
-#0 0x55ccf0dcd3ba (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x6ad83b9)
-#1 0x55ccf4f51504 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac5c503)
-#2 0x7fde3b045330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)
-#3 0x7fde3b04527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)
-#4 0x7fde3b0288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)
-#5 0x55ccf4f49535 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac54534)
-#6 0x55ccf4f10a9d (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba9c)
-#7 0x55ccf4f10a37 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba36)
-#8 0x55ccef04dee5 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4d58ee4)
-#9 0x55ccefb8ca49 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5897a48)
-#10 0x55ccef133ef6 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4e3eef5)
-#11 0x55ccf450ee64 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xa219e63)
-#12 0x55ccefa0c6b4 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x57176b3)
-#13 0x55ccefa0bd2f (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5716d2e)
-#14 0x7fde3b02a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)
-#15 0x7fde3b02a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)
-#16 0x55ccf13f2b1a (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x70fdb19)
-  r8: 00000c080013c263  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246
- r12: 0000000000000006 r13: 0000000000000264 r14: 0000000000000016 r15: 00007ffdbd007b68
-  di: 0000000000000b4f  si: 0000000000000b4f  bp: 00007ffdbd0074e0  bx: 0000000000000b4f
-  dx: 0000000000000006  ax: 0000000000000000  cx: 00007fde3b09eb2c  sp: 00007ffdbd0074a0
-  ip: 00007fde3b09eb2c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000
- trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000
-[end of stack trace]
-
-
-TROUBLESHOOTING: https://pptr.dev/troubleshooting
-
-    at ChildProcess.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
-    at ChildProcess.emit (node:events:530:35)
-    at ChildProcess._handle.onexit (node:internal/child_process:293:12)
-
-
-flowchart LR
-    subgraph Producer
-      P[Producer] --&gt; Q
-    end
-
-    subgraph Destinations
-      Q[Queue]
-      T[Topic]
-      S[Stream]
-    end
-
-    Q --&gt;|One message to one consumer| C1[Consumer]
-    T --&gt;|Copy to each group| G1[Group A]
-    T --&gt;|Copy to each group| G2[Group B]
-    S --&gt;|Consumers pull by offset| C2[Consumer Offset 120]</pre>
+<img src="images/ch2-queue-topic-stream-8ce909e9db837aa20c45e22dfe6b63143e5fde48605c9bc49a533b4cb085a49b.png" alt="ch2-queue-topic-stream">
 </div>
 </div>
 </div>
@@ -3581,59 +3471,9 @@ Typically, these use <strong>peer-to-peer sockets</strong> or multicast protocol
 </div>
 <div class="sect3">
 <h4 id="_visual_comparison">2.2.3. Visual Comparison</h4>
-<div class="listingblock">
+<div class="imageblock kroki">
 <div class="content">
-<pre>Failed to generate image: mmdc failed:
-Error: Failed to launch the browser process!
-[2945:2945:0808/074018.001364:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:132] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
-[0808/074018.008357:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: No such file or directory (2)
-[0808/074018.008393:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq: No such file or directory (2)
-Received signal 6
-#0 0x55ad043473ba (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x6ad83b9)
-#1 0x55ad084cb504 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac5c503)
-#2 0x7fe750445330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)
-#3 0x7fe75044527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)
-#4 0x7fe7504288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)
-#5 0x55ad084c3535 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac54534)
-#6 0x55ad0848aa9d (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba9c)
-#7 0x55ad0848aa37 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba36)
-#8 0x55ad025c7ee5 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4d58ee4)
-#9 0x55ad03106a49 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5897a48)
-#10 0x55ad026adef6 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4e3eef5)
-#11 0x55ad07a88e64 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xa219e63)
-#12 0x55ad02f866b4 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x57176b3)
-#13 0x55ad02f85d2f (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5716d2e)
-#14 0x7fe75042a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)
-#15 0x7fe75042a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)
-#16 0x55ad0496cb1a (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x70fdb19)
-  r8: 000016b80013c263  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246
- r12: 0000000000000006 r13: 0000000000000264 r14: 0000000000000016 r15: 00007fff8476cc68
-  di: 0000000000000b81  si: 0000000000000b81  bp: 00007fff8476c5e0  bx: 0000000000000b81
-  dx: 0000000000000006  ax: 0000000000000000  cx: 00007fe75049eb2c  sp: 00007fff8476c5a0
-  ip: 00007fe75049eb2c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000
- trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000
-[end of stack trace]
-
-
-TROUBLESHOOTING: https://pptr.dev/troubleshooting
-
-    at ChildProcess.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
-    at ChildProcess.emit (node:events:530:35)
-    at ChildProcess._handle.onexit (node:internal/child_process:293:12)
-
-
-flowchart TB
-    subgraph Brokered
-      P1 --&gt; B[Broker Cluster]
-      P2 --&gt; B
-      B --&gt; C1
-      B --&gt; C2
-    end
-
-    subgraph Brokerless
-      P3 --&gt; C3
-      P3 --&gt; C4
-    end</pre>
+<img src="images/ch2-broker-vs-brokerless-525503497e9d26c917421514a90624025137d0f06577bc2e923cdd23b7b37a4a.png" alt="ch2-broker-vs-brokerless">
 </div>
 </div>
 <div class="paragraph">
@@ -3867,68 +3707,9 @@ However:</p>
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="imageblock kroki">
 <div class="content">
-<pre>Failed to generate image: mmdc failed:
-Error: Failed to launch the browser process!
-[2977:2977:0808/074018.513710:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:132] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
-[0808/074018.520718:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: No such file or directory (2)
-[0808/074018.520754:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq: No such file or directory (2)
-Received signal 6
-#0 0x5591c6d0d3ba (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x6ad83b9)
-#1 0x5591cae91504 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac5c503)
-#2 0x7f5931445330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)
-#3 0x7f593144527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)
-#4 0x7f59314288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)
-#5 0x5591cae89535 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac54534)
-#6 0x5591cae50a9d (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba9c)
-#7 0x5591cae50a37 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba36)
-#8 0x5591c4f8dee5 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4d58ee4)
-#9 0x5591c5acca49 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5897a48)
-#10 0x5591c5073ef6 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4e3eef5)
-#11 0x5591ca44ee64 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xa219e63)
-#12 0x5591c594c6b4 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x57176b3)
-#13 0x5591c594bd2f (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5716d2e)
-#14 0x7f593142a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)
-#15 0x7f593142a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)
-#16 0x5591c7332b1a (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x70fdb19)
-  r8: 000034580013c263  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246
- r12: 0000000000000006 r13: 0000000000000264 r14: 0000000000000016 r15: 00007ffd79f70268
-  di: 0000000000000ba1  si: 0000000000000ba1  bp: 00007ffd79f6fbe0  bx: 0000000000000ba1
-  dx: 0000000000000006  ax: 0000000000000000  cx: 00007f593149eb2c  sp: 00007ffd79f6fba0
-  ip: 00007f593149eb2c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000
- trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000
-[end of stack trace]
-
-
-TROUBLESHOOTING: https://pptr.dev/troubleshooting
-
-    at ChildProcess.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
-    at ChildProcess.emit (node:events:530:35)
-    at ChildProcess._handle.onexit (node:internal/child_process:293:12)
-
-
-sequenceDiagram
-    participant P as Producer
-    participant B as Broker
-    participant C as Consumer
-
-    Note over P,C: At-most-once
-    P-&gt;&gt;B: Send message
-    B--&gt;&gt;C: Deliver message
-    C &lt;&lt;--&gt;&gt; B: No ack required
-    Note over B: If delivery fails → lost
-
-    Note over P,C: At-least-once
-    P-&gt;&gt;B: Send message
-    B--&gt;&gt;C: Deliver message
-    C--&gt;&gt;B: Ack message
-    Note over B: No ack? Redeliver
-
-    Note over P,C: Exactly-once
-    P-&gt;&gt;B: Send message (transaction)
-    B--&gt;&gt;C: Deliver message
-    C--&gt;&gt;B: Ack + commit atomically</pre>
+<img src="images/ch2-delivery-semantics-f5f486d33cc314159e8f2f781d185210d171c6f0442a4db6de859bab41097d6c.png" alt="ch2-delivery-semantics">
 </div>
 </div>
 </div>
@@ -4046,55 +3827,9 @@ This requires <strong>persistent storage</strong> at the broker level.</p>
 <span class="p">);</span></code></pre>
 </div>
 </div>
-<div class="listingblock">
+<div class="imageblock kroki">
 <div class="content">
-<pre>Failed to generate image: mmdc failed:
-Error: Failed to launch the browser process!
-[3009:3009:0808/074019.006997:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:132] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
-[0808/074019.013989:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: No such file or directory (2)
-[0808/074019.014023:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq: No such file or directory (2)
-Received signal 6
-#0 0x56101b2b33ba (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x6ad83b9)
-#1 0x56101f437504 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac5c503)
-#2 0x7fbc7a045330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)
-#3 0x7fbc7a04527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)
-#4 0x7fbc7a0288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)
-#5 0x56101f42f535 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac54534)
-#6 0x56101f3f6a9d (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba9c)
-#7 0x56101f3f6a37 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba36)
-#8 0x561019533ee5 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4d58ee4)
-#9 0x56101a072a49 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5897a48)
-#10 0x561019619ef6 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4e3eef5)
-#11 0x56101e9f4e64 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xa219e63)
-#12 0x561019ef26b4 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x57176b3)
-#13 0x561019ef1d2f (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5716d2e)
-#14 0x7fbc7a02a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)
-#15 0x7fbc7a02a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)
-#16 0x56101b8d8b1a (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x70fdb19)
-  r8: 000033400013c263  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246
- r12: 0000000000000006 r13: 0000000000000264 r14: 0000000000000016 r15: 00007ffcc453e7b8
-  di: 0000000000000bc1  si: 0000000000000bc1  bp: 00007ffcc453e130  bx: 0000000000000bc1
-  dx: 0000000000000006  ax: 0000000000000000  cx: 00007fbc7a09eb2c  sp: 00007ffcc453e0f0
-  ip: 00007fbc7a09eb2c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000
- trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000
-[end of stack trace]
-
-
-TROUBLESHOOTING: https://pptr.dev/troubleshooting
-
-    at ChildProcess.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
-    at ChildProcess.emit (node:events:530:35)
-    at ChildProcess._handle.onexit (node:internal/child_process:293:12)
-
-
-flowchart LR
-    P[Producer] --&gt;|publish| B[Broker Storage]
-    B --&gt;|write| D1[Disk: Log Segment]
-    B --&gt;|replicate| N1[Replica Node A]
-    B --&gt;|replicate| N2[Replica Node B]
-    D1 --&gt;|ack| B
-    B --&gt;|ack| P
-    B --&gt;|deliver| C[Consumer]</pre>
+<img src="images/ch2-durability-lifecycle-bf299d74b156c04fa2459d99210ec9a4bb4d790ba2151345e64713f1c43989c5.png" alt="ch2-durability-lifecycle">
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -4173,55 +3908,9 @@ This makes semantics explicit and avoids accidental fanout to unintended consume
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="imageblock kroki">
 <div class="content">
-<pre>Failed to generate image: mmdc failed:
-Error: Failed to launch the browser process!
-[3041:3041:0808/074019.498875:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:132] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
-[0808/074019.505883:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: No such file or directory (2)
-[0808/074019.505919:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq: No such file or directory (2)
-Received signal 6
-#0 0x56550d54d3ba (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x6ad83b9)
-#1 0x5655116d1504 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac5c503)
-#2 0x7f27a8245330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)
-#3 0x7f27a824527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)
-#4 0x7f27a82288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)
-#5 0x5655116c9535 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac54534)
-#6 0x565511690a9d (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba9c)
-#7 0x565511690a37 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba36)
-#8 0x56550b7cdee5 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4d58ee4)
-#9 0x56550c30ca49 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5897a48)
-#10 0x56550b8b3ef6 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4e3eef5)
-#11 0x565510c8ee64 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xa219e63)
-#12 0x56550c18c6b4 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x57176b3)
-#13 0x56550c18bd2f (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5716d2e)
-#14 0x7f27a822a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)
-#15 0x7f27a822a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)
-#16 0x56550db72b1a (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x70fdb19)
-  r8: 00003dc80013c263  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246
- r12: 0000000000000006 r13: 0000000000000264 r14: 0000000000000016 r15: 00007ffdf83f43f8
-  di: 0000000000000be1  si: 0000000000000be1  bp: 00007ffdf83f3d70  bx: 0000000000000be1
-  dx: 0000000000000006  ax: 0000000000000000  cx: 00007f27a829eb2c  sp: 00007ffdf83f3d30
-  ip: 00007f27a829eb2c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000
- trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000
-[end of stack trace]
-
-
-TROUBLESHOOTING: https://pptr.dev/troubleshooting
-
-    at ChildProcess.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
-    at ChildProcess.emit (node:events:530:35)
-    at ChildProcess._handle.onexit (node:internal/child_process:293:12)
-
-
-flowchart LR
-    T[Topic: orders] --&gt;|copy| G1[Group: order-service]
-    G1 --&gt;|split work| C1[Consumer 1]
-    G1 --&gt;|split work| C2[Consumer 2]
-
-    T --&gt;|copy| G2[Group: fraud-check]
-    G2 --&gt;|split work| C3[Consumer 3]
-    G2 --&gt;|split work| C4[Consumer 4]</pre>
+<img src="images/ch2-consumer-group-dynamics-61bcc280df772621d8eb3fbe08a088beab5ca200d73085ac7bab4ebb9c019806.png" alt="ch2-consumer-group-dynamics">
 </div>
 </div>
 </div>
@@ -4362,61 +4051,9 @@ Broker pushes messages but limits in-flight count per consumer.</p>
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="imageblock kroki">
 <div class="content">
-<pre>Failed to generate image: mmdc failed:
-Error: Failed to launch the browser process!
-[3075:3075:0808/074020.135747:FATAL:content/browser/zygote_host/zygote_host_impl_linux.cc:132] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
-[0808/074020.143105:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq: No such file or directory (2)
-[0808/074020.143167:ERROR:third_party/crashpad/crashpad/util/file/file_io_posix.cc:145] open /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq: No such file or directory (2)
-Received signal 6
-#0 0x55a2ba4293ba (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x6ad83b9)
-#1 0x55a2be5ad504 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac5c503)
-#2 0x7f0075045330 (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4532f)
-#3 0x7f007504527e (/usr/lib/x86_64-linux-gnu/libc.so.6+0x4527d)
-#4 0x7f00750288ff (/usr/lib/x86_64-linux-gnu/libc.so.6+0x288fe)
-#5 0x55a2be5a5535 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac54534)
-#6 0x55a2be56ca9d (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba9c)
-#7 0x55a2be56ca37 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xac1ba36)
-#8 0x55a2b86a9ee5 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4d58ee4)
-#9 0x55a2b91e8a49 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5897a48)
-#10 0x55a2b878fef6 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x4e3eef5)
-#11 0x55a2bdb6ae64 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0xa219e63)
-#12 0x55a2b90686b4 (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x57176b3)
-#13 0x55a2b9067d2f (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x5716d2e)
-#14 0x7f007502a1ca (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9)
-#15 0x7f007502a28b (/usr/lib/x86_64-linux-gnu/libc.so.6+0x2a28a)
-#16 0x55a2baa4eb1a (/opt/hostedtoolcache/setup-chrome/chrome/stable/x64/chrome+0x70fdb19)
-  r8: 00003b700013c263  r9: 0000000000000001 r10: 0000000000000008 r11: 0000000000000246
- r12: 0000000000000006 r13: 0000000000000264 r14: 0000000000000016 r15: 00007ffc682e4e68
-  di: 0000000000000c03  si: 0000000000000c03  bp: 00007ffc682e47e0  bx: 0000000000000c03
-  dx: 0000000000000006  ax: 0000000000000000  cx: 00007f007509eb2c  sp: 00007ffc682e47a0
-  ip: 00007f007509eb2c efl: 0000000000000246 cgf: 002b000000000033 erf: 0000000000000000
- trp: 0000000000000000 msk: 0000000000000000 cr2: 0000000000000000
-[end of stack trace]
-
-
-TROUBLESHOOTING: https://pptr.dev/troubleshooting
-
-    at ChildProcess.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
-    at ChildProcess.emit (node:events:530:35)
-    at ChildProcess._handle.onexit (node:internal/child_process:293:12)
-
-
-flowchart TB
-subgraph Point-to-Point
-P1[Producer] --&gt; Q1[Queue]
-Q1 --&gt;|one message to one consumer in group| C1[Consumer]
-Q1 -.-&gt;|different message| C2[Consumer]
-end
-subgraph Publish/Subscribe
-  P2[Producer] --&gt; T[Topic]
-  T --&gt;|full copy| G1[Group A]
-  T --&gt;|full copy| G2[Group B]
-  G1 --&gt;|split work| C3[Consumer]
-  G1 --&gt;|split work| C4[Consumer]
-  G2 --&gt;|split work| C5[Consumer]
-end</pre>
+<img src="images/ch2-pubsub-vs-p2p-0d62350ea7397746b93b1f0244c759bad27c0a44cdc3a8d9d13a26a3e9a201b1.png" alt="ch2-pubsub-vs-p2p">
 </div>
 </div>
 </div>
@@ -4471,7 +4108,7 @@ end</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-08 07:39:30 UTC
+Last updated 2025-08-08 07:44:26 UTC
 </div>
 </div>
 </body>
