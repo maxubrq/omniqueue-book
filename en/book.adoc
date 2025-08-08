@@ -25,3 +25,5 @@ include::chapters/how-to-use-this-book.adoc[]
 include::chapters/01-intro.adoc[]
 
 include::chapters/02-core-message-concepts.adoc[]
+
+include::chapters/03-omniqueue-architecture-core-api.adoc[]

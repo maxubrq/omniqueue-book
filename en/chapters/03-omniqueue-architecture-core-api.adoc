@@ -1,0 +1,545 @@
+== OmniQueue Architecture & Core API
+
+=== Overview & Design Principles
+
+OmniQueue is a **broker-agnostic messaging abstraction** written in TypeScript.  
+Its core purpose is to provide a **single, unified API** for producing and consuming messages across a wide range of messaging technologies — both brokered (e.g., RabbitMQ, Kafka, Pulsar) and brokerless (e.g., ZeroMQ).
+
+The architecture is designed to:
+
+- **Unify, not oversimplify**:  
+  Provide consistent `publish` and `subscribe` semantics while still exposing broker-specific options via `createOptions` when needed.
+- **Preserve advanced features**:  
+  Let developers use native capabilities of each broker without breaking the abstraction.
+- **Enforce explicitness**:  
+  OmniQueue requires `groupId` for every subscription — avoiding accidental broadcast to unintended consumers.
+- **Support both high-level productivity and low-level control**:  
+  Developers can start quickly but still configure performance, durability, and topology deeply.
+- **Be modular**:  
+  Each broker is implemented as a separate adapter that can be loaded dynamically.
+- **Be lifecycle-conscious**:  
+  Connection management (`init`, `close`) is explicit to encourage clean startup/shutdown patterns.
+
+OmniQueue’s **core runtime** is small and stable.  
+It handles:
+
+- **Broker registration** (via the plugin registry).
+- **Factory creation** of broker instances.
+- **Delegation** of operations (`publish`, `subscribe`) to the active adapter.
+
+Adapters handle:
+
+- **Protocol specifics** (AMQP, Kafka wire protocol, ZeroMQ sockets, etc.).
+- **Broker-specific topology creation**.
+- **Mapping of OmniQueue concepts** (topics, groups) to the broker’s native constructs.
+
+.OmniQueue Design Layers
+[#ch3-architecture-layers]
+[mermaid, format=png, target=ch3-architecture-layers]
+----
+flowchart TB
+    subgraph App[Application Code]
+      APP1[Business Logic] --> API
+    end
+
+    subgraph Core[OmniQueue Core Runtime]
+      API[Unified API: publish/subscribe]
+      REG[Adapter Registry]
+      LIFECYCLE[init / close management]
+    end
+
+    subgraph Adapter[Broker Adapter]
+      MAPPING[Concept Mapping]
+      PROTO[Protocol Handler]
+    end
+
+    subgraph Broker[Broker or Network]
+      Q[Queue / Topic / Stream]
+    end
+
+    APP1 --> API
+    API --> REG
+    API --> LIFECYCLE
+    REG --> Adapter
+    Adapter --> Broker
+----
+
+TIP: This separation means that adding support for a new broker is as simple as writing an adapter and registering it with `register('provider-name', factoryFn)`.
+
+=== Core API: publish and subscribe
+
+OmniQueue’s runtime exposes two primary operations for message flow:
+
+- **publish** — send a message to a topic so it can be consumed by one or more groups.
+- **subscribe** — join a consumer group to receive messages from a topic.
+
+This section documents their signatures, parameters, and usage patterns.
+
+==== publish()
+
+Sends a message to a given topic. All consumer groups subscribed to that topic will receive a copy.  
+Within each group, only one consumer processes the message.
+
+[,typescript]
+----
+publish(
+  topic: string,
+  msg: Omit<BrokerMessage, 'ack' | 'nack'>,
+  opts?: SendOptions
+): Promise<void>
+----
+
+*Parameters:*
+
+- `topic`: Name of the topic (string).  
+  - Naming is case-sensitive for most brokers.
+- `msg`: Message to send, without the `ack` and `nack` methods.
+  - Must include `id`, `body`, and `headers`.
+- `opts`: Optional `SendOptions`:
+  - `prio`: Message priority (broker-dependent).
+  - `ensure`: Create the topic/queue/stream if it doesn’t exist.
+  - `createOptions`: Broker-specific creation parameters (durability, partitions, etc.).
+
+*Example:*
+
+[#code-publish-example]
+[,typescript]
+----
+await broker.publish(
+  'orders',
+  {
+    id: '01JABCDE123...',
+    body: { orderId: 'A123', status: 'confirmed' },
+    headers: { 'x-source': 'checkout-service' },
+  },
+  {
+    ensure: true,
+    createOptions: { durable: true }
+  }
+);
+----
+
+==== subscribe()
+
+Listens for messages on a topic as part of a specific consumer group.
+
+[,typescript]
+----
+subscribe(
+  topic: string,
+  handler: (m: BrokerMessage) => Promise<void>,
+  groupId: string,
+  opts: ConsumeOptions
+): Promise<void>
+----
+
+*Parameters:*
+
+- `topic`: Name of the topic (string).
+- `handler`: Async function that processes each message.
+  - Receives a `BrokerMessage` with `ack()` and `nack()` methods.
+  - Must call `ack()` on success, or `nack(requeue?: boolean)` on failure.
+- `groupId`: Mandatory group identifier for work-sharing.
+- `opts`: Optional `ConsumeOptions` (inherits all `SendOptions`).
+
+*Example:*
+
+[#code-subscribe-example]
+[,typescript]
+----
+await broker.subscribe(
+  'orders',
+  async (msg) => {
+    try {
+      console.log('Processing order', msg.body);
+      await msg.ack();
+    } catch (err) {
+      await msg.nack(true); // requeue on error
+    }
+  },
+  'order-service',
+  { ensure: true }
+);
+----
+
+TIP: Use multiple groups to implement **fanout**; use a single group for **point-to-point** load sharing.
+
+=== Message Structure: `BrokerMessage`
+
+The `BrokerMessage` interface defines the shape of every message flowing through OmniQueue.  
+It represents a single unit of data in transit between producer and consumer.
+
+[,typescript]
+----
+export interface BrokerMessage<T = any> {
+   id: string;
+   body: T;
+   headers: Record<string, any>;
+
+   ack(): Promise<void>;
+   nack(requeue?: boolean): Promise<void>;
+}
+----
+
+.Message fields
+[#table-broker-message-fields]
+[cols="1,3",options="header"]
+|===
+| Field | Description
+| `id` | Unique identifier for the message.  
+It should be globally unique to avoid collisions across brokers and environments.  
+Best practice: ULID or UUID v7 for sortable uniqueness.
+| `body` | JSON-serialisable payload of the message.  
+For binary data, encode as Base64 or use a broker-specific binary mode if supported.
+| `headers` | Metadata key/value pairs.  
+Common uses: content type, correlation IDs, trace context, tenant information.
+|===
+
+.Message acknowledgement methods
+[#table-broker-message-ack]
+[cols="1,3",options="header"]
+|===
+| Method | Description
+| `ack()` | Positively acknowledges that the message was processed successfully.  
+In at-least-once systems, this will remove the message from the queue or commit the offset.
+| `nack(requeue?: boolean)` | Negatively acknowledges the message.  
+If `requeue` is `true`, the broker will attempt redelivery (immediate or delayed, broker-dependent).  
+If `false`, the message may be routed to a Dead Letter Queue (DLQ) or discarded.
+|===
+
+==== Best Practices
+
+- Always call `ack()` **exactly once** for successfully processed messages.
+- Call `nack(true)` for transient errors (e.g., network failures to downstream systems).
+- Call `nack(false)` for permanent errors (e.g., invalid schema) to avoid poison-message loops.
+- Store `id` and relevant `headers` for idempotent processing in at-least-once systems.
+
+.Example: Handling `BrokerMessage`
+[#code-broker-message-handler]
+[,typescript]
+----
+await broker.subscribe(
+  'payments',
+  async (msg) => {
+    try {
+      if (!isValidPayment(msg.body)) {
+        console.warn('Invalid payment', msg.id);
+        await msg.nack(false); // send to DLQ
+        return;
+      }
+
+      await processPayment(msg.body);
+      await msg.ack();
+    } catch (err) {
+      console.error('Temporary error, retrying', err);
+      await msg.nack(true); // requeue for retry
+    }
+  },
+  'payment-processor',
+  { ensure: true }
+);
+----
+
+=== Groups and Work-sharing Semantics
+
+In OmniQueue, **every subscription belongs to a group** — this is not optional.  
+The `groupId` parameter in `subscribe()` is the explicit contract that defines how messages are delivered and balanced among consumers.
+
+==== Why `groupId` is mandatory
+
+- Prevents **accidental global broadcast** to all consumers.
+- Makes **intent explicit** in code: you either want fanout (multiple groups) or point-to-point (single group).
+- Aligns OmniQueue’s semantics with modern brokers like Kafka, NATS JetStream, and Pulsar, where groups (or their equivalents) are first-class.
+
+==== Work-sharing model
+
+When a producer publishes a message to a topic:
+
+- Each **group** subscribed to that topic receives a full copy of the message stream.
+- Within each group, **only one consumer** handles a given message.
+- The broker decides which consumer in the group gets the next message, based on its load-balancing strategy.
+
+---
+
+.Consumer group work-sharing
+[#ch3-consumer-group-work-sharing]
+[mermaid, format=png, target=ch3-consumer-group-work-sharing]
+----
+flowchart LR
+    P[Producer] --> T[Topic: orders]
+    T -->|copy| G1[Group: order-service]
+    T -->|copy| G2[Group: fraud-check]
+
+    G1 -->|split work| C1[Consumer 1]
+    G1 -->|split work| C2[Consumer 2]
+
+    G2 -->|split work| C3[Consumer 3]
+    G2 -->|split work| C4[Consumer 4]
+----
+
+==== Patterns enabled by `groupId`
+
+- **Point-to-point load sharing**:  
+  Use a single group for all consumers that should share the workload.
+- **Fanout processing**:  
+  Use multiple groups, each representing an independent processing path.
+
+[,typescript]
+----
+await broker.subscribe('orders', handleOrder, 'order-service', { ensure: true });
+await broker.subscribe('orders', handleFraud, 'fraud-check', { ensure: true });
+await broker.subscribe('orders', handleAnalytics, 'analytics', { ensure: true });
+----
+
+==== Operational considerations
+
+- **Scaling throughput**: Add more consumers to the same group to process messages faster.
+- **Zero-downtime deployment**: Temporarily run old and new versions of a consumer in the same group to drain messages during rollout.
+- **Isolated experiments**: Spin up a separate group for A/B testing without impacting production consumers.
+- **Back-pressure management**: Monitor group-level consumer lag to detect bottlenecks.
+
+TIP: In some brokers, group identifiers are durable — the broker remembers offsets per group even if no consumers are active. This allows resuming consumption from the last processed message.
+
+=== Lifecycle Management (`init`, `close`)
+
+OmniQueue brokers follow a **well-defined lifecycle** to ensure connections are properly established, resources are managed, and workloads are gracefully shut down.
+
+==== Initialization (`init()`)
+
+Before you can send or receive messages, you **must** initialize the broker instance.
+
+- Establishes network connections to the broker or peer nodes.
+- Performs authentication/authorization (if required).
+- Prepares client internals such as connection pools, channel/session objects, and background heartbeat tasks.
+- May lazily create broker-side resources (queues, topics, streams) depending on the adapter.
+
+[,typescript]
+----
+import { create } from 'omni-queue-core';
+
+// Create broker instance from provider
+const broker = await create('rabbitmq', {
+  host: 'localhost',
+  port: 5672,
+  username: 'guest',
+  password: 'guest',
+});
+
+// Must be called before publish/subscribe
+await broker.init();
+----
+
+TIP: In production, call `init()` **during service startup** and ensure it completes before accepting external requests. Failing to initialize may cause publish or subscribe calls to throw errors.
+
+==== Graceful shutdown (`close()`)
+
+When your service is terminating, **always close the broker connection**:
+
+- Ensures in-flight messages are acknowledged before disconnection.
+- Releases network sockets, file handles, and background workers.
+- Helps the broker redistribute work quickly to other consumers in the same group.
+
+[,typescript]
+----
+process.on('SIGTERM', async () => {
+  console.log('Shutting down…');
+  await broker.close();
+  process.exit(0);
+});
+----
+
+TIP: Pair `init()` and `close()` in a lifecycle manager, such as:
+
+- Node.js process hooks (`SIGTERM`, `SIGINT`).
+- HTTP server start/stop callbacks.
+- Framework lifecycle hooks (NestJS `OnModuleInit` / `OnModuleDestroy`).
+
+==== Common pitfalls
+
+- **Skipping `close()`**: Can lead to stale connections or message redelivery delays.
+- **Closing too early**: If you close before acknowledging all messages, some brokers will redeliver them.
+- **Multiple `init()` calls**: Avoid re-initializing the same broker instance; instead, reuse the connection.
+
+.Lifecycle overview
+[#ch3-lifecycle-overview]
+[mermaid, format=png, target=ch3-lifecycle-overview]
+----
+flowchart LR
+    Start[Service Startup] --> Init[broker.init]
+    Init --> Work[Publish / Subscribe / Process Messages]
+    Work --> Shutdown[Service Shutdown Signal]
+    Shutdown --> Close[broker.close]
+    Close --> End[Exit Process]
+----
+
+=== Error Handling (`ack`, `nack`)
+
+OmniQueue enforces explicit acknowledgement semantics for all consumed messages.  
+This makes error handling **predictable** and **adapter-agnostic**, regardless of broker type.
+
+==== Acknowledgement (`ack()`)
+
+Calling `ack()` tells the broker:
+
+- The message has been processed successfully.
+- It can be removed from the queue or marked as complete in the log.
+
+[,typescript]
+----
+await broker.subscribe('orders', async (msg) => {
+  try {
+    await processOrder(msg.body);
+    await msg.ack();
+  } catch (err) {
+    console.error('Processing failed', err);
+    await msg.nack(true); // retry
+  }
+}, 'order-service', { ensure: true });
+----
+
+TIP: Always `ack()` *after* completing the business logic, not before.  
+Acknowledging too early risks losing messages if the process crashes mid-task.
+
+==== Negative acknowledgement (`nack(requeue?: boolean)`)
+
+Calling `nack()` signals:
+
+- The message **could not** be processed.
+- The broker may requeue the message for retry (if `requeue` is `true`) or discard/send to DLQ (if `false`).
+
+**Usage patterns:**
+
+- `nack(true)` → retry later (transient failure).
+- `nack(false)` → drop or route to DLQ (poison message).
+
+==== Idempotency for at-least-once delivery
+
+Since most brokers operate with **at-least-once** guarantees, your consumer logic must be **idempotent**:
+
+- Ensure repeating the same message does not cause incorrect results.
+- Common strategies:
+  - Use a **message ID store** (database, Redis) to track processed IDs.
+  - Apply **upserts** instead of inserts.
+  - Wrap business logic in transactional boundaries.
+
+==== Retry & DLQ patterns
+
+**Retry loop:**  
+Many brokers allow message redelivery after a delay, often via dead-lettering with a TTL and re-queue policy.
+
+**DLQ (Dead Letter Queue):**  
+Capture messages that consistently fail to process.  
+This enables:
+
+- Debugging message payloads.
+- Backfilling after code fixes.
+- Alerting when thresholds are reached.
+
+.ack/nack lifecycle
+[#ch3-ack-nack-lifecycle]
+[mermaid, format=png, target=ch3-ack-nack-lifecycle]
+----
+flowchart LR
+    subgraph Broker
+      M[Message in queue] --> Delivered[Delivered to consumer]
+    end
+
+    Delivered -->|Consumer calls ack| Remove[Remove from queue]
+    Delivered -->|Consumer calls nack - true| Retry[Requeue for retry]
+    Delivered -->|Consumer calls nack - false| DLQ[Send to Dead Letter Queue]
+----
+
+==== OmniQueue adapter mapping
+
+Different brokers use different APIs, but OmniQueue normalizes them:
+
+- **RabbitMQ** → `channel.ack()` / `channel.nack()`
+- **Kafka** → commit offset / seek & reprocess
+- **NATS JetStream** → `msg.ack()` / `msg.nak({ delay })`
+- **ZeroMQ** → application-level ack handling
+
+You **always** use `msg.ack()` and `msg.nack()` in OmniQueue, regardless of broker.
+
+TIP: When integrating with multiple brokers, always assume **at-least-once** and make consumers idempotent.  
+This ensures consistent behavior even if you switch adapters.
+
+=== OmniQueue Core Flow Diagram
+
+The OmniQueue core flow represents the **end-to-end lifecycle** of a message — from creation to final acknowledgement — in a **broker-agnostic** manner.  
+This view is essential for both developers and operators to understand how OmniQueue mediates between application code and underlying messaging infrastructure.
+
+.Core Flow Overview
+[#ch3-core-flow-overview]
+[mermaid, format=png, target=ch3-core-flow-overview]
+----
+flowchart LR
+    subgraph App[Application Layer]
+        P[Producer Code] -->|publish/send| API[OmniQueue API]
+        API --> H[Handler Code in Subscriber]
+    end
+
+    subgraph OmniQueue[OmniQueue Core]
+        API --> A1[Adapter Interface]
+        A1 -->|invoke| B[Broker Adapter]
+    end
+
+    subgraph Broker[Underlying Broker]
+        B --> Q[Destination: Queue/Topic/Stream]
+        Q --> C[Consumer Group Assignment]
+        C --> D[Consumer]
+    end
+
+    D -->|deliver BrokerMessage| H
+    H -->|ack/nack| D
+    D -->|propagate ack/nack| Q
+----
+
+==== How to Read This Diagram
+
+- **Application Layer** — Your service’s producer and consumer code.
+- **OmniQueue Core** — The broker-agnostic interface (`publish`, `subscribe`) and internal adapter interface.
+- **Broker Adapter** — Provider-specific implementation (RabbitMQ, Kafka, NATS, etc.).
+- **Broker** — The actual messaging infrastructure.
+- **Destination** — The queue, topic, or stream created or ensured.
+- **Consumer Group Assignment** — The broker’s work-sharing or partition assignment process.
+
+==== Flow Breakdown
+
+1. **Producer Code**  
+   - Calls `publish()` (topic-based API) or `send()` (if adapter supports queue semantics) with a `BrokerMessage` payload.
+   - Can set `ensure` and `createOptions` for destination management.
+
+2. **OmniQueue API**  
+   - Validates parameters.
+   - Wraps the payload in OmniQueue’s standard format.
+   - Passes request to the registered adapter via the adapter interface.
+
+3. **Broker Adapter**  
+   - Maps OmniQueue’s API calls to the broker’s native client library calls.
+   - Ensures destination exists if `ensure` is `true`.
+   - Serialises the message body and headers into broker-specific format.
+
+4. **Destination Creation/Lookup**  
+   - Broker creates or verifies the target queue/topic/stream.
+   - Applies `createOptions` (e.g., partitions, durability, replication).
+
+5. **Delivery to Consumer Group**  
+   - Broker assigns messages to a consumer in the target group.
+   - In **point-to-point**, exactly one consumer in the group processes each message.
+   - In **fanout**, all groups subscribed receive the message.
+
+6. **Handler Execution**  
+   - Message arrives at the subscriber’s handler.
+   - Handler processes and calls `ack()` (success) or `nack()` (failure).
+
+7. **Ack/Nack Propagation**  
+   - `ack()` removes or commits the message in the broker.
+   - `nack()` either discards or requeues the message (depending on `requeue`).
+
+==== Operational Notes
+
+- **Backpressure Management** — Most adapters expose prefetch or flow control to prevent overwhelming consumers.
+- **Tracing** — Add correlation IDs in `headers` for distributed tracing.
+- **Error Containment** — Use dead-letter queues to capture repeatedly failed messages.
+
+TIP: Understanding this flow helps in debugging end-to-end issues, such as “messages not being delivered” or “duplicates appearing” — often the cause lies at a specific hand-off in this chain.
