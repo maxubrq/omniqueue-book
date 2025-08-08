@@ -90,12 +90,16 @@ jobs:
           npm config set prefix ~/.npm-global
           echo "$HOME/.npm-global/bin" >> $GITHUB_PATH
 
-      - name: Install toolchain (Asciidoctor + Mermaid + Chromium)
+      - name: Install toolchain (Asciidoctor + Mermaid + Chrome)
         run: |
           gem install --no-document asciidoctor asciidoctor-pdf asciidoctor-epub3 asciidoctor-diagram rouge
           npm i -g @mermaid-js/mermaid-cli
-          npx --yes @puppeteer/browsers install chromium@latest
-          echo "PUPPETEER_EXECUTABLE_PATH=$(npx --yes @puppeteer/browsers path chromium)" >> $GITHUB_ENV
+
+          # Install Google Chrome that matches Puppeteer expectations
+          npx --yes @puppeteer/browsers install chrome@stable
+
+          # Export Chrome path for all subsequent steps
+          echo "PUPPETEER_EXECUTABLE_PATH=$(npx --yes @puppeteer/browsers path chrome)" >> $GITHUB_ENV
 
       - name: Build (English)
         run: ./scripts/build.en.sh production

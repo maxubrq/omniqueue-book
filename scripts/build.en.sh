@@ -24,24 +24,31 @@ THEME="$THEME_DIR/oreilly-theme.yml"
 FONTS_DIR="$THEME_DIR/fonts"
 
 # Ensure Puppeteer knows which Chromium to use (works in CI too)
+# Ensure Puppeteer knows which Chrome to use (works in CI too)
 if [[ -z "${PUPPETEER_EXECUTABLE_PATH:-}" ]]; then
   if command -v npx &>/dev/null; then
-    CHROMIUM_PATH="$(npx --yes @puppeteer/browsers path chromium 2>/dev/null || true)"
-    if [[ -n "$CHROMIUM_PATH" && -x "$CHROMIUM_PATH" ]]; then
-      export PUPPETEER_EXECUTABLE_PATH="$CHROMIUM_PATH"
-      log "Using Chromium at $PUPPETEER_EXECUTABLE_PATH"
+    CHROME_PATH="$(npx --yes @puppeteer/browsers path chrome 2>/dev/null || true)"
+    if [[ -n "$CHROME_PATH" && -x "$CHROME_PATH" ]]; then
+      export PUPPETEER_EXECUTABLE_PATH="$CHROME_PATH"
+      log "Using Chrome at $PUPPETEER_EXECUTABLE_PATH"
     else
-      warn "PUPPETEER_EXECUTABLE_PATH not set and Chromium path not found via puppeteer. Mermaid may fail."
+      CHROMIUM_PATH="$(npx --yes @puppeteer/browsers path chromium 2>/dev/null || true)"
+      if [[ -n "$CHROMIUM_PATH" && -x "$CHROMIUM_PATH" ]]; then
+        export PUPPETEER_EXECUTABLE_PATH="$CHROMIUM_PATH"
+        log "Using Chromium at $PUPPETEER_EXECUTABLE_PATH"
+      else
+        warn "PUPPETEER_EXECUTABLE_PATH not set and no browser path found via puppeteer. Mermaid may fail."
+      fi
     fi
   else
-    warn "npx not available; cannot auto-detect Chromium path."
+    warn "npx not available; cannot auto-detect browser path."
   fi
 fi
 
 log "${BOLD}Building (${ENV}) → ${OUT_DIR}${RESET}"
 mkdir -p "$OUT_DIR/en"
 
-MERMAID_OPTS="--puppeteerConfigFile=.puppeteerrc.cjs"
+MERMAID_OPTS="--executablePath=${PUPPETEER_EXECUTABLE_PATH:-} --puppeteerConfigFile=.puppeteerrc.cjs"
 
 log "HTML (asciidoctor + diagram)"
 asciidoctor \
