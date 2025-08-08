@@ -20,7 +20,6 @@ jobs:
 
     steps:
       - name: Checkout
-      # line numbers shifted; no worries
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -28,8 +27,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
-          cache: 'npm'
+          node-version: 'lts/*'   # no cache => no lockfile required
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -42,22 +40,6 @@ jobs:
         with:
           path: ~/.cache/puppeteer
           key: puppeteer-${{ runner.os }}-chromium
-
-      - name: Cache npm global
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm-global
-          key: npm-global-${{ runner.os }}-${{ hashFiles('**/package-lock.json', '**/npm-shrinkwrap.json') }}
-          restore-keys: |
-            npm-global-${{ runner.os }}-
-
-      - name: Cache gem dir
-        uses: actions/cache@v4
-        with:
-          path: ~/.gem
-          key: gem-${{ runner.os }}-${{ hashFiles('**/*.gemspec') }}
-          restore-keys: |
-            gem-${{ runner.os }}-
 
       - name: Ensure scripts are executable
         run: |
@@ -76,7 +58,7 @@ jobs:
             libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 \
             libxss1 libxtst6 lsb-release xdg-utils wget unzip
 
-      - name: Prepare npm global bin on PATH
+      - name: Put npm global bin on PATH
         run: |
           mkdir -p ~/.npm-global
           npm config set prefix ~/.npm-global
