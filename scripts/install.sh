@@ -39,7 +39,9 @@ sudo gem install asciidoctor-diagram
 
 echo "==> Installing Puperteer (optional)..."
 sudo npm -g install puppeteer
-npx puppeteer browsers install chrome
+
+echo "==> Installing Puperteer (optional)..."
+sudo npx puppeteer browsers install chrome
 
 echo "==> Installing Mermaid CLI (optional)..."
 sudo npm install -g @mermaid-js/mermaid-cli
