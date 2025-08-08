@@ -27,7 +27,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'   # no cache => no lockfile required
+          node-version: 'lts/*'
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -35,7 +35,6 @@ jobs:
           ruby-version: '3.2'
           bundler: none
 
-      # System libraries Chrome needs (works on 22.04 and 24.04)
       - name: Install OS packages required by Chrome
         shell: bash
         run: |
@@ -62,7 +61,6 @@ jobs:
             libpango-1.0-0 libx11-6 libx11-xcb1 libxcomposite1 libxcursor1 \
             libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 \
             libxss1 libxtst6
-
           install_either libasound2t64 libasound2
           install_either libglib2.0-0t64 libglib2.0-0
           install_either libexpat1t64 libexpat1
@@ -71,22 +69,17 @@ jobs:
           install_either libfontconfig1 libfontconfig1
           install_either fonts-liberation fonts-liberation
 
-      # Install latest stable Google Chrome and expose CHROME_PATH env var
       - name: Setup Chrome
+        id: chrome
         uses: browser-actions/setup-chrome@v2
         with:
           chrome-version: stable
 
-      - name: Echo Chrome path (debug)
+      - name: Debug Chrome env
         run: |
-          echo "CHROME_PATH=$CHROME_PATH"
-          ls -l "$CHROME_PATH" || true
-
-      # Make CHROME_PATH available to later steps as PUPPETEER_EXECUTABLE_PATH
-      - name: Export Chrome path for Puppeteer
-        run: |
-          echo "PUPPETEER_EXECUTABLE_PATH=$CHROME_PATH" >> $GITHUB_ENV
-          echo "Using Chrome at: $CHROME_PATH"
+          echo "chrome-path output: ${{ steps.chrome.outputs.chrome-path }}"
+          echo "which google-chrome: $(command -v google-chrome || true)"
+          echo "version: $({{ steps.chrome.outputs.chrome-path }} --version || true)"
 
       - name: Ensure scripts are executable
         run: |
@@ -105,23 +98,14 @@ jobs:
           gem install --no-document asciidoctor asciidoctor-pdf asciidoctor-epub3 asciidoctor-diagram rouge
           npm i -g @mermaid-js/mermaid-cli
 
-      # Optional: quick sanity debug
-      - name: Debug Chrome env
-        run: |
-          echo "CHROME_PATH=$CHROME_PATH"
-          echo "PUPPETEER_EXECUTABLE_PATH=$PUPPETEER_EXECUTABLE_PATH"
-          command -v google-chrome || true
-          ls -l "$CHROME_PATH" || true
-
       - name: Build (English)
-        env: 
-          # pass Chrome directly into the step; skip $GITHUB_ENV indirection
-          PUPPETEER_EXECUTABLE_PATH: ${{ env.CHROME_PATH }}
+        env:
+          PUPPETEER_EXECUTABLE_PATH: ${{ steps.chrome.outputs.chrome-path }}
         run: ./scripts/build.en.sh production
 
       - name: Build (Vietnamese)
         env:
-            PUPPETEER_EXECUTABLE_PATH: ${{ env.CHROME_PATH }}
+          PUPPETEER_EXECUTABLE_PATH: ${{ steps.chrome.outputs.chrome-path }}
         run: ./scripts/build.vi.sh production
 
       - name: Prepare GitHub Pages index

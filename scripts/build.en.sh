@@ -29,9 +29,13 @@ FONTS_DIR="$THEME_DIR/fonts"
 #     PUPPETEER_EXECUTABLE_PATH: ${{ env.CHROME_PATH }}
 # -------------------------
 if [[ -z "${PUPPETEER_EXECUTABLE_PATH:-}" ]]; then
-  err "PUPPETEER_EXECUTABLE_PATH is empty. In CI, pass it from CHROME_PATH in the build step env."
-  exit 1
+  if command -v google-chrome >/dev/null 2>&1; then
+    PUPPETEER_EXECUTABLE_PATH="$(command -v google-chrome)"
+  elif command -v chromium >/dev/null 2>&1; then
+    PUPPETEER_EXECUTABLE_PATH="$(command -v chromium)"
+  fi
 fi
+
 if [[ ! -x "$PUPPETEER_EXECUTABLE_PATH" ]]; then
   err "PUPPETEER_EXECUTABLE_PATH is not an executable: $PUPPETEER_EXECUTABLE_PATH"
   exit 1
