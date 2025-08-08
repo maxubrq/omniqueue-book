@@ -16,14 +16,27 @@ Darius Max
 :sectnums!:
 
 include::chapters/preface.adoc[]
-
 include::chapters/how-to-use-this-book.adoc[]
 
+// Main content (numbered)
 :sectnums:
 
-// Main chapters (numbered)
+[#part-1]
+[part]
+= Part I: Messaging Fundamentals
+
+[partintro]
+--
+This part lays the essential groundwork for mastering OmniQueue and broker-agnostic messaging systems.  
+Before we dive into advanced patterns, scaling strategies, or broker-specific optimisations, we need to develop a shared vocabulary and mental model.
+
+You’ll start by exploring what “messaging” really means in a distributed systems context — moving beyond the abstract to see how messages, queues, topics, and streams actually behave in the wild. We’ll break down the trade-offs between brokered and brokerless architectures, delivery semantics, and the key reliability levers at your disposal.
+
+From there, we’ll move into the architectural core of OmniQueue itself. You’ll learn how its unified API abstracts away broker differences without hiding the critical operational controls you need. We’ll also unpack concepts like **mandatory consumer groups** and **work-sharing semantics**, so you can design pipelines that scale cleanly without sacrificing correctness.
+
+By the end of this part, you’ll not only understand *how* to send, receive, and manage messages — you’ll know *why* these design choices matter, and how to apply them confidently across any broker environment.
+--
+
 include::chapters/01-intro.adoc[]
-
 include::chapters/02-core-message-concepts.adoc[]
-
 include::chapters/03-omniqueue-architecture-core-api.adoc[]
