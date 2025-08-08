@@ -18,13 +18,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      # Ensure npm global bin is on PATH if you install globals (mmdc)
-      NPM_CONFIG_PREFIX: ~/.npm-global
-      PATH: ~/.npm-global/bin:${{ env.PATH }}
-
     steps:
       - name: Checkout
+      # line numbers shifted; no worries
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -39,13 +35,12 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
-          bundler: none  # you're not using Gemfile; we'll gem install directly
+          bundler: none
 
       - name: Cache Puppeteer Chromium
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.cache/puppeteer
+          path: ~/.cache/puppeteer
           key: puppeteer-${{ runner.os }}-chromium
 
       - name: Cache npm global
@@ -81,19 +76,16 @@ jobs:
             libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 \
             libxss1 libxtst6 lsb-release xdg-utils wget unzip
 
-      - name: Install toolchain (Asciidoctor + Mermaid)
+      - name: Prepare npm global bin on PATH
         run: |
-          # npm global dir
-          mkdir -p "$NPM_CONFIG_PREFIX"
-          echo "$NPM_CONFIG_PREFIX/bin" >> $GITHUB_PATH
+          mkdir -p ~/.npm-global
+          npm config set prefix ~/.npm-global
+          echo "$HOME/.npm-global/bin" >> $GITHUB_PATH
 
-          # Gems
+      - name: Install toolchain (Asciidoctor + Mermaid + Chromium)
+        run: |
           gem install --no-document asciidoctor asciidoctor-pdf asciidoctor-epub3 asciidoctor-diagram
-
-          # Mermaid CLI
           npm i -g @mermaid-js/mermaid-cli
-
-          # Install a *known* Chromium for Puppeteer and export path
           npx --yes @puppeteer/browsers install chromium@latest
           echo "PUPPETEER_EXECUTABLE_PATH=$(npx --yes @puppeteer/browsers path chromium)" >> $GITHUB_ENV
 
