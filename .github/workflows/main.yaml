@@ -35,19 +35,8 @@ jobs:
           ruby-version: '3.2'
           bundler: none
 
-      - name: Cache Puppeteer Chromium
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/puppeteer
-          key: puppeteer-${{ runner.os }}-chromium
-
-      - name: Ensure scripts are executable
-        run: |
-          chmod +x ./scripts/install.sh || true
-          chmod +x ./scripts/build.en.sh || true
-          chmod +x ./scripts/build.vi.sh || true
-
-      - name: Install OS packages required by Chromium
+      # System libraries Chrome needs (works on 22.04 and 24.04)
+      - name: Install OS packages required by Chrome
         shell: bash
         run: |
           set -euo pipefail
@@ -65,7 +54,6 @@ jobs:
             exit 1
           }
 
-          # Core deps (names stable across 22.04/24.04)
           sudo apt-get install -y --no-install-recommends \
             ca-certificates xdg-utils wget unzip \
             fonts-noto fonts-noto-cjk fonts-noto-color-emoji \
@@ -75,7 +63,6 @@ jobs:
             libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 \
             libxss1 libxtst6
 
-          # Renamed or variant packages
           install_either libasound2t64 libasound2
           install_either libglib2.0-0t64 libglib2.0-0
           install_either libexpat1t64 libexpat1
@@ -84,22 +71,42 @@ jobs:
           install_either libfontconfig1 libfontconfig1
           install_either fonts-liberation fonts-liberation
 
+      # Install latest stable Google Chrome and expose CHROME_PATH env var
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
+
+      # Make CHROME_PATH available to later steps as PUPPETEER_EXECUTABLE_PATH
+      - name: Export Chrome path for Puppeteer
+        run: |
+          echo "PUPPETEER_EXECUTABLE_PATH=$CHROME_PATH" >> $GITHUB_ENV
+          echo "Using Chrome at: $CHROME_PATH"
+
+      - name: Ensure scripts are executable
+        run: |
+          chmod +x ./scripts/install.sh || true
+          chmod +x ./scripts/build.en.sh || true
+          chmod +x ./scripts/build.vi.sh || true
+
       - name: Put npm global bin on PATH
         run: |
           mkdir -p ~/.npm-global
           npm config set prefix ~/.npm-global
           echo "$HOME/.npm-global/bin" >> $GITHUB_PATH
 
-      - name: Install toolchain (Asciidoctor + Mermaid + Chrome)
+      - name: Install toolchain (Asciidoctor + Mermaid)
         run: |
           gem install --no-document asciidoctor asciidoctor-pdf asciidoctor-epub3 asciidoctor-diagram rouge
           npm i -g @mermaid-js/mermaid-cli
 
-          # Install Google Chrome that matches Puppeteer expectations
-          npx --yes @puppeteer/browsers install chrome@stable
-
-          # Export Chrome path for all subsequent steps
-          echo "PUPPETEER_EXECUTABLE_PATH=$(npx --yes @puppeteer/browsers path chrome)" >> $GITHUB_ENV
+      # Optional: quick sanity debug
+      - name: Debug Chrome env
+        run: |
+          echo "CHROME_PATH=$CHROME_PATH"
+          echo "PUPPETEER_EXECUTABLE_PATH=$PUPPETEER_EXECUTABLE_PATH"
+          command -v google-chrome || true
+          ls -l "$CHROME_PATH" || true
 
       - name: Build (English)
         run: ./scripts/build.en.sh production
