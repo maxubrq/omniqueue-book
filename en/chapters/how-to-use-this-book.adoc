@@ -1,18 +1,100 @@
 == How to Use This Book
 
+This book is both a *reference* and a *journey*.  
+You can read it cover-to-cover or jump directly to the sections that matter most to your work.
 
-=== Who This Book Is For
+We’ve designed it with multiple entry points, so whether you are brand-new to messaging or a seasoned architect managing a multi-broker fleet, you’ll find value.
 
-This book is intended for anyone involved or interested in messaging systems—developers, architects, system engineers, tech leads, or even students aspiring to understand and build message-driven architectures. Whether you're new to messaging systems or an experienced professional looking to unify or expand your understanding, this guide has something valuable for you.
+=== Reading Paths by Experience Tier
 
-=== Navigating the Book
+We’ve tagged content for different levels of experience.  
+If you identify your tier, you can follow the recommended path:
 
-This book is structured clearly, enabling you to approach it according to your background, needs, and interests:
+- **Beginner (0–2 years)**  
+  Start with Part I: *Messaging Fundamentals* (Chapters 1–3).  
+  These chapters introduce core concepts and get you hands-on with OmniQueue quickly.  
+  Then, read only the broker chapters (Part II) for the systems you’ll use in your current work.
 
-- If you're new to messaging systems or uncertain about core concepts like queues, topics, delivery semantics, or broker architectures, you should begin with **Part I: Messaging Fundamentals**. This section establishes essential terminology, patterns, and design principles you'll need to grasp to benefit fully from the rest of the book.
+- **Intermediate (2–5 years)**  
+  You can skim Part I for a refresher, then dive deep into the broker chapters (Part II).  
+  Pay attention to *War Stories* and *Cheat Sheets* — they’ll save you pain in production.  
+  Follow with Part III to learn scaling, monitoring, and advanced OmniQueue patterns.
 
-- If you're looking to dive into a specific messaging technology (for example, RabbitMQ, Kafka, AWS SQS, NATS, or others), feel free to jump directly into **Part II: Deep Dive into Messaging Brokers**. Each chapter stands alone, providing comprehensive coverage of individual brokers and their integration with OmniQueue.
+- **Senior Engineer / Architect (5+ years)**  
+  Jump to the broker chapters you care about most, but don’t skip Part III — it’s packed with operational patterns for high-scale environments.  
+  Use Part IV’s case studies for inspiration and validation of architectural decisions.
 
-- For readers with hands-on experience working with messaging systems in production, **Parts III, IV, and V** cover advanced topics, real-world implementations, and extending OmniQueue. These chapters assume familiarity with practical messaging concepts and address common challenges, advanced patterns, scalability considerations, operational practices, and community contribution.
+- **OmniQueue Mastery Mode**  
+  These sections are sprinkled throughout the book for readers who want to extend OmniQueue itself.  
+  You’ll find them in both broker chapters and advanced sections.
 
-You can approach the book sequentially, jump to chapters relevant to your current projects, or revisit sections as a reference guide. Use the table of contents and quick-reference appendices to navigate efficiently according to your specific needs and level of experience.
+=== Part-by-Part Guide
+
+[cols="1,4",options="header"]
+|===
+| Part | How to Use It
+| I | Foundation for messaging concepts and OmniQueue basics. Best for new readers.
+| II | Broker-specific knowledge. Each chapter is standalone — read only what you need.
+| III | Advanced OmniQueue usage: scaling, observability, disaster recovery.
+| IV | Real-world case studies — learn from actual deployments and failures.
+| V | Contribution and extension — for those building on or contributing to OmniQueue.
+| Appendices | Quick-reference materials, glossary, and operational checklists.
+|===
+
+=== Code Examples
+
+All OmniQueue examples are in **TypeScript**.  
+We assume you have basic familiarity with `npm`, `pnpm`, or `yarn` and Node.js tooling.
+
+Code listings are annotated with comments to explain *why* something is done, not just *how*.  
+For example:
+
+[source, typescript]
+----
+// Sending a message with OmniQueue
+await omni.send({
+  destination: 'orders',
+  body: { id: '1234', status: 'confirmed' },
+  group: 'order-processing', // Required for consumers
+  ensure: true, // Create destination if it doesn't exist
+});
+----
+
+Whenever we compare OmniQueue to a native broker API, we show them side-by-side for clarity.
+
+=== Diagrams and Visuals
+
+We use **Mermaid diagrams** for flows, topologies, and message lifecycles.
+These are rendered in the book, but if you’re reading the raw AsciiDoc, you can copy the code into any Mermaid-compatible renderer to visualize it.
+
+=== Cheat Sheets and War Stories
+
+At the end of each broker chapter:
+
+* **Cheat Sheet** — quick reference for commands, configs, metrics, and a *disaster checklist*.
+* **War Stories** — short narratives of real-world incidents, failures, and their solutions.
+
+=== Cross-References
+
+Throughout the book, cross-references (e.g., “see <<\_chapter\_3>>”) help you connect concepts.
+We strongly encourage following them, especially when exploring advanced topics that build on earlier material.
+
+=== What You’ll Need
+
+- **Node.js** 18+
+- A package manager (`npm`, `pnpm`, or `yarn`)
+- Docker (optional, but useful for running brokers locally)
+- Basic terminal familiarity
+
+You don’t need to install every broker at once — we’ll give setup instructions per chapter.
+
+=== Our Advice
+
+- **Don’t just read — run the examples.**
+  Messaging is best learned by sending and receiving real messages.
+
+- **Experiment with failure.**
+  Kill brokers, drop connections, overload queues — see how systems behave under stress.
+
+- **Adapt patterns to your context.**
+  There’s no universal “right” way; use these patterns as starting points.

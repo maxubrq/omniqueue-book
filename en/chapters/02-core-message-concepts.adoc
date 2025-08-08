@@ -1,0 +1,514 @@
+== Core Messaging Concepts
+
+=== Messages, Queues, Topics, Streams
+
+At the heart of any messaging system is the **message**:  
+a discrete unit of data that moves from producer to consumer.
+
+==== The Message Structure
+
+While brokers differ in terminology and features, most messages contain:
+
+[cols="1,2",options="header"]
+|===
+| Field | Purpose
+| **ID** | Uniquely identifies the message.  
+For durability and traceability, many teams use ULID or UUID v7. Some brokers provide their own sequence IDs (Kafka offset, Pulsar ledgerId/entryId, etc.).
+| **Body** | The actual payload.  
+Often JSON for ease of debugging, but formats like Avro or Protobuf are preferred in high-performance or schema-validated environments.
+| **Headers / Attributes** | Metadata about the message (e.g., `content-type`, source service, trace IDs for distributed tracing, tenant identifiers).  
+These can influence routing (e.g., header-based exchange in RabbitMQ) or serve for observability.
+|===
+
+TIP: In OmniQueue, `body` is always JSON-serialisable to ensure adapter compatibility, but you can base64-encode binary payloads if needed.
+
+==== Queues
+
+A **queue** is a named, ordered collection of messages that delivers each message to exactly one consumer within a given group.  
+When a message is acknowledged (`ack()`), it is removed from the queue (or marked processed).  
+
+*Key characteristics:*
+
+- **FIFO order** by default, though some brokers allow priority or sharded ordering.
+- **Work sharing** — multiple consumers in the same group share the load.
+- **Backpressure** — unacknowledged messages accumulate in the queue.
+
+*Real-world usage:*
+
+- Task processing (image rendering, report generation).
+- Decoupling request spikes from downstream processing.
+- Buffering workloads when downstream systems are slow.
+
+==== Topics
+
+A **topic** is a named channel to which producers publish and consumers subscribe.  
+
+*Key characteristics:*
+
+- **Fanout delivery** — every consumer group subscribed to a topic gets a full copy of the message stream.
+- **Group semantics** — within a single group, messages are load-balanced to one consumer at a time.
+- **Loose coupling** — producers don’t need to know who consumes their messages.
+
+*Real-world usage:*
+
+- Event broadcasting (order events, user activity streams).
+- Multi-service pipelines (analytics, fraud detection, notifications).
+- Event sourcing feeds.
+
+==== Streams
+
+A **stream** is an append-only, immutable sequence of messages stored in durable storage.  
+Consumers track their own **offset** (position) and can replay older messages at will.
+
+Key characteristics:
+
+- **Messages persist** for a retention period (e.g., 7 days) or indefinitely.
+- **Multiple independent consumers** — each with their own offsets.
+- **High throughput** by avoiding message deletion.
+
+*Real-world usage:*
+
+- Audit logging with replay.
+- Rebuilding projections in CQRS systems.
+- Time-series analytics pipelines.
+
+==== Comparing Destinations
+
+[cols="1,3,3,3",options="header"]
+|===
+| Type | Delivery Model | Storage & Retention | Replay Support
+| Queue | Point-to-point within a group | Message removed after ack | No
+| Topic | Publish/subscribe, fanout to groups | Broker-controlled, may persist temporarily | Sometimes (depends on broker)
+| Stream | Publish/subscribe with offset tracking | Long-term retention in log | Yes
+|===
+
+[mermaid, format=png, target=ch2-queue-topic-stream]
+----
+flowchart LR
+    subgraph Producer
+      P[Producer] --> Q
+    end
+
+    subgraph Destinations
+      Q[Queue]
+      T[Topic]
+      S[Stream]
+    end
+
+    Q -->|One message to one consumer| C1[Consumer]
+    T -->|Copy to each group| G1[Group A]
+    T -->|Copy to each group| G2[Group B]
+    S -->|Consumers pull by offset| C2[Consumer Offset 120]
+----
+
+=== Brokers vs. Brokerless
+
+==== What is a Broker?
+
+A **broker** is a dedicated server (or cluster) that:
+
+- Accepts messages from producers via network protocols (AMQP, Kafka protocol, MQTT, HTTP).
+- Routes them based on metadata (exchange bindings, partition keys, headers).
+- Stores them (in memory, disk, or distributed logs) for durability and later delivery.
+- Delivers them to consumers, tracking acknowledgements.
+
+Examples: RabbitMQ, Kafka, NATS JetStream, ActiveMQ Artemis, Azure Service Bus, Apache Pulsar.
+
+*Advantages:*
+
+- **Durability** — messages survive restarts or crashes.
+- **Routing flexibility** — fanout, topic filters, header matching, partitioning.
+- **Operational visibility** — metrics, queues, consumer lag.
+- **Security controls** — authentication, authorization, encryption.
+
+*Challenges:*
+
+- Operational cost — needs monitoring, scaling, patching.
+- Latency vs. durability trade-offs — fsyncs, replication.
+- Complexity — tuning partitions, queues, consumers.
+
+==== Brokerless Messaging
+
+In **brokerless** systems, producers send messages directly to consumers without an intermediary server.  
+Typically, these use **peer-to-peer sockets** or multicast protocols.
+
+Example: ZeroMQ’s PUB/SUB, PUSH/PULL patterns.
+
+*Advantages:*
+
+- **Ultra-low latency** — no queue persistence or broker hop.
+- **No single point of failure** — as long as consumers are reachable.
+- **Lightweight deployment** — often just a library in your app.
+
+*Challenges:*
+
+- No inherent durability — offline consumers miss messages.
+- No centralized management — must handle discovery, retries, ordering yourself.
+- Difficult scaling for complex topologies.
+
+==== Visual Comparison
+
+[mermaid, format=png, target=ch2-broker-vs-brokerless]
+----
+flowchart TB
+    subgraph Brokered
+      P1 --> B[Broker Cluster]
+      P2 --> B
+      B --> C1
+      B --> C2
+    end
+
+    subgraph Brokerless
+      P3 --> C3
+      P3 --> C4
+    end
+----
+
+**Brokered systems** shine in reliability and complexity management.  
+**Brokerless systems** shine in simplicity and speed — but require discipline in application design.
+
+TIP: OmniQueue supports *both* worlds. A `@omniqueue/zeromq` adapter can connect directly between processes without a broker, while `@omniqueue/kafka`, `@omniqueue/rabbitmq`, and others leverage durable, clustered brokers.
+
+=== Delivery Semantics
+
+Delivery semantics define **how many times** a message is delivered to a consumer, and under what guarantees.  
+They are a cornerstone of messaging design — the choice affects performance, complexity, and data correctness.
+
+==== At-most-once
+
+*Definition:*
+
+A message is delivered **zero or one time**, but never more than once.  
+If the delivery fails, the message is lost — no retries.
+
+*How it happens:*
+
+1. The broker (or producer in brokerless systems) sends the message without waiting for acknowledgement.
+2. No redelivery is attempted if the consumer fails mid-processing.
+
+*Pros:*
+
+- Lowest latency — no ack/nack overhead.
+- Simplest implementation.
+
+*Cons:*
+
+- Data loss possible under failures.
+- Not suitable for critical workflows.
+
+*Real-world usage:*
+
+- Non-critical telemetry where occasional loss is acceptable (e.g., live UI metrics).
+- High-frequency, low-value sensor data.
+
+==== At-least-once
+
+*Definition:*  
+
+A message is delivered **one or more times** until it is acknowledged.  
+Duplicates may occur.
+
+*How it happens:*
+
+1. The broker stores the message until it gets an explicit ack from the consumer.
+2. If ack is not received within a timeout or connection drops, the broker redelivers.
+
+*Pros:*
+
+- No message loss under normal broker persistence guarantees.
+- The default for most brokers (RabbitMQ, SQS, NATS JetStream).
+
+*Cons:*
+
+- Requires **idempotent** consumers — they must handle duplicates gracefully.
+- Potential extra load from duplicate processing.
+
+*Real-world usage:*
+
+- Payment processing (with idempotency keys).
+- Order event processing.
+- Logging pipelines.
+
+==== Exactly-once
+
+*Definition:*
+
+A message is delivered **exactly one time** — no duplicates, no losses.
+
+*How it happens:*
+
+1. Requires transactional coordination between producer, broker, and consumer.
+2. The broker and consumer commit offsets/state atomically.
+
+*Pros:*
+
+- Simplest for consumers — no deduplication logic.
+
+*Cons:*
+
+- High complexity, often broker-specific.
+- Lower throughput due to transactional overhead.
+- Often misunderstood — "exactly-once" guarantees are fragile in distributed systems.
+
+*Real-world usage:*
+
+- Financial transaction settlement (Kafka + idempotent producers + transactions).
+- Highly sensitive event processing.
+
+==== OmniQueue Perspective
+
+OmniQueue does not enforce a delivery semantic by itself — it passes through the broker's native behavior.  
+However:
+
+- At-least-once is the most common.
+- You can achieve effectively-once delivery by combining at-least-once brokers with idempotent consumer logic.
+- Broker adapters may expose native exactly-once features (e.g., Kafka transactions) via `createOptions` or broker-specific APIs.
+
+[mermaid, format=png, target=ch2-delivery-semantics]
+----
+sequenceDiagram
+    participant P as Producer
+    participant B as Broker
+    participant C as Consumer
+
+    Note over P,C: At-most-once
+    P->>B: Send message
+    B-->>C: Deliver message
+    C <<-->> B: No ack required
+    Note over B: If delivery fails → lost
+
+    Note over P,C: At-least-once
+    P->>B: Send message
+    B-->>C: Deliver message
+    C-->>B: Ack message
+    Note over B: No ack? Redeliver
+
+    Note over P,C: Exactly-once
+    P->>B: Send message (transaction)
+    B-->>C: Deliver message
+    C-->>B: Ack + commit atomically
+----
+
+=== Reliability & Durability
+
+==== Reliability
+
+Reliability is the ability of a messaging system to deliver messages as promised, even under faults.  
+It depends on:
+
+- **Acknowledgements** — explicit `ack()`/`nack()` calls.
+- **Retries** — redelivery on failure.
+- **Consumer groups** — work sharing without loss.
+- **Dead-letter queues (DLQ)** — holding unprocessable messages for inspection.
+
+Operational tips:
+
+- Set sensible retry limits — infinite retries can overload systems.
+- Use DLQs to capture poison messages (malformed or consistently failing).
+- Monitor consumer lag — large lag indicates bottlenecks.
+
+==== Durability
+
+Durability ensures messages survive broker or system restarts.  
+This requires **persistent storage** at the broker level.
+
+Common strategies:
+
+- **Disk persistence** — messages are written to disk (RabbitMQ durable queues, Kafka logs).
+- **Replication** — messages are stored on multiple nodes (Kafka ISR, Pulsar BookKeeper).
+- **Acknowledgement after fsync** — broker only acks after writing to stable storage.
+
+Trade-offs:
+
+- Durability often increases latency.
+- Replication adds network cost but prevents data loss from node failure.
+
+==== Durability in OmniQueue Context
+
+OmniQueue’s durability depends entirely on the broker adapter in use:
+
+- **RabbitMQ Adapter** — durable queues + persistent messages.
+- **Kafka Adapter** — log-based storage with configurable replication factor.
+- **NATS JetStream Adapter** — file or memory storage with optional replication.
+- **ZeroMQ Adapter** — no built-in durability (application must handle persistence).
+
+You can influence durability in OmniQueue via `createOptions` when calling `publish()` or `subscribe()`, passing through broker-specific flags.
+
+Example:
+
+[source, typescript]
+----
+await broker.publish(
+  'orders',
+  { id: '1', body: {...}, headers: {} },
+  { ensure: true, createOptions: { durable: true, replicationFactor: 3 } }
+);
+----
+
+[mermaid, format=png, target=ch2-durability-lifecycle]
+----
+flowchart LR
+    P[Producer] -->|publish| B[Broker Storage]
+    B -->|write| D1[Disk: Log Segment]
+    B -->|replicate| N1[Replica Node A]
+    B -->|replicate| N2[Replica Node B]
+    D1 -->|ack| B
+    B -->|ack| P
+    B -->|deliver| C[Consumer]
+----
+
+TIP: If you don’t configure durability in the broker, OmniQueue can’t “make it durable” — always set it explicitly in `createOptions` when the workload demands it.
+
+=== Load Balancing & Consumer Groups
+
+In messaging systems, **load balancing** is about distributing work evenly among multiple consumers to improve throughput and avoid overloading any single consumer.
+
+==== Consumer Groups
+
+A **consumer group** is a named set of consumers that share the work of processing messages from a topic or queue.
+
+Key characteristics:
+
+- **Work-sharing**:  
+  Each message is processed by exactly **one** consumer in the group.
+- **Isolation between groups**:  
+  Multiple groups can subscribe to the same topic, each getting its **own full copy** of the messages.
+- **Scaling**:  
+  Adding more consumers to a group increases parallelism; removing consumers reduces throughput but not reliability.
+
+OmniQueue enforces **mandatory consumer groups** — every `subscribe()` call must specify a `groupId`.  
+This makes semantics explicit and avoids accidental fanout to unintended consumers.
+
+Example with OmniQueue:
+
+[source, typescript]
+----
+await broker.subscribe(
+  'orders',
+  async (msg) => {
+    console.log(`[Worker] Processing order ${msg.body.id}`);
+    await msg.ack();
+  },
+  'order-service',       // groupId
+  { ensure: true }
+);
+----
+
+==== Consumer Group Dynamics
+
+- If a consumer in a group fails mid-processing: The broker reassigns its unacknowledged messages to other consumers in the same group.
+- If more consumers join the group: The broker redistributes partitions or message streams to balance the load.
+
+[mermaid, format=png, target=ch2-consumer-group-dynamics]
+----
+flowchart LR
+    T[Topic: orders] -->|copy| G1[Group: order-service]
+    G1 -->|split work| C1[Consumer 1]
+    G1 -->|split work| C2[Consumer 2]
+
+    T -->|copy| G2[Group: fraud-check]
+    G2 -->|split work| C3[Consumer 3]
+    G2 -->|split work| C4[Consumer 4]
+----
+
+==== Load Balancing Patterns
+
+1. **Static partition assignment** (Kafka, Pulsar):
+   Each consumer gets a fixed set of partitions.
+2. **Dynamic work stealing** (RabbitMQ, NATS JetStream):
+   Consumers pull messages as they become available.
+3. **Broker push with credit flow control**:
+   Broker pushes messages but limits in-flight count per consumer.
+
+Operational considerations:
+
+- Monitor **consumer lag** per group.
+- Keep consumer processing times balanced — slow consumers can cause uneven workloads.
+- In idempotent systems, you can temporarily run the same consumer logic in multiple groups for migration or testing.
+
+=== Pub/Sub (Fanout) vs. Point-to-Point
+
+==== Point-to-Point (P2P)
+
+In **point-to-point** messaging:
+
+- A message is sent to a **queue**.
+- Exactly one consumer within the target group processes it.
+- Once acknowledged, the message is removed.
+
+*Pros:*
+
+- Ensures work is processed only once per group.
+- Easy to reason about load balancing.
+
+*Cons:*
+
+- No automatic duplication to other consumers outside the group.
+
+*Real-world usage:*
+
+- Task queues (image processing jobs).
+- Distributed workers for batch workloads.
+
+==== Publish/Subscribe (Fanout)
+
+In **publish/subscribe** messaging:
+
+- Producers send to a **topic**.
+- Each subscribed group gets a **full copy** of each message.
+- Inside each group, messages are load-balanced.
+
+*Pros:*
+
+- Multiple services can independently react to the same event stream.
+- Decouples event producers from consumers.
+
+*Cons:*
+
+- More storage and network usage if many groups subscribe.
+- Need to manage schema and compatibility carefully.
+
+
+[mermaid, format=png, target=ch2-pubsub-vs-p2p]
+----
+flowchart TB
+subgraph Point-to-Point
+P1[Producer] --> Q1[Queue]
+Q1 -->|one message to one consumer in group| C1[Consumer]
+Q1 -.->|different message| C2[Consumer]
+end
+subgraph Publish/Subscribe
+  P2[Producer] --> T[Topic]
+  T -->|full copy| G1[Group A]
+  T -->|full copy| G2[Group B]
+  G1 -->|split work| C3[Consumer]
+  G1 -->|split work| C4[Consumer]
+  G2 -->|split work| C5[Consumer]
+end
+----
+
+==== OmniQueue’s Approach
+
+OmniQueue **always** uses publish/subscribe semantics at the API level:
+
+- `publish(topic, message, opts?)` — send to a topic.
+- `subscribe(topic, handler, groupId, opts)` — join a group to consume messages.
+
+This allows:
+
+- **Point-to-point** — by having only one group for a topic.
+- **Fanout** — by having multiple groups subscribed to the same topic.
+
+This design unifies the two models, and the behavior depends on how you name and organize your groups.
+
+Example:
+
+[,typescript]
+----
+// Point-to-point: single group
+await broker.subscribe('orders', handler, 'order-service', { ensure: true });
+
+// Fanout: multiple groups get all events
+await broker.subscribe('orders', handler1, 'fraud-check', { ensure: true });
+await broker.subscribe('orders', handler2, 'analytics', { ensure: true });
+----

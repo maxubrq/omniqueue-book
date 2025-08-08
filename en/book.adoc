@@ -10,14 +10,18 @@ Darius Max
 :sectnums:
 :chapter-label:
 :imagesdir: images
+:diagram-generator: mermaid
 
 // Front matter (unnumbered)
 :sectnums!:
+
 include::chapters/preface.adoc[]
+
 include::chapters/how-to-use-this-book.adoc[]
+
 :sectnums:
 
 // Main chapters (numbered)
 include::chapters/01-intro.adoc[]
-include::chapters/02-architecture.adoc[]
-include::chapters/03-api.adoc[]
+
+include::chapters/02-core-message-concepts.adoc[]

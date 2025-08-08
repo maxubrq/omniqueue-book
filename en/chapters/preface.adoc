@@ -1,18 +1,110 @@
 [preface]
 == Preface
 
-Messaging systems sit at the heart of modern software infrastructure. From microservices that power daily applications to complex data pipelines and real-time analytics, effective communication is essential. Yet, despite their importance, messaging systems are notoriously fragmented. Developers often find themselves navigating multiple incompatible APIs, varied delivery guarantees, and broker-specific quirks.
+=== Why This Book Exists
 
-I've encountered this complexity firsthand, and it led me to ask a simple yet challenging question: Could we unify these diverse messaging systems into a single, elegant abstraction?
+In the last decade, messaging systems have become the invisible backbone of modern software.  
+From high-frequency trading platforms to e-commerce checkout flows, from IoT telemetry ingestion to social media fanout, **asynchronous message passing** underpins much of the world’s critical software.
 
-This is how OmniQueue was born.
+But there’s a catch: the messaging landscape is *fragmented*.  
+Each broker — RabbitMQ, Kafka, NATS, ActiveMQ, SQS, and so on — comes with its own API, terminology, quirks, and operational mindset. Switching from one broker to another can mean a complete rewrite of integration code, along with a steep re-learning curve for operations.
 
-OmniQueue began as an experiment to bridge the gaps between various messaging brokers—RabbitMQ, Kafka, NATS, AWS SQS, Azure Service Bus, and even brokerless solutions like ZeroMQ. It quickly evolved from a coding project into a broader architectural vision: simplifying message-driven architectures by abstracting away complexity, while preserving flexibility and performance.
+**OmniQueue** was born from a simple but ambitious idea:
 
-This book captures everything I've learned along the way. It's intended to serve not just as a technical manual but as a practical guide, offering you clear explanations, detailed examples, and real-world insights into building unified messaging architectures.
+[quote, Founder’s Notes]
+____
+“What if there was a single, unified API that could speak to any messaging system — brokered or brokerless — without sacrificing the power and unique features of each?”
+____
 
-Whether you're an engineer dealing daily with messaging complexity, a team lead aiming to streamline your organization's messaging infrastructure, or simply curious about how messaging works behind the scenes—this book is for you.
+This book is the culmination of that idea.
 
-Welcome to OmniQueue.
+It’s *both* a deep dive into the theory and practice of messaging systems **and** the definitive guide to OmniQueue — a TypeScript-based, broker-agnostic messaging API.
 
-Darius Max (@maxubrq)
+=== Who This Book Is For
+
+This book is written for engineers, architects, and operations teams who:
+
+- Work with messaging systems regularly.
+- Need to support multiple brokers across environments.
+- Migrate between brokers due to scaling, cost, or vendor lock-in.
+- Want to abstract messaging complexity without losing control.
+
+We’ve structured the content so that:
+
+- **Beginners (0–2 years)** gain a solid grounding in messaging fundamentals.
+- **Intermediate practitioners (2–5 years)** learn deep operational patterns and broker-specific optimizations.
+- **Senior engineers (5+ years)** explore high-scale, mission-critical messaging architecture and troubleshooting.
+- **OmniQueue Mastery Mode** sections give you direct, in-depth knowledge to extend, tune, and contribute to the OmniQueue project.
+
+=== What This Book Covers
+
+We will explore:
+
+- Core messaging concepts: queues, topics, routing, delivery semantics, and reliability.
+- Detailed broker chapters for RabbitMQ, Kafka, NATS JetStream, ActiveMQ Artemis, ZeroMQ, BullMQ, AWS SQS/SNS, Azure Service Bus, and Apache Pulsar.
+- OmniQueue’s architecture, design decisions, and implementation patterns.
+- Mapping native broker concepts to OmniQueue’s unified API.
+- Advanced OmniQueue usage: scaling, plugin development, observability, and disaster recovery.
+- Real-world case studies, complete with war stories from production incidents.
+- How to extend and contribute to OmniQueue.
+
+Throughout the book, we’ll balance *conceptual clarity* with *practical hands-on examples*.
+
+=== Why OmniQueue?
+
+Traditional messaging integrations often fall into one of two traps:
+
+1. **Tight coupling to a specific broker.**  
+   This limits future flexibility, creates vendor lock-in, and complicates migrations.
+2. **Overly generic abstractions.**  
+   These hide broker-specific features, leading to lowest-common-denominator APIs.
+
+OmniQueue aims to solve both problems:
+
+- **Unified Core API** for sending, receiving, publishing, and subscribing.
+- **Broker Adapters** that map directly to native features.
+- **Optional Features** for advanced tuning, scaling, and recovery.
+- **Plugin Architecture** for extending to new brokers or integrating custom logic.
+
+=== A Note on Style
+
+This book is written in the spirit of O’Reilly guides:  
+technical, clear, and actionable — with just enough narrative to keep you awake during the heavy parts.
+
+You’ll see **TypeScript code** for OmniQueue, **Mermaid diagrams** for system flows, and **cheat sheets** for quick reference.
+
+=== Reader Expectations
+
+- You don’t need to be a messaging expert — but some familiarity with distributed systems will help.
+- You should be comfortable reading TypeScript and basic CLI commands.
+- Expect real-world complexity: we’ll talk about failures, quirks, and debugging nightmares.
+- We’ll show both the “happy path” and the “when it all goes wrong” path.
+
+=== How This Book Is Organized
+
+[.text-center]
+[cols="1,4",options="header"]
+|===
+| Part | Focus
+| I | Messaging fundamentals and OmniQueue core API.
+| II | Deep dives into individual brokers with OmniQueue mapping.
+| III | Advanced OmniQueue usage, scaling, and tuning.
+| IV | Real-world implementations and case studies.
+| V | Extending and contributing to OmniQueue.
+| Appendices | Quick references, glossary, and disaster checklists.
+|===
+
+=== Our Promise
+
+By the end of this book, you’ll be able to:
+
+- Understand the trade-offs between major messaging systems.
+- Confidently implement broker-agnostic messaging in your projects.
+- Operate and troubleshoot OmniQueue in production.
+- Extend OmniQueue to support new brokers and patterns.
+
+[quote, "From the Authors"]
+____
+Messaging is not just about moving data.  
+It’s about shaping the *lifeblood* of your system — reliably, predictably, and with intent.
+____

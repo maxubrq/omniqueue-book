@@ -15,6 +15,7 @@ mkdir -p "$OUT_DIR/vi"
 asciidoctor -a stylesheet=../theme/default-theme.css -o "$OUT_DIR/vi/book.html" "$SRC"
 
 asciidoctor-pdf \
+  -r asciidoctor-diagram \
   -a pdf-theme="$THEME" \
   -a pdf-fontsdir="$FONTS_DIR" \
   -o "$OUT_DIR/vi/book.pdf" "$SRC"

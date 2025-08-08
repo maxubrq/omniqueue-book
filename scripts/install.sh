@@ -37,6 +37,13 @@ sudo gem install asciidoctor-epub3
 echo "==> Installing Asciidoctor Diagram (optional)..."
 sudo gem install asciidoctor-diagram
 
+echo "==> Install Browser (optional)..."
+sudo wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
+
+echo "==> Installing Mermaid CLI (optional)..."
+sudo npm install -g @mermaid-js/mermaid-cli
+
 echo "==> Setup complete!"
 echo
 echo "📘 Usage:"

@@ -1,16 +1,146 @@
-= Introduction
+== Chapter 1: Introduction
 
-OmniQueue is a unified messaging abstraction that allows sending and receiving messages across different brokers — such as RabbitMQ, Kafka, NATS, and brokerless transports — using a consistent API.
+=== The Role of Messaging in Modern Systems
 
-[NOTE]
-====
-This book is designed for engineers building resilient distributed systems.
-====
+Messaging is the circulatory system of distributed software.
 
-== Truyền Cảm Hứng
+Whether you are processing financial transactions, streaming telemetry from millions of IoT devices, or fanning out notifications to mobile users, *messages* are how your system communicates internally and externally.
 
-Why another messaging library?
+Unlike synchronous HTTP calls, messaging systems decouple producers and consumers in *time* and *space*.  
+This makes them a cornerstone of:
 
-* Every broker has quirks
-* Interoperability is painful
-* Configuring queues is boilerplate-heavy
+- **Scalability** — handle bursts by buffering messages in queues, logs, or streams.
+- **Resilience** — retry failed deliveries without dropping data.
+- **Loose coupling** — evolve services independently.
+- **Asynchronous workflows** — free services from waiting on each other.
+
+Modern architectures like **microservices**, **event-driven systems**, and **CQRS/ES** (Command Query Responsibility Segregation / Event Sourcing) rely heavily on messaging.
+
+=== Brokered vs. Brokerless Messaging
+
+Messaging systems come in two broad categories:
+
+[cols="1,2,2",options="header"]
+|===
+| Type | Description | Examples
+| Brokered | Messages flow through a central server (the broker) that stores, routes, and delivers them. | RabbitMQ, Kafka, NATS JetStream, ActiveMQ Artemis, Azure Service Bus, Apache Pulsar
+| Brokerless | Producers send messages directly to consumers without an intermediary. Often implemented with peer-to-peer sockets. | ZeroMQ, nanomsg
+|===
+
+**Brokered systems** offer durability, routing flexibility, and operational control.  
+**Brokerless systems** excel in speed, simplicity, and deployment independence.
+
+=== The Fragmentation Problem
+
+Each broker ecosystem has its *own*:
+
+- API shape and naming conventions
+- Delivery semantics (at-most-once, at-least-once, exactly-once)
+- Terminology: *queue* vs *topic*, *exchange* vs *stream*, *subject* vs *channel*
+- Operational model and deployment pattern
+- Performance characteristics and tuning knobs
+
+Moving from RabbitMQ to Kafka isn’t just a config change — it’s often a **rewrite**.  
+Even within the same organization, different teams may adopt different brokers for historical or domain-specific reasons.
+
+This leads to:
+
+- **Code duplication** — multiple code paths for different brokers.
+- **Vendor lock-in** — hard to migrate away.
+- **Operational complexity** — separate tooling, metrics, and expertise required.
+
+=== Enter OmniQueue
+
+OmniQueue addresses the fragmentation problem with a **unified, broker-agnostic API** centered on *publish/subscribe with mandatory consumer groups*.  
+
+Producers **publish** to a *topic*.  
+Each *consumer group* subscribed to that topic receives a copy of every message; within a given group, only one consumer processes a given message.  
+
+Handlers acknowledge with `ack()` or `nack(requeue?: boolean)`.
+
+[mermaid, target=overview-diag, format=png, width=600, height=600]
+----
+flowchart LR
+    subgraph Producers
+      P1[Producer A] -->|publish| T[Topic: orders]
+      P2[Producer B] -->|publish| T
+    end
+
+    subgraph Consumers
+      G1[Group: order-service] -->|subscribe| T
+      G2[Group: fraud-check] -->|subscribe| T
+    end
+
+    T -->|fanout copy| C11[Consumer 1 in order-service]
+    T -->|fanout copy| C21[Consumer 1 in fraud-check]
+    T -. work-sharing .-> C12[Consumer 2 in order-service]
+    T -. work-sharing .-> C22[Consumer 2 in fraud-check]
+----
+
+With OmniQueue, your code can switch between brokers with minimal changes, while still leveraging advanced features through *broker adapters*.
+
+=== A Simple Example
+
+[source, typescript]
+----
+import { create } from '@omniqueue/core';
+import '@omniqueue/rabbitmq'; // registers the "rabbitmq" adapter
+
+// Create and init a broker instance
+const broker = await create('rabbitmq', { url: 'amqp://localhost' });
+await broker.init();
+
+// Publisher: send one event to the topic "orders"
+await broker.publish(
+  'orders',
+  {
+    id: 'ulid-01JABCDEF...',
+    body: { orderId: 'A123', status: 'confirmed' },
+    headers: { 'x-source': 'checkout' },
+  },
+  {
+    ensure: true, // lazily create the destination if missing
+    // createOptions can pass through to the adapter (durable, partitions, etc.)
+  }
+);
+
+// Subscriber: each GROUP receives a copy; work is shared inside the group.
+await broker.subscribe(
+  'orders',
+  async (msg) => {
+    try {
+      console.log('Processing order', msg.body);
+      await msg.ack();
+    } catch (err) {
+      await msg.nack(true); // requeue on error
+    }
+  },
+  'order-service',    // <-- mandatory groupId
+  { ensure: true }    // optional ConsumeOptions
+);
+
+// ...later, graceful shutdown
+await broker.close();
+----
+
+Switching to Kafka, NATS, Pulsar, or another supported broker means changing only the adapter import and connection config — your core logic stays the same.
+
+=== Who Uses OmniQueue?
+
+OmniQueue is designed for:
+
+- **Polyglot microservice environments** — where different teams choose different brokers.
+- **Hybrid cloud architectures** — where on-prem and cloud-native brokers must coexist.
+- **Migration projects** — moving from one broker to another without downtime.
+- **Prototyping and R\&D** — quickly test message flows across multiple systems.
+
+=== What This Chapter Sets Up
+
+In the chapters ahead:
+
+- **Chapter 2** will cover *Core Messaging Concepts* in detail — topics, routing, delivery guarantees, and reliability.
+- **Chapter 3** will dissect *OmniQueue Architecture & Core API*, showing exactly how the abstraction is implemented with `publish`/`subscribe`.
+- **Part II** will then dive deep into individual brokers.
+
+The goal of this introduction is simple:
+Give you the “why” and the “what” before we explore the “how” and “when”.
