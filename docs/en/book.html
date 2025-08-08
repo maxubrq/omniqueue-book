@@ -2928,25 +2928,17 @@ Each <strong>consumer group</strong> subscribed to that topic receives a copy of
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
-    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
-                    ^
+<pre>Failed to generate image: mmdc failed:
+Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
+ 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
+    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
+    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
+    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
+    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
 
-ReferenceError: join is not defined
-    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
-    at Module._compile (node:internal/modules/cjs/loader:1730:14)
-    at Object..js (node:internal/modules/cjs/loader:1895:10)
-    at Module.load (node:internal/modules/cjs/loader:1465:32)
-    at Function._load (node:internal/modules/cjs/loader:1282:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
-    at Module.require (node:internal/modules/cjs/loader:1487:12)
-    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
-    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
-  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
-}
-
-Node.js v22.17.1
 
 flowchart LR
     subgraph Producers
@@ -3276,25 +3268,17 @@ Consumers track their own <strong>offset</strong> (position) and can replay olde
 </table>
 <div class="listingblock">
 <div class="content">
-<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
-    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
-                    ^
+<pre>Failed to generate image: mmdc failed:
+Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
+ 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
+    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
+    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
+    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
+    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
 
-ReferenceError: join is not defined
-    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
-    at Module._compile (node:internal/modules/cjs/loader:1730:14)
-    at Object..js (node:internal/modules/cjs/loader:1895:10)
-    at Module.load (node:internal/modules/cjs/loader:1465:32)
-    at Function._load (node:internal/modules/cjs/loader:1282:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
-    at Module.require (node:internal/modules/cjs/loader:1487:12)
-    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
-    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
-  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
-}
-
-Node.js v22.17.1
 
 flowchart LR
     subgraph Producer
@@ -3423,25 +3407,17 @@ Typically, these use <strong>peer-to-peer sockets</strong> or multicast protocol
 <h4 id="_visual_comparison">2.2.3. Visual Comparison</h4>
 <div class="listingblock">
 <div class="content">
-<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
-    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
-                    ^
+<pre>Failed to generate image: mmdc failed:
+Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
+ 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
+    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
+    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
+    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
+    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
 
-ReferenceError: join is not defined
-    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
-    at Module._compile (node:internal/modules/cjs/loader:1730:14)
-    at Object..js (node:internal/modules/cjs/loader:1895:10)
-    at Module.load (node:internal/modules/cjs/loader:1465:32)
-    at Function._load (node:internal/modules/cjs/loader:1282:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
-    at Module.require (node:internal/modules/cjs/loader:1487:12)
-    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
-    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
-  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
-}
-
-Node.js v22.17.1
 
 flowchart TB
     subgraph Brokered
@@ -3690,25 +3666,17 @@ However:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
-    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
-                    ^
+<pre>Failed to generate image: mmdc failed:
+Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
+ 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
+    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
+    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
+    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
+    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
 
-ReferenceError: join is not defined
-    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
-    at Module._compile (node:internal/modules/cjs/loader:1730:14)
-    at Object..js (node:internal/modules/cjs/loader:1895:10)
-    at Module.load (node:internal/modules/cjs/loader:1465:32)
-    at Function._load (node:internal/modules/cjs/loader:1282:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
-    at Module.require (node:internal/modules/cjs/loader:1487:12)
-    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
-    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
-  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
-}
-
-Node.js v22.17.1
 
 sequenceDiagram
     participant P as Producer
@@ -3850,25 +3818,17 @@ This requires <strong>persistent storage</strong> at the broker level.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
-    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
-                    ^
+<pre>Failed to generate image: mmdc failed:
+Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
+ 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
+    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
+    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
+    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
+    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
 
-ReferenceError: join is not defined
-    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
-    at Module._compile (node:internal/modules/cjs/loader:1730:14)
-    at Object..js (node:internal/modules/cjs/loader:1895:10)
-    at Module.load (node:internal/modules/cjs/loader:1465:32)
-    at Function._load (node:internal/modules/cjs/loader:1282:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
-    at Module.require (node:internal/modules/cjs/loader:1487:12)
-    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
-    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
-  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
-}
-
-Node.js v22.17.1
 
 flowchart LR
     P[Producer] --&gt;|publish| B[Broker Storage]
@@ -3958,25 +3918,17 @@ This makes semantics explicit and avoids accidental fanout to unintended consume
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
-    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
-                    ^
+<pre>Failed to generate image: mmdc failed:
+Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
+ 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
+    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
+    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
+    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
+    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
 
-ReferenceError: join is not defined
-    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
-    at Module._compile (node:internal/modules/cjs/loader:1730:14)
-    at Object..js (node:internal/modules/cjs/loader:1895:10)
-    at Module.load (node:internal/modules/cjs/loader:1465:32)
-    at Function._load (node:internal/modules/cjs/loader:1282:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
-    at Module.require (node:internal/modules/cjs/loader:1487:12)
-    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
-    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
-  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
-}
-
-Node.js v22.17.1
 
 flowchart LR
     T[Topic: orders] --&gt;|copy| G1[Group: order-service]
@@ -4128,25 +4080,17 @@ Broker pushes messages but limits in-flight count per consumer.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
-    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
-                    ^
+<pre>Failed to generate image: mmdc failed:
+Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
+ 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
+ 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
+For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
+    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
+    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
+    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
+    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
+    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
 
-ReferenceError: join is not defined
-    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
-    at Module._compile (node:internal/modules/cjs/loader:1730:14)
-    at Object..js (node:internal/modules/cjs/loader:1895:10)
-    at Module.load (node:internal/modules/cjs/loader:1465:32)
-    at Function._load (node:internal/modules/cjs/loader:1282:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
-    at Module.require (node:internal/modules/cjs/loader:1487:12)
-    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
-    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
-  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
-}
-
-Node.js v22.17.1
 
 flowchart TB
 subgraph Point-to-Point
@@ -4216,7 +4160,7 @@ await broker.subscribe('orders', handler2, 'analytics', { ensure: true });</code
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-08 07:06:30 UTC
+Last updated 2025-08-08 07:10:50 UTC
 </div>
 </div>
 </body>
