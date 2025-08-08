@@ -42,6 +42,26 @@ heading:
   margin_top: $vertical_rhythm * 0.4
   margin_bottom: $vertical_rhythm * 0.9
   min_height_after: $base_line_height_length * 1.5
+heading:
+  # Chapter title (=)
+  h1:
+    margin_top: $vertical_rhythm * 3
+    margin_bottom: $vertical_rhythm * 24   # big breathing room after chapter title
+
+  # Section (==)
+  h2:
+    margin_top: $vertical_rhythm * 3
+    margin_bottom: $vertical_rhythm * 12
+
+  # Subsection (===)
+  h3:
+    margin_top: $vertical_rhythm * 1
+    margin_bottom: $vertical_rhythm * 3
+
+  # Sub-subsection (====)
+  h4:
+    margin_top: $vertical_rhythm * 1
+    margin_bottom: $vertical_rhythm * 1
 
 # --- Title page: red title, restrained subtitle/authors ---
 title_page:

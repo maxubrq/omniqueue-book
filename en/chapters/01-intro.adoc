@@ -20,6 +20,8 @@ Modern architectures like **microservices**, **event-driven systems**, and **CQR
 
 Messaging systems come in two broad categories:
 
+.Brokered Vs Brokerless
+[#table-brokered-brokerless]
 [cols="1,2,2",options="header"]
 |===
 | Type | Description | Examples
@@ -58,7 +60,9 @@ Each *consumer group* subscribed to that topic receives a copy of every message;
 
 Handlers acknowledge with `ack()` or `nack(requeue?: boolean)`.
 
-[mermaid, target=overview-diag, format=png, width=600, height=600]
+.A look on "topic" messaging
+[figure::#fig-a-look-on-topic-messaging]
+[mermaid, target=a-look-on-topic-messaging, format=png, width=600, height=600]
 ----
 flowchart LR
     subgraph Producers
@@ -81,6 +85,7 @@ With OmniQueue, your code can switch between brokers with minimal changes, while
 
 === A Simple Example
 
+[#code-a-look-on-omniqueue-code]
 [source, typescript]
 ----
 import { create } from '@omniqueue/core';
