@@ -41,7 +41,7 @@ echo "==> Installing Puperteer (optional)..."
 sudo npm -g install puppeteer
 
 echo "==> Installing Chrome (optional)..."
-sudo npx puppeteer browsers install chrome
+sudo npx puppeteer browsers install
 
 echo "==> Installing Mermaid CLI (optional)..."
 sudo npm install -g @mermaid-js/mermaid-cli
