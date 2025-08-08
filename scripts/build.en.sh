@@ -41,26 +41,32 @@ fi
 log "${BOLD}Building (${ENV}) → ${OUT_DIR}${RESET}"
 mkdir -p "$OUT_DIR/en"
 
+MERMAID_OPTS="--puppeteerConfigFile=.puppeteerrc.cjs"
+
 log "HTML (asciidoctor + diagram)"
 asciidoctor \
   -r asciidoctor-diagram \
+  -a mermaid-cli-opts="$MERMAID_OPTS" \
+  -a source-highlighter=rouge \
+  -a rouge-theme=github \
   -a stylesheet=../theme/default-theme.css \
   -a imagesoutdir="$OUT_DIR/en/images" \
-  -a outfilesuffix=.html \
   -o "$OUT_DIR/en/book.html" "$SRC"
 ok "HTML → $OUT_DIR/en/book.html"
 
 log "PDF (asciidoctor-pdf + diagram)"
 asciidoctor-pdf \
   -r asciidoctor-diagram \
+  -a mermaid-cli-opts="$MERMAID_OPTS" \
+  -a source-highlighter=rouge \
   -a pdf-theme="$THEME" \
   -a pdf-fontsdir="$FONTS_DIR" \
   -a imagesoutdir="$OUT_DIR/en/images" \
   -o "$OUT_DIR/en/book.pdf" "$SRC"
-ok "PDF → $OUT_DIR/en/book.pdf"
 
 log "EPUB3"
 asciidoctor-epub3 \
+  -a source-highlighter=rouge \
   -a imagesoutdir="$OUT_DIR/en/images" \
   -o "$OUT_DIR/en/book.epub" "$SRC"
 ok "EPUB → $OUT_DIR/en/book.epub"
