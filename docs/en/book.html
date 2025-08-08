@@ -2480,6 +2480,53 @@ pre.rouge .gs {
 </li>
 </ul>
 </li>
+<li><a href="#_omniqueue_architecture_core_api">3. OmniQueue Architecture &amp; Core API</a>
+<ul class="sectlevel2">
+<li><a href="#_overview_design_principles">3.1. Overview &amp; Design Principles</a></li>
+<li><a href="#_core_api_publish_and_subscribe">3.2. Core API: publish and subscribe</a>
+<ul class="sectlevel3">
+<li><a href="#_publish">3.2.1. publish()</a></li>
+<li><a href="#_subscribe">3.2.2. subscribe()</a></li>
+</ul>
+</li>
+<li><a href="#_message_structure_brokermessage">3.3. Message Structure: <code>BrokerMessage</code></a>
+<ul class="sectlevel3">
+<li><a href="#_best_practices">3.3.1. Best Practices</a></li>
+</ul>
+</li>
+<li><a href="#_groups_and_work_sharing_semantics">3.4. Groups and Work-sharing Semantics</a>
+<ul class="sectlevel3">
+<li><a href="#_why_groupid_is_mandatory">3.4.1. Why <code>groupId</code> is mandatory</a></li>
+<li><a href="#_work_sharing_model">3.4.2. Work-sharing model</a></li>
+<li><a href="#_patterns_enabled_by_groupid">3.4.3. Patterns enabled by <code>groupId</code></a></li>
+<li><a href="#_operational_considerations">3.4.4. Operational considerations</a></li>
+</ul>
+</li>
+<li><a href="#_lifecycle_management_init_close">3.5. Lifecycle Management (<code>init</code>, <code>close</code>)</a>
+<ul class="sectlevel3">
+<li><a href="#_initialization_init">3.5.1. Initialization (<code>init()</code>)</a></li>
+<li><a href="#_graceful_shutdown_close">3.5.2. Graceful shutdown (<code>close()</code>)</a></li>
+<li><a href="#_common_pitfalls">3.5.3. Common pitfalls</a></li>
+</ul>
+</li>
+<li><a href="#_error_handling_ack_nack">3.6. Error Handling (<code>ack</code>, <code>nack</code>)</a>
+<ul class="sectlevel3">
+<li><a href="#_acknowledgement_ack">3.6.1. Acknowledgement (<code>ack()</code>)</a></li>
+<li><a href="#_negative_acknowledgement_nackrequeue_boolean">3.6.2. Negative acknowledgement (<code>nack(requeue?: boolean)</code>)</a></li>
+<li><a href="#_idempotency_for_at_least_once_delivery">3.6.3. Idempotency for at-least-once delivery</a></li>
+<li><a href="#_retry_dlq_patterns">3.6.4. Retry &amp; DLQ patterns</a></li>
+<li><a href="#_omniqueue_adapter_mapping">3.6.5. OmniQueue adapter mapping</a></li>
+</ul>
+</li>
+<li><a href="#_omniqueue_core_flow_diagram">3.7. OmniQueue Core Flow Diagram</a>
+<ul class="sectlevel3">
+<li><a href="#_how_to_read_this_diagram">3.7.1. How to Read This Diagram</a></li>
+<li><a href="#_flow_breakdown">3.7.2. Flow Breakdown</a></li>
+<li><a href="#_operational_notes">3.7.3. Operational Notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -4115,10 +4162,960 @@ Broker pushes messages but limits in-flight count per consumer.</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_omniqueue_architecture_core_api">3. OmniQueue Architecture &amp; Core API</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_overview_design_principles">3.1. Overview &amp; Design Principles</h3>
+<div class="paragraph">
+<p>OmniQueue is a <strong>broker-agnostic messaging abstraction</strong> written in TypeScript.
+Its core purpose is to provide a <strong>single, unified API</strong> for producing and consuming messages across a wide range of messaging technologies — both brokered (e.g., RabbitMQ, Kafka, Pulsar) and brokerless (e.g., ZeroMQ).</p>
+</div>
+<div class="paragraph">
+<p>The architecture is designed to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Unify, not oversimplify</strong>:
+Provide consistent <code>publish</code> and <code>subscribe</code> semantics while still exposing broker-specific options via <code>createOptions</code> when needed.</p>
+</li>
+<li>
+<p><strong>Preserve advanced features</strong>:
+Let developers use native capabilities of each broker without breaking the abstraction.</p>
+</li>
+<li>
+<p><strong>Enforce explicitness</strong>:
+OmniQueue requires <code>groupId</code> for every subscription — avoiding accidental broadcast to unintended consumers.</p>
+</li>
+<li>
+<p><strong>Support both high-level productivity and low-level control</strong>:
+Developers can start quickly but still configure performance, durability, and topology deeply.</p>
+</li>
+<li>
+<p><strong>Be modular</strong>:
+Each broker is implemented as a separate adapter that can be loaded dynamically.</p>
+</li>
+<li>
+<p><strong>Be lifecycle-conscious</strong>:
+Connection management (<code>init</code>, <code>close</code>) is explicit to encourage clean startup/shutdown patterns.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>OmniQueue’s <strong>core runtime</strong> is small and stable.
+It handles:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Broker registration</strong> (via the plugin registry).</p>
+</li>
+<li>
+<p><strong>Factory creation</strong> of broker instances.</p>
+</li>
+<li>
+<p><strong>Delegation</strong> of operations (<code>publish</code>, <code>subscribe</code>) to the active adapter.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Adapters handle:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Protocol specifics</strong> (AMQP, Kafka wire protocol, ZeroMQ sockets, etc.).</p>
+</li>
+<li>
+<p><strong>Broker-specific topology creation</strong>.</p>
+</li>
+<li>
+<p><strong>Mapping of OmniQueue concepts</strong> (topics, groups) to the broker’s native constructs.</p>
+</li>
+</ul>
+</div>
+<div id="ch3-architecture-layers" class="imageblock kroki">
+<div class="content">
+<img src="images/ch3-architecture-layers-93f7f1fa8bfea1a249700f94a26da5032c33aa03cd659ff85de2822c9dacfced.png" alt="OmniQueue Design Layers">
+</div>
+<div class="title">Figure 8. OmniQueue Design Layers</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+This separation means that adding support for a new broker is as simple as writing an adapter and registering it with <code>register('provider-name', factoryFn)</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_core_api_publish_and_subscribe">3.2. Core API: publish and subscribe</h3>
+<div class="paragraph">
+<p>OmniQueue’s runtime exposes two primary operations for message flow:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>publish</strong> — send a message to a topic so it can be consumed by one or more groups.</p>
+</li>
+<li>
+<p><strong>subscribe</strong> — join a consumer group to receive messages from a topic.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This section documents their signatures, parameters, and usage patterns.</p>
+</div>
+<div class="sect3">
+<h4 id="_publish">3.2.1. publish()</h4>
+<div class="paragraph">
+<p>Sends a message to a given topic. All consumer groups subscribed to that topic will receive a copy.
+Within each group, only one consumer processes the message.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nf">publish</span><span class="p">(</span>
+  <span class="nx">topic</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span>
+  <span class="nx">msg</span><span class="p">:</span> <span class="nb">Omit</span><span class="o">&lt;</span><span class="nx">BrokerMessage</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ack</span><span class="dl">'</span> <span class="o">|</span> <span class="dl">'</span><span class="s1">nack</span><span class="dl">'</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nx">opts</span><span class="p">?:</span> <span class="nx">SendOptions</span>
+<span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Parameters:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>topic</code>: Name of the topic (string).</p>
+</li>
+<li>
+<p>Naming is case-sensitive for most brokers.</p>
+</li>
+<li>
+<p><code>msg</code>: Message to send, without the <code>ack</code> and <code>nack</code> methods.</p>
+</li>
+<li>
+<p>Must include <code>id</code>, <code>body</code>, and <code>headers</code>.</p>
+</li>
+<li>
+<p><code>opts</code>: Optional <code>SendOptions</code>:</p>
+</li>
+<li>
+<p><code>prio</code>: Message priority (broker-dependent).</p>
+</li>
+<li>
+<p><code>ensure</code>: Create the topic/queue/stream if it doesn’t exist.</p>
+</li>
+<li>
+<p><code>createOptions</code>: Broker-specific creation parameters (durability, partitions, etc.).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Example:</strong></p>
+</div>
+<div id="code-publish-example" class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nf">publish</span><span class="p">(</span>
+  <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">{</span>
+    <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">01JABCDE123...</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">body</span><span class="p">:</span> <span class="p">{</span> <span class="na">orderId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">A123</span><span class="dl">'</span><span class="p">,</span> <span class="na">status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">confirmed</span><span class="dl">'</span> <span class="p">},</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">x-source</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">checkout-service</span><span class="dl">'</span> <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">createOptions</span><span class="p">:</span> <span class="p">{</span> <span class="na">durable</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">);</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_subscribe">3.2.2. subscribe()</h4>
+<div class="paragraph">
+<p>Listens for messages on a topic as part of a specific consumer group.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nf">subscribe</span><span class="p">(</span>
+  <span class="nx">topic</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span>
+  <span class="nx">handler</span><span class="p">:</span> <span class="p">(</span><span class="nx">m</span><span class="p">:</span> <span class="nx">BrokerMessage</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nx">groupId</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span>
+  <span class="nx">opts</span><span class="p">:</span> <span class="nx">ConsumeOptions</span>
+<span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Parameters:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>topic</code>: Name of the topic (string).</p>
+</li>
+<li>
+<p><code>handler</code>: Async function that processes each message.</p>
+</li>
+<li>
+<p>Receives a <code>BrokerMessage</code> with <code>ack()</code> and <code>nack()</code> methods.</p>
+</li>
+<li>
+<p>Must call <code>ack()</code> on success, or <code>nack(requeue?: boolean)</code> on failure.</p>
+</li>
+<li>
+<p><code>groupId</code>: Mandatory group identifier for work-sharing.</p>
+</li>
+<li>
+<p><code>opts</code>: Optional <code>ConsumeOptions</code> (inherits all <code>SendOptions</code>).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Example:</strong></p>
+</div>
+<div id="code-subscribe-example" class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span>
+  <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
+  <span class="k">async </span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Processing order</span><span class="dl">'</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+      <span class="k">await</span> <span class="nx">msg</span><span class="p">.</span><span class="nf">ack</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">await</span> <span class="nx">msg</span><span class="p">.</span><span class="nf">nack</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span> <span class="c1">// requeue on error</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="dl">'</span><span class="s1">order-service</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>
+<span class="p">);</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Use multiple groups to implement <strong>fanout</strong>; use a single group for <strong>point-to-point</strong> load sharing.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_message_structure_brokermessage">3.3. Message Structure: <code>BrokerMessage</code></h3>
+<div class="paragraph">
+<p>The <code>BrokerMessage</code> interface defines the shape of every message flowing through OmniQueue.
+It represents a single unit of data in transit between producer and consumer.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">export</span> <span class="kr">interface</span> <span class="nx">BrokerMessage</span><span class="o">&lt;</span><span class="nx">T</span> <span class="o">=</span> <span class="kr">any</span><span class="o">&gt;</span> <span class="p">{</span>
+   <span class="na">id</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+   <span class="nl">body</span><span class="p">:</span> <span class="nx">T</span><span class="p">;</span>
+   <span class="nl">headers</span><span class="p">:</span> <span class="nb">Record</span><span class="o">&lt;</span><span class="kr">string</span><span class="p">,</span> <span class="kr">any</span><span class="o">&gt;</span><span class="p">;</span>
+
+   <span class="nf">ack</span><span class="p">():</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="nf">nack</span><span class="p">(</span><span class="nx">requeue</span><span class="p">?:</span> <span class="nx">boolean</span><span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<table id="table-broker-message-fields" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Message fields</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unique identifier for the message.
+It should be globally unique to avoid collisions across brokers and environments.
+Best practice: ULID or UUID v7 for sortable uniqueness.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>body</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JSON-serialisable payload of the message.
+For binary data, encode as Base64 or use a broker-specific binary mode if supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metadata key/value pairs.
+Common uses: content type, correlation IDs, trace context, tenant information.</p></td>
+</tr>
+</tbody>
+</table>
+<table id="table-broker-message-ack" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Message acknowledgement methods</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Method</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ack()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Positively acknowledges that the message was processed successfully.
+In at-least-once systems, this will remove the message from the queue or commit the offset.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nack(requeue?: boolean)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Negatively acknowledges the message.
+If <code>requeue</code> is <code>true</code>, the broker will attempt redelivery (immediate or delayed, broker-dependent).
+If <code>false</code>, the message may be routed to a Dead Letter Queue (DLQ) or discarded.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="_best_practices">3.3.1. Best Practices</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Always call <code>ack()</code> <strong>exactly once</strong> for successfully processed messages.</p>
+</li>
+<li>
+<p>Call <code>nack(true)</code> for transient errors (e.g., network failures to downstream systems).</p>
+</li>
+<li>
+<p>Call <code>nack(false)</code> for permanent errors (e.g., invalid schema) to avoid poison-message loops.</p>
+</li>
+<li>
+<p>Store <code>id</code> and relevant <code>headers</code> for idempotent processing in at-least-once systems.</p>
+</li>
+</ul>
+</div>
+<div id="code-broker-message-handler" class="listingblock">
+<div class="title">Example: Handling <code>BrokerMessage</code></div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span>
+  <span class="dl">'</span><span class="s1">payments</span><span class="dl">'</span><span class="p">,</span>
+  <span class="k">async </span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nf">isValidPayment</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nf">warn</span><span class="p">(</span><span class="dl">'</span><span class="s1">Invalid payment</span><span class="dl">'</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+        <span class="k">await</span> <span class="nx">msg</span><span class="p">.</span><span class="nf">nack</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span> <span class="c1">// send to DLQ</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="k">await</span> <span class="nf">processPayment</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+      <span class="k">await</span> <span class="nx">msg</span><span class="p">.</span><span class="nf">ack</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Temporary error, retrying</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+      <span class="k">await</span> <span class="nx">msg</span><span class="p">.</span><span class="nf">nack</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span> <span class="c1">// requeue for retry</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="dl">'</span><span class="s1">payment-processor</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>
+<span class="p">);</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_groups_and_work_sharing_semantics">3.4. Groups and Work-sharing Semantics</h3>
+<div class="paragraph">
+<p>In OmniQueue, <strong>every subscription belongs to a group</strong> — this is not optional.
+The <code>groupId</code> parameter in <code>subscribe()</code> is the explicit contract that defines how messages are delivered and balanced among consumers.</p>
+</div>
+<div class="sect3">
+<h4 id="_why_groupid_is_mandatory">3.4.1. Why <code>groupId</code> is mandatory</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Prevents <strong>accidental global broadcast</strong> to all consumers.</p>
+</li>
+<li>
+<p>Makes <strong>intent explicit</strong> in code: you either want fanout (multiple groups) or point-to-point (single group).</p>
+</li>
+<li>
+<p>Aligns OmniQueue’s semantics with modern brokers like Kafka, NATS JetStream, and Pulsar, where groups (or their equivalents) are first-class.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_work_sharing_model">3.4.2. Work-sharing model</h4>
+<div class="paragraph">
+<p>When a producer publishes a message to a topic:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Each <strong>group</strong> subscribed to that topic receives a full copy of the message stream.</p>
+</li>
+<li>
+<p>Within each group, <strong>only one consumer</strong> handles a given message.</p>
+</li>
+<li>
+<p>The broker decides which consumer in the group gets the next message, based on its load-balancing strategy.</p>
+</li>
+</ul>
+</div>
+<hr>
+<div id="ch3-consumer-group-work-sharing" class="imageblock kroki">
+<div class="content">
+<img src="images/ch3-consumer-group-work-sharing-bd21caee01cde99fb5bf3276ef279a82cc97604b3fcad3545b7340871eeb2260.png" alt="Consumer group work-sharing">
+</div>
+<div class="title">Figure 9. Consumer group work-sharing</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_patterns_enabled_by_groupid">3.4.3. Patterns enabled by <code>groupId</code></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Point-to-point load sharing</strong>:
+Use a single group for all consumers that should share the workload.</p>
+</li>
+<li>
+<p><strong>Fanout processing</strong>:
+Use multiple groups, each representing an independent processing path.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span> <span class="nx">handleOrder</span><span class="p">,</span> <span class="dl">'</span><span class="s1">order-service</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span> <span class="nx">handleFraud</span><span class="p">,</span> <span class="dl">'</span><span class="s1">fraud-check</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span> <span class="nx">handleAnalytics</span><span class="p">,</span> <span class="dl">'</span><span class="s1">analytics</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_operational_considerations">3.4.4. Operational considerations</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Scaling throughput</strong>: Add more consumers to the same group to process messages faster.</p>
+</li>
+<li>
+<p><strong>Zero-downtime deployment</strong>: Temporarily run old and new versions of a consumer in the same group to drain messages during rollout.</p>
+</li>
+<li>
+<p><strong>Isolated experiments</strong>: Spin up a separate group for A/B testing without impacting production consumers.</p>
+</li>
+<li>
+<p><strong>Back-pressure management</strong>: Monitor group-level consumer lag to detect bottlenecks.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+In some brokers, group identifiers are durable — the broker remembers offsets per group even if no consumers are active. This allows resuming consumption from the last processed message.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_lifecycle_management_init_close">3.5. Lifecycle Management (<code>init</code>, <code>close</code>)</h3>
+<div class="paragraph">
+<p>OmniQueue brokers follow a <strong>well-defined lifecycle</strong> to ensure connections are properly established, resources are managed, and workloads are gracefully shut down.</p>
+</div>
+<div class="sect3">
+<h4 id="_initialization_init">3.5.1. Initialization (<code>init()</code>)</h4>
+<div class="paragraph">
+<p>Before you can send or receive messages, you <strong>must</strong> initialize the broker instance.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Establishes network connections to the broker or peer nodes.</p>
+</li>
+<li>
+<p>Performs authentication/authorization (if required).</p>
+</li>
+<li>
+<p>Prepares client internals such as connection pools, channel/session objects, and background heartbeat tasks.</p>
+</li>
+<li>
+<p>May lazily create broker-side resources (queues, topics, streams) depending on the adapter.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">create</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">omni-queue-core</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="c1">// Create broker instance from provider</span>
+<span class="kd">const</span> <span class="nx">broker</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">rabbitmq</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">host</span><span class="p">:</span> <span class="dl">'</span><span class="s1">localhost</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">port</span><span class="p">:</span> <span class="mi">5672</span><span class="p">,</span>
+  <span class="na">username</span><span class="p">:</span> <span class="dl">'</span><span class="s1">guest</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">password</span><span class="p">:</span> <span class="dl">'</span><span class="s1">guest</span><span class="dl">'</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="c1">// Must be called before publish/subscribe</span>
+<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nf">init</span><span class="p">();</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+In production, call <code>init()</code> <strong>during service startup</strong> and ensure it completes before accepting external requests. Failing to initialize may cause publish or subscribe calls to throw errors.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_graceful_shutdown_close">3.5.2. Graceful shutdown (<code>close()</code>)</h4>
+<div class="paragraph">
+<p>When your service is terminating, <strong>always close the broker connection</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ensures in-flight messages are acknowledged before disconnection.</p>
+</li>
+<li>
+<p>Releases network sockets, file handles, and background workers.</p>
+</li>
+<li>
+<p>Helps the broker redistribute work quickly to other consumers in the same group.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nx">process</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">SIGTERM</span><span class="dl">'</span><span class="p">,</span> <span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Shutting down…</span><span class="dl">'</span><span class="p">);</span>
+  <span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nf">close</span><span class="p">();</span>
+  <span class="nx">process</span><span class="p">.</span><span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">});</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Pair <code>init()</code> and <code>close()</code> in a lifecycle manager, such as:
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Node.js process hooks (<code>SIGTERM</code>, <code>SIGINT</code>).</p>
+</li>
+<li>
+<p>HTTP server start/stop callbacks.</p>
+</li>
+<li>
+<p>Framework lifecycle hooks (NestJS <code>OnModuleInit</code> / <code>OnModuleDestroy</code>).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_common_pitfalls">3.5.3. Common pitfalls</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Skipping <code>close()</code></strong>: Can lead to stale connections or message redelivery delays.</p>
+</li>
+<li>
+<p><strong>Closing too early</strong>: If you close before acknowledging all messages, some brokers will redeliver them.</p>
+</li>
+<li>
+<p><strong>Multiple <code>init()</code> calls</strong>: Avoid re-initializing the same broker instance; instead, reuse the connection.</p>
+</li>
+</ul>
+</div>
+<div id="ch3-lifecycle-overview" class="imageblock kroki">
+<div class="content">
+<img src="images/ch3-lifecycle-overview-e513eea4c7883070eb5d1ab78026fd4fcba22f6555d64a6507e0859feb93faf1.png" alt="Lifecycle overview">
+</div>
+<div class="title">Figure 10. Lifecycle overview</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_error_handling_ack_nack">3.6. Error Handling (<code>ack</code>, <code>nack</code>)</h3>
+<div class="paragraph">
+<p>OmniQueue enforces explicit acknowledgement semantics for all consumed messages.
+This makes error handling <strong>predictable</strong> and <strong>adapter-agnostic</strong>, regardless of broker type.</p>
+</div>
+<div class="sect3">
+<h4 id="_acknowledgement_ack">3.6.1. Acknowledgement (<code>ack()</code>)</h4>
+<div class="paragraph">
+<p>Calling <code>ack()</code> tells the broker:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The message has been processed successfully.</p>
+</li>
+<li>
+<p>It can be removed from the queue or marked as complete in the log.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span> <span class="k">async </span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nf">processOrder</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+    <span class="k">await</span> <span class="nx">msg</span><span class="p">.</span><span class="nf">ack</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Processing failed</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+    <span class="k">await</span> <span class="nx">msg</span><span class="p">.</span><span class="nf">nack</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span> <span class="c1">// retry</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="dl">'</span><span class="s1">order-service</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Always <code>ack()</code> <strong>after</strong> completing the business logic, not before.
+Acknowledging too early risks losing messages if the process crashes mid-task.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_negative_acknowledgement_nackrequeue_boolean">3.6.2. Negative acknowledgement (<code>nack(requeue?: boolean)</code>)</h4>
+<div class="paragraph">
+<p>Calling <code>nack()</code> signals:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The message <strong>could not</strong> be processed.</p>
+</li>
+<li>
+<p>The broker may requeue the message for retry (if <code>requeue</code> is <code>true</code>) or discard/send to DLQ (if <code>false</code>).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Usage patterns:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>nack(true)</code> → retry later (transient failure).</p>
+</li>
+<li>
+<p><code>nack(false)</code> → drop or route to DLQ (poison message).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_idempotency_for_at_least_once_delivery">3.6.3. Idempotency for at-least-once delivery</h4>
+<div class="paragraph">
+<p>Since most brokers operate with <strong>at-least-once</strong> guarantees, your consumer logic must be <strong>idempotent</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ensure repeating the same message does not cause incorrect results.</p>
+</li>
+<li>
+<p>Common strategies:</p>
+</li>
+<li>
+<p>Use a <strong>message ID store</strong> (database, Redis) to track processed IDs.</p>
+</li>
+<li>
+<p>Apply <strong>upserts</strong> instead of inserts.</p>
+</li>
+<li>
+<p>Wrap business logic in transactional boundaries.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_retry_dlq_patterns">3.6.4. Retry &amp; DLQ patterns</h4>
+<div class="paragraph">
+<p><strong>Retry loop:</strong>
+Many brokers allow message redelivery after a delay, often via dead-lettering with a TTL and re-queue policy.</p>
+</div>
+<div class="paragraph">
+<p><strong>DLQ (Dead Letter Queue):</strong>
+Capture messages that consistently fail to process.
+This enables:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Debugging message payloads.</p>
+</li>
+<li>
+<p>Backfilling after code fixes.</p>
+</li>
+<li>
+<p>Alerting when thresholds are reached.</p>
+</li>
+</ul>
+</div>
+<div id="ch3-ack-nack-lifecycle" class="imageblock kroki">
+<div class="content">
+<img src="images/ch3-ack-nack-lifecycle-5fabd8852cabec2173ea56cddb5ca619a0487942972990afcc5dedcbb11b4faa.png" alt="ack/nack lifecycle">
+</div>
+<div class="title">Figure 11. ack/nack lifecycle</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_omniqueue_adapter_mapping">3.6.5. OmniQueue adapter mapping</h4>
+<div class="paragraph">
+<p>Different brokers use different APIs, but OmniQueue normalizes them:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>RabbitMQ</strong> → <code>channel.ack()</code> / <code>channel.nack()</code></p>
+</li>
+<li>
+<p><strong>Kafka</strong> → commit offset / seek &amp; reprocess</p>
+</li>
+<li>
+<p><strong>NATS JetStream</strong> → <code>msg.ack()</code> / <code>msg.nak({ delay })</code></p>
+</li>
+<li>
+<p><strong>ZeroMQ</strong> → application-level ack handling</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You <strong>always</strong> use <code>msg.ack()</code> and <code>msg.nack()</code> in OmniQueue, regardless of broker.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+When integrating with multiple brokers, always assume <strong>at-least-once</strong> and make consumers idempotent.
+This ensures consistent behavior even if you switch adapters.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_omniqueue_core_flow_diagram">3.7. OmniQueue Core Flow Diagram</h3>
+<div class="paragraph">
+<p>The OmniQueue core flow represents the <strong>end-to-end lifecycle</strong> of a message — from creation to final acknowledgement — in a <strong>broker-agnostic</strong> manner.
+This view is essential for both developers and operators to understand how OmniQueue mediates between application code and underlying messaging infrastructure.</p>
+</div>
+<div id="ch3-core-flow-overview" class="imageblock kroki">
+<div class="content">
+<img src="images/ch3-core-flow-overview-b23c6d70b15c3aff6fcd45cd83d6ca9dfc434125e1b86cb01e9b533c48bd6539.png" alt="Core Flow Overview">
+</div>
+<div class="title">Figure 12. Core Flow Overview</div>
+</div>
+<div class="sect3">
+<h4 id="_how_to_read_this_diagram">3.7.1. How to Read This Diagram</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Application Layer</strong> — Your service’s producer and consumer code.</p>
+</li>
+<li>
+<p><strong>OmniQueue Core</strong> — The broker-agnostic interface (<code>publish</code>, <code>subscribe</code>) and internal adapter interface.</p>
+</li>
+<li>
+<p><strong>Broker Adapter</strong> — Provider-specific implementation (RabbitMQ, Kafka, NATS, etc.).</p>
+</li>
+<li>
+<p><strong>Broker</strong> — The actual messaging infrastructure.</p>
+</li>
+<li>
+<p><strong>Destination</strong> — The queue, topic, or stream created or ensured.</p>
+</li>
+<li>
+<p><strong>Consumer Group Assignment</strong> — The broker’s work-sharing or partition assignment process.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_flow_breakdown">3.7.2. Flow Breakdown</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Producer Code</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Calls <code>publish()</code> (topic-based API) or <code>send()</code> (if adapter supports queue semantics) with a <code>BrokerMessage</code> payload.</p>
+</li>
+<li>
+<p>Can set <code>ensure</code> and <code>createOptions</code> for destination management.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>OmniQueue API</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Validates parameters.</p>
+</li>
+<li>
+<p>Wraps the payload in OmniQueue’s standard format.</p>
+</li>
+<li>
+<p>Passes request to the registered adapter via the adapter interface.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Broker Adapter</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Maps OmniQueue’s API calls to the broker’s native client library calls.</p>
+</li>
+<li>
+<p>Ensures destination exists if <code>ensure</code> is <code>true</code>.</p>
+</li>
+<li>
+<p>Serialises the message body and headers into broker-specific format.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Destination Creation/Lookup</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Broker creates or verifies the target queue/topic/stream.</p>
+</li>
+<li>
+<p>Applies <code>createOptions</code> (e.g., partitions, durability, replication).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Delivery to Consumer Group</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Broker assigns messages to a consumer in the target group.</p>
+</li>
+<li>
+<p>In <strong>point-to-point</strong>, exactly one consumer in the group processes each message.</p>
+</li>
+<li>
+<p>In <strong>fanout</strong>, all groups subscribed receive the message.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Handler Execution</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Message arrives at the subscriber’s handler.</p>
+</li>
+<li>
+<p>Handler processes and calls <code>ack()</code> (success) or <code>nack()</code> (failure).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Ack/Nack Propagation</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ack()</code> removes or commits the message in the broker.</p>
+</li>
+<li>
+<p><code>nack()</code> either discards or requeues the message (depending on <code>requeue</code>).</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_operational_notes">3.7.3. Operational Notes</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Backpressure Management</strong> — Most adapters expose prefetch or flow control to prevent overwhelming consumers.</p>
+</li>
+<li>
+<p><strong>Tracing</strong> — Add correlation IDs in <code>headers</code> for distributed tracing.</p>
+</li>
+<li>
+<p><strong>Error Containment</strong> — Use dead-letter queues to capture repeatedly failed messages.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Understanding this flow helps in debugging end-to-end issues, such as “messages not being delivered” or “duplicates appearing” — often the cause lies at a specific hand-off in this chain.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-08 08:50:46 UTC
+Last updated 2025-08-08 09:51:43 UTC
 </div>
 </div>
 </body>
