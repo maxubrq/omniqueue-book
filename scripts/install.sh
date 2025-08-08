@@ -37,14 +37,14 @@ sudo gem install asciidoctor-epub3
 echo "==> Installing Asciidoctor Diagram (optional)..."
 sudo gem install asciidoctor-diagram
 
+echo "==> Installing Mermaid CLI (optional)..."
+sudo npm install -g @mermaid-js/mermaid-cli
+
 echo "==> Installing Puperteer (optional)..."
 sudo npm -g install puppeteer
 
 echo "==> Installing Chrome (optional)..."
 sudo npx puppeteer browsers install
-
-echo "==> Installing Mermaid CLI (optional)..."
-sudo npm install -g @mermaid-js/mermaid-cli
 
 echo "==> Setup complete!"
 echo
