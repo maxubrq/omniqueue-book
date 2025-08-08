@@ -3047,15 +3047,19 @@ Each <strong>consumer group</strong> subscribed to that topic receives a copy of
 <div class="listingblock">
 <div class="content">
 <pre>Failed to generate image: mmdc failed:
-Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
- 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
- 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
-For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
-    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
-    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
-    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
-    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
-    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
+Error: Failed to launch the browser process!
+[0808/072326.704716:FATAL:zygote_host_impl_linux.cc(128)] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
+
+
+TROUBLESHOOTING: https://pptr.dev/troubleshooting
+
+    at Interface.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
+    at Interface.emit (node:events:530:35)
+    at Interface.close (node:internal/readline/interface:534:10)
+    at Socket.onend (node:internal/readline/interface:260:10)
+    at Socket.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
 
 
 flowchart LR
@@ -3387,15 +3391,19 @@ Consumers track their own <strong>offset</strong> (position) and can replay olde
 <div class="listingblock">
 <div class="content">
 <pre>Failed to generate image: mmdc failed:
-Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
- 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
- 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
-For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
-    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
-    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
-    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
-    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
-    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
+Error: Failed to launch the browser process!
+[0808/072327.167056:FATAL:zygote_host_impl_linux.cc(128)] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
+
+
+TROUBLESHOOTING: https://pptr.dev/troubleshooting
+
+    at Interface.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
+    at Interface.emit (node:events:530:35)
+    at Interface.close (node:internal/readline/interface:534:10)
+    at Socket.onend (node:internal/readline/interface:260:10)
+    at Socket.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
 
 
 flowchart LR
@@ -3526,15 +3534,19 @@ Typically, these use <strong>peer-to-peer sockets</strong> or multicast protocol
 <div class="listingblock">
 <div class="content">
 <pre>Failed to generate image: mmdc failed:
-Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
- 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
- 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
-For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
-    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
-    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
-    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
-    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
-    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
+Error: Failed to launch the browser process!
+[0808/072327.606843:FATAL:zygote_host_impl_linux.cc(128)] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
+
+
+TROUBLESHOOTING: https://pptr.dev/troubleshooting
+
+    at Interface.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
+    at Interface.emit (node:events:530:35)
+    at Interface.close (node:internal/readline/interface:534:10)
+    at Socket.onend (node:internal/readline/interface:260:10)
+    at Socket.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
 
 
 flowchart TB
@@ -3785,15 +3797,19 @@ However:</p>
 <div class="listingblock">
 <div class="content">
 <pre>Failed to generate image: mmdc failed:
-Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
- 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
- 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
-For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
-    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
-    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
-    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
-    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
-    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
+Error: Failed to launch the browser process!
+[0808/072328.056745:FATAL:zygote_host_impl_linux.cc(128)] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
+
+
+TROUBLESHOOTING: https://pptr.dev/troubleshooting
+
+    at Interface.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
+    at Interface.emit (node:events:530:35)
+    at Interface.close (node:internal/readline/interface:534:10)
+    at Socket.onend (node:internal/readline/interface:260:10)
+    at Socket.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
 
 
 sequenceDiagram
@@ -3937,15 +3953,19 @@ This requires <strong>persistent storage</strong> at the broker level.</p>
 <div class="listingblock">
 <div class="content">
 <pre>Failed to generate image: mmdc failed:
-Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
- 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
- 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
-For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
-    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
-    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
-    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
-    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
-    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
+Error: Failed to launch the browser process!
+[0808/072328.520229:FATAL:zygote_host_impl_linux.cc(128)] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
+
+
+TROUBLESHOOTING: https://pptr.dev/troubleshooting
+
+    at Interface.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
+    at Interface.emit (node:events:530:35)
+    at Interface.close (node:internal/readline/interface:534:10)
+    at Socket.onend (node:internal/readline/interface:260:10)
+    at Socket.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
 
 
 flowchart LR
@@ -4037,15 +4057,19 @@ This makes semantics explicit and avoids accidental fanout to unintended consume
 <div class="listingblock">
 <div class="content">
 <pre>Failed to generate image: mmdc failed:
-Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
- 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
- 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
-For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
-    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
-    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
-    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
-    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
-    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
+Error: Failed to launch the browser process!
+[0808/072328.956578:FATAL:zygote_host_impl_linux.cc(128)] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
+
+
+TROUBLESHOOTING: https://pptr.dev/troubleshooting
+
+    at Interface.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
+    at Interface.emit (node:events:530:35)
+    at Interface.close (node:internal/readline/interface:534:10)
+    at Socket.onend (node:internal/readline/interface:260:10)
+    at Socket.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
 
 
 flowchart LR
@@ -4199,15 +4223,19 @@ Broker pushes messages but limits in-flight count per consumer.</p>
 <div class="listingblock">
 <div class="content">
 <pre>Failed to generate image: mmdc failed:
-Error: Could not find Chrome (ver. 131.0.6778.204). This can occur if either
- 1. you did not perform an installation before running the script (e.g. `npx puppeteer browsers install chrome-headless-shell`) or
- 2. your cache path is incorrectly configured (which is: /home/runner/work/omniqueue-book/omniqueue-book/en/.cache/puppeteer).
-For (2), check out our guide on configuring puppeteer at https://pptr.dev/guides/configuration.
-    at ChromeLauncher.resolveExecutablePath (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:266:27)
-    at ChromeLauncher.computeLaunchArguments (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/ChromeLauncher.js:85:24)
-    at async ChromeLauncher.launch (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer-core/lib/esm/puppeteer/node/BrowserLauncher.js:45:28)
-    at async run (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:529:17)
-    at async cli (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/src/index.js:213:3)
+Error: Failed to launch the browser process!
+[0808/072329.394742:FATAL:zygote_host_impl_linux.cc(128)] No usable sandbox! If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor, see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md. Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox. If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
+
+
+TROUBLESHOOTING: https://pptr.dev/troubleshooting
+
+    at Interface.onClose (file:///home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/@puppeteer/browsers/lib/esm/launch.js:303:24)
+    at Interface.emit (node:events:530:35)
+    at Interface.close (node:internal/readline/interface:534:10)
+    at Socket.onend (node:internal/readline/interface:260:10)
+    at Socket.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
 
 
 flowchart TB
@@ -4278,7 +4306,7 @@ end</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-08 07:15:59 UTC
+Last updated 2025-08-08 07:22:27 UTC
 </div>
 </div>
 </body>
