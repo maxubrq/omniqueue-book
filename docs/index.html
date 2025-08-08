@@ -2815,96 +2815,100 @@ pre.rouge .gs {
 <li><a href="#_a_simple_example">1.5. A Simple Example</a></li>
 <li><a href="#_who_uses_omniqueue">1.6. Who Uses OmniQueue?</a></li>
 <li><a href="#_what_this_chapter_sets_up">1.7. What This Chapter Sets Up</a></li>
-<li><a href="#_messages_queues_topics_streams">1.8. Messages, Queues, Topics, Streams</a>
-<ul class="sectlevel3">
-<li><a href="#_the_message_structure">1.8.1. The Message Structure</a></li>
-<li><a href="#_queues">1.8.2. Queues</a></li>
-<li><a href="#_topics">1.8.3. Topics</a></li>
-<li><a href="#_streams">1.8.4. Streams</a></li>
-<li><a href="#_comparing_destinations">1.8.5. Comparing Destinations</a></li>
 </ul>
 </li>
-<li><a href="#_brokers_vs_brokerless">1.9. Brokers vs. Brokerless</a>
-<ul class="sectlevel3">
-<li><a href="#_what_is_a_broker">1.9.1. What is a Broker?</a></li>
-<li><a href="#_brokerless_messaging">1.9.2. Brokerless Messaging</a></li>
-<li><a href="#_visual_comparison">1.9.3. Visual Comparison</a></li>
-</ul>
-</li>
-<li><a href="#_delivery_semantics">1.10. Delivery Semantics</a>
-<ul class="sectlevel3">
-<li><a href="#_at_most_once">1.10.1. At-most-once</a></li>
-<li><a href="#_at_least_once">1.10.2. At-least-once</a></li>
-<li><a href="#_exactly_once">1.10.3. Exactly-once</a></li>
-<li><a href="#_omniqueue_perspective">1.10.4. OmniQueue Perspective</a></li>
-</ul>
-</li>
-<li><a href="#_reliability_durability">1.11. Reliability &amp; Durability</a>
-<ul class="sectlevel3">
-<li><a href="#_reliability">1.11.1. Reliability</a></li>
-<li><a href="#_durability">1.11.2. Durability</a></li>
-<li><a href="#_durability_in_omniqueue_context">1.11.3. Durability in OmniQueue Context</a></li>
-</ul>
-</li>
-<li><a href="#_load_balancing_consumer_groups">1.12. Load Balancing &amp; Consumer Groups</a>
-<ul class="sectlevel3">
-<li><a href="#_consumer_groups">1.12.1. Consumer Groups</a></li>
-<li><a href="#_consumer_group_dynamics">1.12.2. Consumer Group Dynamics</a></li>
-<li><a href="#_load_balancing_patterns">1.12.3. Load Balancing Patterns</a></li>
-</ul>
-</li>
-<li><a href="#_pubsub_fanout_vs_point_to_point">1.13. Pub/Sub (Fanout) vs. Point-to-Point</a>
-<ul class="sectlevel3">
-<li><a href="#_point_to_point_p2p">1.13.1. Point-to-Point (P2P)</a></li>
-<li><a href="#_publishsubscribe_fanout">1.13.2. Publish/Subscribe (Fanout)</a></li>
-<li><a href="#_omniqueues_approach">1.13.3. OmniQueue’s Approach</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#_omniqueue_architecture_core_api">2. OmniQueue Architecture &amp; Core API</a>
+<li><a href="#_core_messaging_concepts">2. Core Messaging Concepts</a>
 <ul class="sectlevel2">
-<li><a href="#_overview_design_principles">2.1. Overview &amp; Design Principles</a></li>
-<li><a href="#_core_api_publish_and_subscribe">2.2. Core API: publish and subscribe</a>
+<li><a href="#_messages_queues_topics_streams">2.1. Messages, Queues, Topics, Streams</a>
 <ul class="sectlevel3">
-<li><a href="#_publish">2.2.1. publish()</a></li>
-<li><a href="#_subscribe">2.2.2. subscribe()</a></li>
+<li><a href="#_the_message_structure">2.1.1. The Message Structure</a></li>
+<li><a href="#_queues">2.1.2. Queues</a></li>
+<li><a href="#_topics">2.1.3. Topics</a></li>
+<li><a href="#_streams">2.1.4. Streams</a></li>
+<li><a href="#_comparing_destinations">2.1.5. Comparing Destinations</a></li>
 </ul>
 </li>
-<li><a href="#_message_structure_brokermessage">2.3. Message Structure: <code>BrokerMessage</code></a>
+<li><a href="#_brokers_vs_brokerless">2.2. Brokers vs. Brokerless</a>
 <ul class="sectlevel3">
-<li><a href="#_best_practices">2.3.1. Best Practices</a></li>
+<li><a href="#_what_is_a_broker">2.2.1. What is a Broker?</a></li>
+<li><a href="#_brokerless_messaging">2.2.2. Brokerless Messaging</a></li>
+<li><a href="#_visual_comparison">2.2.3. Visual Comparison</a></li>
 </ul>
 </li>
-<li><a href="#_groups_and_work_sharing_semantics">2.4. Groups and Work-sharing Semantics</a>
+<li><a href="#_delivery_semantics">2.3. Delivery Semantics</a>
 <ul class="sectlevel3">
-<li><a href="#_why_groupid_is_mandatory">2.4.1. Why <code>groupId</code> is mandatory</a></li>
-<li><a href="#_work_sharing_model">2.4.2. Work-sharing model</a></li>
-<li><a href="#_patterns_enabled_by_groupid">2.4.3. Patterns enabled by <code>groupId</code></a></li>
-<li><a href="#_operational_considerations">2.4.4. Operational considerations</a></li>
+<li><a href="#_at_most_once">2.3.1. At-most-once</a></li>
+<li><a href="#_at_least_once">2.3.2. At-least-once</a></li>
+<li><a href="#_exactly_once">2.3.3. Exactly-once</a></li>
+<li><a href="#_omniqueue_perspective">2.3.4. OmniQueue Perspective</a></li>
 </ul>
 </li>
-<li><a href="#_lifecycle_management_init_close">2.5. Lifecycle Management (<code>init</code>, <code>close</code>)</a>
+<li><a href="#_reliability_durability">2.4. Reliability &amp; Durability</a>
 <ul class="sectlevel3">
-<li><a href="#_initialization_init">2.5.1. Initialization (<code>init()</code>)</a></li>
-<li><a href="#_graceful_shutdown_close">2.5.2. Graceful shutdown (<code>close()</code>)</a></li>
-<li><a href="#_common_pitfalls">2.5.3. Common pitfalls</a></li>
+<li><a href="#_reliability">2.4.1. Reliability</a></li>
+<li><a href="#_durability">2.4.2. Durability</a></li>
+<li><a href="#_durability_in_omniqueue_context">2.4.3. Durability in OmniQueue Context</a></li>
 </ul>
 </li>
-<li><a href="#_error_handling_ack_nack">2.6. Error Handling (<code>ack</code>, <code>nack</code>)</a>
+<li><a href="#_load_balancing_consumer_groups">2.5. Load Balancing &amp; Consumer Groups</a>
 <ul class="sectlevel3">
-<li><a href="#_acknowledgement_ack">2.6.1. Acknowledgement (<code>ack()</code>)</a></li>
-<li><a href="#_negative_acknowledgement_nackrequeue_boolean">2.6.2. Negative acknowledgement (<code>nack(requeue?: boolean)</code>)</a></li>
-<li><a href="#_idempotency_for_at_least_once_delivery">2.6.3. Idempotency for at-least-once delivery</a></li>
-<li><a href="#_retry_dlq_patterns">2.6.4. Retry &amp; DLQ patterns</a></li>
-<li><a href="#_omniqueue_adapter_mapping">2.6.5. OmniQueue adapter mapping</a></li>
+<li><a href="#_consumer_groups">2.5.1. Consumer Groups</a></li>
+<li><a href="#_consumer_group_dynamics">2.5.2. Consumer Group Dynamics</a></li>
+<li><a href="#_load_balancing_patterns">2.5.3. Load Balancing Patterns</a></li>
 </ul>
 </li>
-<li><a href="#_omniqueue_core_flow_diagram">2.7. OmniQueue Core Flow Diagram</a>
+<li><a href="#_pubsub_fanout_vs_point_to_point">2.6. Pub/Sub (Fanout) vs. Point-to-Point</a>
 <ul class="sectlevel3">
-<li><a href="#_how_to_read_this_diagram">2.7.1. How to Read This Diagram</a></li>
-<li><a href="#_flow_breakdown">2.7.2. Flow Breakdown</a></li>
-<li><a href="#_operational_notes">2.7.3. Operational Notes</a></li>
+<li><a href="#_point_to_point_p2p">2.6.1. Point-to-Point (P2P)</a></li>
+<li><a href="#_publishsubscribe_fanout">2.6.2. Publish/Subscribe (Fanout)</a></li>
+<li><a href="#_omniqueues_approach">2.6.3. OmniQueue’s Approach</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_omniqueue_architecture_core_api">3. OmniQueue Architecture &amp; Core API</a>
+<ul class="sectlevel2">
+<li><a href="#_overview_design_principles">3.1. Overview &amp; Design Principles</a></li>
+<li><a href="#_core_api_publish_and_subscribe">3.2. Core API: publish and subscribe</a>
+<ul class="sectlevel3">
+<li><a href="#_publish">3.2.1. publish()</a></li>
+<li><a href="#_subscribe">3.2.2. subscribe()</a></li>
+</ul>
+</li>
+<li><a href="#_message_structure_brokermessage">3.3. Message Structure: <code>BrokerMessage</code></a>
+<ul class="sectlevel3">
+<li><a href="#_best_practices">3.3.1. Best Practices</a></li>
+</ul>
+</li>
+<li><a href="#_groups_and_work_sharing_semantics">3.4. Groups and Work-sharing Semantics</a>
+<ul class="sectlevel3">
+<li><a href="#_why_groupid_is_mandatory">3.4.1. Why <code>groupId</code> is mandatory</a></li>
+<li><a href="#_work_sharing_model">3.4.2. Work-sharing model</a></li>
+<li><a href="#_patterns_enabled_by_groupid">3.4.3. Patterns enabled by <code>groupId</code></a></li>
+<li><a href="#_operational_considerations">3.4.4. Operational considerations</a></li>
+</ul>
+</li>
+<li><a href="#_lifecycle_management_init_close">3.5. Lifecycle Management (<code>init</code>, <code>close</code>)</a>
+<ul class="sectlevel3">
+<li><a href="#_initialization_init">3.5.1. Initialization (<code>init()</code>)</a></li>
+<li><a href="#_graceful_shutdown_close">3.5.2. Graceful shutdown (<code>close()</code>)</a></li>
+<li><a href="#_common_pitfalls">3.5.3. Common pitfalls</a></li>
+</ul>
+</li>
+<li><a href="#_error_handling_ack_nack">3.6. Error Handling (<code>ack</code>, <code>nack</code>)</a>
+<ul class="sectlevel3">
+<li><a href="#_acknowledgement_ack">3.6.1. Acknowledgement (<code>ack()</code>)</a></li>
+<li><a href="#_negative_acknowledgement_nackrequeue_boolean">3.6.2. Negative acknowledgement (<code>nack(requeue?: boolean)</code>)</a></li>
+<li><a href="#_idempotency_for_at_least_once_delivery">3.6.3. Idempotency for at-least-once delivery</a></li>
+<li><a href="#_retry_dlq_patterns">3.6.4. Retry &amp; DLQ patterns</a></li>
+<li><a href="#_omniqueue_adapter_mapping">3.6.5. OmniQueue adapter mapping</a></li>
+</ul>
+</li>
+<li><a href="#_omniqueue_core_flow_diagram">3.7. OmniQueue Core Flow Diagram</a>
+<ul class="sectlevel3">
+<li><a href="#_how_to_read_this_diagram">3.7.1. How to Read This Diagram</a></li>
+<li><a href="#_flow_breakdown">3.7.2. Flow Breakdown</a></li>
+<li><a href="#_operational_notes">3.7.3. Operational Notes</a></li>
 </ul>
 </li>
 </ul>
@@ -2945,6 +2949,7 @@ Each broker — RabbitMQ, Kafka, NATS, ActiveMQ, SQS, and so on — comes with i
 <div class="paragraph">
 <p>It’s <strong>both</strong> a deep dive into the theory and practice of messaging systems <strong>and</strong> the definitive guide to OmniQueue — a TypeScript-based, broker-agnostic messaging API.</p>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_who_this_book_is_for">Who This Book Is For</h3>
@@ -3020,6 +3025,7 @@ Each broker — RabbitMQ, Kafka, NATS, ActiveMQ, SQS, and so on — comes with i
 <div class="paragraph">
 <p>Throughout the book, we’ll balance <strong>conceptual clarity</strong> with <strong>practical hands-on examples</strong>.</p>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_why_omniqueue">Why OmniQueue?</h3>
@@ -3086,6 +3092,7 @@ technical, clear, and actionable — with just enough narrative to keep you awak
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_how_this_book_is_organized">How This Book Is Organized</h3>
@@ -3205,6 +3212,7 @@ You’ll find them in both broker chapters and advanced sections.</p>
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_part_by_part_guide">Part-by-Part Guide</h3>
@@ -3271,6 +3279,7 @@ For example:</p>
 <div class="paragraph">
 <p>Whenever we compare OmniQueue to a native broker API, we show them side-by-side for clarity.</p>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_diagrams_and_visuals">Diagrams and Visuals</h3>
@@ -3323,6 +3332,7 @@ We strongly encourage following them, especially when exploring advanced topics 
 <div class="paragraph">
 <p>You don’t need to install every broker at once — we’ll give setup instructions per chapter.</p>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_our_advice">Our Advice</h3>
@@ -3385,6 +3395,7 @@ This makes them a cornerstone of:</p>
 <div class="paragraph">
 <p>Modern architectures like <strong>microservices</strong>, <strong>event-driven systems</strong>, and <strong>CQRS/ES</strong> (Command Query Responsibility Segregation / Event Sourcing) rely heavily on messaging.</p>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_brokered_vs_brokerless_messaging">1.2. Brokered vs. Brokerless Messaging</h3>
@@ -3489,6 +3500,7 @@ Each <strong>consumer group</strong> subscribed to that topic receives a copy of
 <div class="paragraph">
 <p>With OmniQueue, your code can switch between brokers with minimal changes, while still leveraging advanced features through <strong>broker adapters</strong>.</p>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_a_simple_example">1.5. A Simple Example</h3>
@@ -3580,18 +3592,22 @@ Each <strong>consumer group</strong> subscribed to that topic receives a copy of
 </div>
 <div class="paragraph">
 <p>The goal of this introduction is simple:
-Give you the “why” and the “what” before we explore the “how” and “when”.
-== Core Messaging Concepts</p>
+Give you the “why” and the “what” before we explore the “how” and “when”.</p>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_core_messaging_concepts">2. Core Messaging Concepts</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="_messages_queues_topics_streams">1.8. Messages, Queues, Topics, Streams</h3>
+<h3 id="_messages_queues_topics_streams">2.1. Messages, Queues, Topics, Streams</h3>
 <div class="paragraph">
 <p>At the heart of any messaging system is the <strong>message</strong>:
 a discrete unit of data that moves from producer to consumer.</p>
 </div>
 <div class="sect3">
-<h4 id="_the_message_structure">1.8.1. The Message Structure</h4>
+<h4 id="_the_message_structure">2.1.1. The Message Structure</h4>
 <div class="paragraph">
 <p>While brokers differ in terminology and features, most messages contain:</p>
 </div>
@@ -3637,9 +3653,10 @@ In OmniQueue, <code>body</code> is always JSON-serialisable to ensure adapter co
 </tr>
 </table>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect3">
-<h4 id="_queues">1.8.2. Queues</h4>
+<h4 id="_queues">2.1.2. Queues</h4>
 <div class="paragraph">
 <p>A <strong>queue</strong> is a named, ordered collection of messages that delivers each message to exactly one consumer within a given group.
 When a message is acknowledged (<code>ack()</code>), it is removed from the queue (or marked processed).</p>
@@ -3678,7 +3695,7 @@ When a message is acknowledged (<code>ack()</code>), it is removed from the queu
 </div>
 </div>
 <div class="sect3">
-<h4 id="_topics">1.8.3. Topics</h4>
+<h4 id="_topics">2.1.3. Topics</h4>
 <div class="paragraph">
 <p>A <strong>topic</strong> is a named channel to which producers publish and consumers subscribe.</p>
 </div>
@@ -3714,9 +3731,10 @@ When a message is acknowledged (<code>ack()</code>), it is removed from the queu
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect3">
-<h4 id="_streams">1.8.4. Streams</h4>
+<h4 id="_streams">2.1.4. Streams</h4>
 <div class="paragraph">
 <p>A <strong>stream</strong> is an append-only, immutable sequence of messages stored in durable storage.
 Consumers track their own <strong>offset</strong> (position) and can replay older messages at will.</p>
@@ -3755,7 +3773,7 @@ Consumers track their own <strong>offset</strong> (position) and can replay olde
 </div>
 </div>
 <div class="sect3">
-<h4 id="_comparing_destinations">1.8.5. Comparing Destinations</h4>
+<h4 id="_comparing_destinations">2.1.5. Comparing Destinations</h4>
 <table id="table-queue-vs-topic-vs-stream" class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 3. Queue Vs Topic Vs Stream</caption>
 <colgroup>
@@ -3802,9 +3820,9 @@ Consumers track their own <strong>offset</strong> (position) and can replay olde
 </div>
 </div>
 <div class="sect2">
-<h3 id="_brokers_vs_brokerless">1.9. Brokers vs. Brokerless</h3>
+<h3 id="_brokers_vs_brokerless">2.2. Brokers vs. Brokerless</h3>
 <div class="sect3">
-<h4 id="_what_is_a_broker">1.9.1. What is a Broker?</h4>
+<h4 id="_what_is_a_broker">2.2.1. What is a Broker?</h4>
 <div class="paragraph">
 <p>A <strong>broker</strong> is a dedicated server (or cluster) that:</p>
 </div>
@@ -3864,7 +3882,7 @@ Consumers track their own <strong>offset</strong> (position) and can replay olde
 </div>
 </div>
 <div class="sect3">
-<h4 id="_brokerless_messaging">1.9.2. Brokerless Messaging</h4>
+<h4 id="_brokerless_messaging">2.2.2. Brokerless Messaging</h4>
 <div class="paragraph">
 <p>In <strong>brokerless</strong> systems, producers send messages directly to consumers without an intermediary server.
 Typically, these use <strong>peer-to-peer sockets</strong> or multicast protocols.</p>
@@ -3888,6 +3906,7 @@ Typically, these use <strong>peer-to-peer sockets</strong> or multicast protocol
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="paragraph">
 <p><strong>Challenges:</strong></p>
 </div>
@@ -3906,7 +3925,7 @@ Typically, these use <strong>peer-to-peer sockets</strong> or multicast protocol
 </div>
 </div>
 <div class="sect3">
-<h4 id="_visual_comparison">1.9.3. Visual Comparison</h4>
+<h4 id="_visual_comparison">2.2.3. Visual Comparison</h4>
 <div id="ch2-broker-vs-brokerless" class="imageblock kroki">
 <div class="content">
 <img src="images/images/ch2-broker-vs-brokerless-a010235679bf318d118d4430e7fc7893e95fff1dbcabea5cdadbd064d15ab92f.png" alt="Brokered Vs Brokerless">
@@ -3929,16 +3948,17 @@ OmniQueue supports <strong>both</strong> worlds. A <code>@omniqueue/zeromq</code
 </tr>
 </table>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_delivery_semantics">1.10. Delivery Semantics</h3>
+<h3 id="_delivery_semantics">2.3. Delivery Semantics</h3>
 <div class="paragraph">
 <p>Delivery semantics define <strong>how many times</strong> a message is delivered to a consumer, and under what guarantees.
 They are a cornerstone of messaging design — the choice affects performance, complexity, and data correctness.</p>
 </div>
 <div class="sect3">
-<h4 id="_at_most_once">1.10.1. At-most-once</h4>
+<h4 id="_at_most_once">2.3.1. At-most-once</h4>
 <div class="paragraph">
 <p><strong>Definition:</strong></p>
 </div>
@@ -3998,9 +4018,10 @@ If the delivery fails, the message is lost — no retries.</p>
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect3">
-<h4 id="_at_least_once">1.10.2. At-least-once</h4>
+<h4 id="_at_least_once">2.3.2. At-least-once</h4>
 <div class="paragraph">
 <p><strong>Definition:</strong></p>
 </div>
@@ -4065,7 +4086,7 @@ Duplicates may occur.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_exactly_once">1.10.3. Exactly-once</h4>
+<h4 id="_exactly_once">2.3.3. Exactly-once</h4>
 <div class="paragraph">
 <p><strong>Definition:</strong></p>
 </div>
@@ -4126,7 +4147,7 @@ Duplicates may occur.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_omniqueue_perspective">1.10.4. OmniQueue Perspective</h4>
+<h4 id="_omniqueue_perspective">2.3.4. OmniQueue Perspective</h4>
 <div class="paragraph">
 <p>OmniQueue does not enforce a delivery semantic by itself — it passes through the broker&#8217;s native behavior.
 However:</p>
@@ -4150,12 +4171,13 @@ However:</p>
 </div>
 <div class="title">Figure 4. Delivery Semantics</div>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_reliability_durability">1.11. Reliability &amp; Durability</h3>
+<h3 id="_reliability_durability">2.4. Reliability &amp; Durability</h3>
 <div class="sect3">
-<h4 id="_reliability">1.11.1. Reliability</h4>
+<h4 id="_reliability">2.4.1. Reliability</h4>
 <div class="paragraph">
 <p>Reliability is the ability of a messaging system to deliver messages as promised, even under faults.
 It depends on:</p>
@@ -4194,7 +4216,7 @@ It depends on:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_durability">1.11.2. Durability</h4>
+<h4 id="_durability">2.4.2. Durability</h4>
 <div class="paragraph">
 <p>Durability ensures messages survive broker or system restarts.
 This requires <strong>persistent storage</strong> at the broker level.</p>
@@ -4230,7 +4252,7 @@ This requires <strong>persistent storage</strong> at the broker level.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_durability_in_omniqueue_context">1.11.3. Durability in OmniQueue Context</h4>
+<h4 id="_durability_in_omniqueue_context">2.4.3. Durability in OmniQueue Context</h4>
 <div class="paragraph">
 <p>OmniQueue’s durability depends entirely on the broker adapter in use:</p>
 </div>
@@ -4286,12 +4308,12 @@ If you don’t configure durability in the broker, OmniQueue can’t “make it 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_load_balancing_consumer_groups">1.12. Load Balancing &amp; Consumer Groups</h3>
+<h3 id="_load_balancing_consumer_groups">2.5. Load Balancing &amp; Consumer Groups</h3>
 <div class="paragraph">
 <p>In messaging systems, <strong>load balancing</strong> is about distributing work evenly among multiple consumers to improve throughput and avoid overloading any single consumer.</p>
 </div>
 <div class="sect3">
-<h4 id="_consumer_groups">1.12.1. Consumer Groups</h4>
+<h4 id="_consumer_groups">2.5.1. Consumer Groups</h4>
 <div class="paragraph">
 <p>A <strong>consumer group</strong> is a named set of consumers that share the work of processing messages from a topic or queue.</p>
 </div>
@@ -4336,7 +4358,7 @@ This makes semantics explicit and avoids accidental fanout to unintended consume
 </div>
 </div>
 <div class="sect3">
-<h4 id="_consumer_group_dynamics">1.12.2. Consumer Group Dynamics</h4>
+<h4 id="_consumer_group_dynamics">2.5.2. Consumer Group Dynamics</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4355,7 +4377,7 @@ This makes semantics explicit and avoids accidental fanout to unintended consume
 </div>
 </div>
 <div class="sect3">
-<h4 id="_load_balancing_patterns">1.12.3. Load Balancing Patterns</h4>
+<h4 id="_load_balancing_patterns">2.5.3. Load Balancing Patterns</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -4391,9 +4413,9 @@ Broker pushes messages but limits in-flight count per consumer.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_pubsub_fanout_vs_point_to_point">1.13. Pub/Sub (Fanout) vs. Point-to-Point</h3>
+<h3 id="_pubsub_fanout_vs_point_to_point">2.6. Pub/Sub (Fanout) vs. Point-to-Point</h3>
 <div class="sect3">
-<h4 id="_point_to_point_p2p">1.13.1. Point-to-Point (P2P)</h4>
+<h4 id="_point_to_point_p2p">2.6.1. Point-to-Point (P2P)</h4>
 <div class="paragraph">
 <p>In <strong>point-to-point</strong> messaging:</p>
 </div>
@@ -4448,7 +4470,7 @@ Broker pushes messages but limits in-flight count per consumer.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_publishsubscribe_fanout">1.13.2. Publish/Subscribe (Fanout)</h4>
+<h4 id="_publishsubscribe_fanout">2.6.2. Publish/Subscribe (Fanout)</h4>
 <div class="paragraph">
 <p>In <strong>publish/subscribe</strong> messaging:</p>
 </div>
@@ -4499,7 +4521,7 @@ Broker pushes messages but limits in-flight count per consumer.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_omniqueues_approach">1.13.3. OmniQueue’s Approach</h4>
+<h4 id="_omniqueues_approach">2.6.3. OmniQueue’s Approach</h4>
 <div class="paragraph">
 <p>OmniQueue <strong>always</strong> uses publish/subscribe semantics at the API level:</p>
 </div>
@@ -4547,10 +4569,10 @@ Broker pushes messages but limits in-flight count per consumer.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_omniqueue_architecture_core_api">2. OmniQueue Architecture &amp; Core API</h2>
+<h2 id="_omniqueue_architecture_core_api">3. OmniQueue Architecture &amp; Core API</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_overview_design_principles">2.1. Overview &amp; Design Principles</h3>
+<h3 id="_overview_design_principles">3.1. Overview &amp; Design Principles</h3>
 <div class="paragraph">
 <p>OmniQueue is a <strong>broker-agnostic messaging abstraction</strong> written in TypeScript.
 Its core purpose is to provide a <strong>single, unified API</strong> for producing and consuming messages across a wide range of messaging technologies — both brokered (e.g., RabbitMQ, Kafka, Pulsar) and brokerless (e.g., ZeroMQ).</p>
@@ -4639,7 +4661,7 @@ This separation means that adding support for a new broker is as simple as writi
 </div>
 </div>
 <div class="sect2">
-<h3 id="_core_api_publish_and_subscribe">2.2. Core API: publish and subscribe</h3>
+<h3 id="_core_api_publish_and_subscribe">3.2. Core API: publish and subscribe</h3>
 <div class="paragraph">
 <p>OmniQueue’s runtime exposes two primary operations for message flow:</p>
 </div>
@@ -4657,7 +4679,7 @@ This separation means that adding support for a new broker is as simple as writi
 <p>This section documents their signatures, parameters, and usage patterns.</p>
 </div>
 <div class="sect3">
-<h4 id="_publish">2.2.1. publish()</h4>
+<h4 id="_publish">3.2.1. publish()</h4>
 <div class="paragraph">
 <p>Sends a message to a given topic. All consumer groups subscribed to that topic will receive a copy.
 Within each group, only one consumer processes the message.</p>
@@ -4723,7 +4745,7 @@ Within each group, only one consumer processes the message.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_subscribe">2.2.2. subscribe()</h4>
+<h4 id="_subscribe">3.2.2. subscribe()</h4>
 <div class="paragraph">
 <p>Listens for messages on a topic as part of a specific consumer group.</p>
 </div>
@@ -4797,7 +4819,7 @@ Use multiple groups to implement <strong>fanout</strong>; use a single group for
 </div>
 </div>
 <div class="sect2">
-<h3 id="_message_structure_brokermessage">2.3. Message Structure: <code>BrokerMessage</code></h3>
+<h3 id="_message_structure_brokermessage">3.3. Message Structure: <code>BrokerMessage</code></h3>
 <div class="paragraph">
 <p>The <code>BrokerMessage</code> interface defines the shape of every message flowing through OmniQueue.
 It represents a single unit of data in transit between producer and consumer.</p>
@@ -4872,7 +4894,7 @@ If <code>false</code>, the message may be routed to a Dead Letter Queue (DLQ) or
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="_best_practices">2.3.1. Best Practices</h4>
+<h4 id="_best_practices">3.3.1. Best Practices</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4917,13 +4939,13 @@ If <code>false</code>, the message may be routed to a Dead Letter Queue (DLQ) or
 </div>
 </div>
 <div class="sect2">
-<h3 id="_groups_and_work_sharing_semantics">2.4. Groups and Work-sharing Semantics</h3>
+<h3 id="_groups_and_work_sharing_semantics">3.4. Groups and Work-sharing Semantics</h3>
 <div class="paragraph">
 <p>In OmniQueue, <strong>every subscription belongs to a group</strong> — this is not optional.
 The <code>groupId</code> parameter in <code>subscribe()</code> is the explicit contract that defines how messages are delivered and balanced among consumers.</p>
 </div>
 <div class="sect3">
-<h4 id="_why_groupid_is_mandatory">2.4.1. Why <code>groupId</code> is mandatory</h4>
+<h4 id="_why_groupid_is_mandatory">3.4.1. Why <code>groupId</code> is mandatory</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4939,7 +4961,7 @@ The <code>groupId</code> parameter in <code>subscribe()</code> is the explicit c
 </div>
 </div>
 <div class="sect3">
-<h4 id="_work_sharing_model">2.4.2. Work-sharing model</h4>
+<h4 id="_work_sharing_model">3.4.2. Work-sharing model</h4>
 <div class="paragraph">
 <p>When a producer publishes a message to a topic:</p>
 </div>
@@ -4965,7 +4987,7 @@ The <code>groupId</code> parameter in <code>subscribe()</code> is the explicit c
 </div>
 </div>
 <div class="sect3">
-<h4 id="_patterns_enabled_by_groupid">2.4.3. Patterns enabled by <code>groupId</code></h4>
+<h4 id="_patterns_enabled_by_groupid">3.4.3. Patterns enabled by <code>groupId</code></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4987,7 +5009,7 @@ Use multiple groups, each representing an independent processing path.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_operational_considerations">2.4.4. Operational considerations</h4>
+<h4 id="_operational_considerations">3.4.4. Operational considerations</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -5019,12 +5041,12 @@ In some brokers, group identifiers are durable — the broker remembers offsets 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lifecycle_management_init_close">2.5. Lifecycle Management (<code>init</code>, <code>close</code>)</h3>
+<h3 id="_lifecycle_management_init_close">3.5. Lifecycle Management (<code>init</code>, <code>close</code>)</h3>
 <div class="paragraph">
 <p>OmniQueue brokers follow a <strong>well-defined lifecycle</strong> to ensure connections are properly established, resources are managed, and workloads are gracefully shut down.</p>
 </div>
 <div class="sect3">
-<h4 id="_initialization_init">2.5.1. Initialization (<code>init()</code>)</h4>
+<h4 id="_initialization_init">3.5.1. Initialization (<code>init()</code>)</h4>
 <div class="paragraph">
 <p>Before you can send or receive messages, you <strong>must</strong> initialize the broker instance.</p>
 </div>
@@ -5074,7 +5096,7 @@ In production, call <code>init()</code> <strong>during service startup</strong> 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_graceful_shutdown_close">2.5.2. Graceful shutdown (<code>close()</code>)</h4>
+<h4 id="_graceful_shutdown_close">3.5.2. Graceful shutdown (<code>close()</code>)</h4>
 <div class="paragraph">
 <p>When your service is terminating, <strong>always close the broker connection</strong>:</p>
 </div>
@@ -5127,7 +5149,7 @@ Pair <code>init()</code> and <code>close()</code> in a lifecycle manager, such a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_common_pitfalls">2.5.3. Common pitfalls</h4>
+<h4 id="_common_pitfalls">3.5.3. Common pitfalls</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -5150,13 +5172,13 @@ Pair <code>init()</code> and <code>close()</code> in a lifecycle manager, such a
 </div>
 </div>
 <div class="sect2">
-<h3 id="_error_handling_ack_nack">2.6. Error Handling (<code>ack</code>, <code>nack</code>)</h3>
+<h3 id="_error_handling_ack_nack">3.6. Error Handling (<code>ack</code>, <code>nack</code>)</h3>
 <div class="paragraph">
 <p>OmniQueue enforces explicit acknowledgement semantics for all consumed messages.
 This makes error handling <strong>predictable</strong> and <strong>adapter-agnostic</strong>, regardless of broker type.</p>
 </div>
 <div class="sect3">
-<h4 id="_acknowledgement_ack">2.6.1. Acknowledgement (<code>ack()</code>)</h4>
+<h4 id="_acknowledgement_ack">3.6.1. Acknowledgement (<code>ack()</code>)</h4>
 <div class="paragraph">
 <p>Calling <code>ack()</code> tells the broker:</p>
 </div>
@@ -5198,7 +5220,7 @@ Acknowledging too early risks losing messages if the process crashes mid-task.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_negative_acknowledgement_nackrequeue_boolean">2.6.2. Negative acknowledgement (<code>nack(requeue?: boolean)</code>)</h4>
+<h4 id="_negative_acknowledgement_nackrequeue_boolean">3.6.2. Negative acknowledgement (<code>nack(requeue?: boolean)</code>)</h4>
 <div class="paragraph">
 <p>Calling <code>nack()</code> signals:</p>
 </div>
@@ -5227,7 +5249,7 @@ Acknowledging too early risks losing messages if the process crashes mid-task.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_idempotency_for_at_least_once_delivery">2.6.3. Idempotency for at-least-once delivery</h4>
+<h4 id="_idempotency_for_at_least_once_delivery">3.6.3. Idempotency for at-least-once delivery</h4>
 <div class="paragraph">
 <p>Since most brokers operate with <strong>at-least-once</strong> guarantees, your consumer logic must be <strong>idempotent</strong>:</p>
 </div>
@@ -5252,7 +5274,7 @@ Acknowledging too early risks losing messages if the process crashes mid-task.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_retry_dlq_patterns">2.6.4. Retry &amp; DLQ patterns</h4>
+<h4 id="_retry_dlq_patterns">3.6.4. Retry &amp; DLQ patterns</h4>
 <div class="paragraph">
 <p><strong>Retry loop:</strong>
 Many brokers allow message redelivery after a delay, often via dead-lettering with a TTL and re-queue policy.</p>
@@ -5283,7 +5305,7 @@ This enables:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_omniqueue_adapter_mapping">2.6.5. OmniQueue adapter mapping</h4>
+<h4 id="_omniqueue_adapter_mapping">3.6.5. OmniQueue adapter mapping</h4>
 <div class="paragraph">
 <p>Different brokers use different APIs, but OmniQueue normalizes them:</p>
 </div>
@@ -5322,7 +5344,7 @@ This ensures consistent behavior even if you switch adapters.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_omniqueue_core_flow_diagram">2.7. OmniQueue Core Flow Diagram</h3>
+<h3 id="_omniqueue_core_flow_diagram">3.7. OmniQueue Core Flow Diagram</h3>
 <div class="paragraph">
 <p>The OmniQueue core flow represents the <strong>end-to-end lifecycle</strong> of a message — from creation to final acknowledgement — in a <strong>broker-agnostic</strong> manner.
 This view is essential for both developers and operators to understand how OmniQueue mediates between application code and underlying messaging infrastructure.</p>
@@ -5334,7 +5356,7 @@ This view is essential for both developers and operators to understand how OmniQ
 <div class="title">Figure 12. Core Flow Overview</div>
 </div>
 <div class="sect3">
-<h4 id="_how_to_read_this_diagram">2.7.1. How to Read This Diagram</h4>
+<h4 id="_how_to_read_this_diagram">3.7.1. How to Read This Diagram</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -5359,7 +5381,7 @@ This view is essential for both developers and operators to understand how OmniQ
 </div>
 </div>
 <div class="sect3">
-<h4 id="_flow_breakdown">2.7.2. Flow Breakdown</h4>
+<h4 id="_flow_breakdown">3.7.2. Flow Breakdown</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -5466,7 +5488,7 @@ This view is essential for both developers and operators to understand how OmniQ
 </div>
 </div>
 <div class="sect3">
-<h4 id="_operational_notes">2.7.3. Operational Notes</h4>
+<h4 id="_operational_notes">3.7.3. Operational Notes</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -5499,7 +5521,7 @@ Understanding this flow helps in debugging end-to-end issues, such as “message
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-08 10:47:24 UTC
+Last updated 2025-08-08 11:13:59 UTC
 </div>
 </div>
 </body>
