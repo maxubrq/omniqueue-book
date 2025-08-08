@@ -92,7 +92,7 @@ jobs:
 
       - name: Install toolchain (Asciidoctor + Mermaid + Chromium)
         run: |
-          gem install --no-document asciidoctor asciidoctor-pdf asciidoctor-epub3 asciidoctor-diagram
+          gem install --no-document asciidoctor asciidoctor-pdf asciidoctor-epub3 asciidoctor-diagram rouge
           npm i -g @mermaid-js/mermaid-cli
           npx --yes @puppeteer/browsers install chromium@latest
           echo "PUPPETEER_EXECUTABLE_PATH=$(npx --yes @puppeteer/browsers path chromium)" >> $GITHUB_ENV
