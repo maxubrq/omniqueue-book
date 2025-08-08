@@ -2268,6 +2268,221 @@ print {
 }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge .cm {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cp {
+  color: #999999;
+  font-weight: bold;
+}
+pre.rouge .c1 {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cpf {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+pre.rouge .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+pre.rouge .ge {
+  color: #000000;
+  font-style: italic;
+}
+pre.rouge .gr {
+  color: #aa0000;
+}
+pre.rouge .gh {
+  color: #999999;
+}
+pre.rouge .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+pre.rouge .go {
+  color: #888888;
+}
+pre.rouge .gp {
+  color: #555555;
+}
+pre.rouge .gs {
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #aaaaaa;
+}
+pre.rouge .gt {
+  color: #aa0000;
+}
+pre.rouge .kc {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kd {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kn {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kp {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kr {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kt {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .k, pre.rouge .kv {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .mf {
+  color: #009999;
+}
+pre.rouge .mh {
+  color: #009999;
+}
+pre.rouge .il {
+  color: #009999;
+}
+pre.rouge .mi {
+  color: #009999;
+}
+pre.rouge .mo {
+  color: #009999;
+}
+pre.rouge .m, pre.rouge .mb, pre.rouge .mx {
+  color: #009999;
+}
+pre.rouge .sa {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .sb {
+  color: #d14;
+}
+pre.rouge .sc {
+  color: #d14;
+}
+pre.rouge .sd {
+  color: #d14;
+}
+pre.rouge .s2 {
+  color: #d14;
+}
+pre.rouge .se {
+  color: #d14;
+}
+pre.rouge .sh {
+  color: #d14;
+}
+pre.rouge .si {
+  color: #d14;
+}
+pre.rouge .sx {
+  color: #d14;
+}
+pre.rouge .sr {
+  color: #009926;
+}
+pre.rouge .s1 {
+  color: #d14;
+}
+pre.rouge .ss {
+  color: #990073;
+}
+pre.rouge .s, pre.rouge .dl {
+  color: #d14;
+}
+pre.rouge .na {
+  color: #008080;
+}
+pre.rouge .bp {
+  color: #999999;
+}
+pre.rouge .nb {
+  color: #0086B3;
+}
+pre.rouge .nc {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .no {
+  color: #008080;
+}
+pre.rouge .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+pre.rouge .ni {
+  color: #800080;
+}
+pre.rouge .ne {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nl {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nn {
+  color: #555555;
+}
+pre.rouge .nt {
+  color: #000080;
+}
+pre.rouge .vc {
+  color: #008080;
+}
+pre.rouge .vg {
+  color: #008080;
+}
+pre.rouge .vi {
+  color: #008080;
+}
+pre.rouge .nv, pre.rouge .vm {
+  color: #008080;
+}
+pre.rouge .ow {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .o {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .w {
+  color: #bbbbbb;
+}
+pre.rouge {
+  background-color: #f8f8f8;
+}
+</style>
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
@@ -2280,15 +2495,86 @@ print {
 <ul class="sectlevel1">
 <li><a href="#_preface">Preface</a>
 <ul class="sectlevel2">
+<li><a href="#_why_this_book_exists">Why This Book Exists</a></li>
 <li><a href="#_who_this_book_is_for">Who This Book Is For</a></li>
-<li><a href="#_navigating_the_book">Navigating the Book</a></li>
+<li><a href="#_what_this_book_covers">What This Book Covers</a></li>
+<li><a href="#_why_omniqueue">Why OmniQueue?</a></li>
+<li><a href="#_a_note_on_style">A Note on Style</a></li>
+<li><a href="#_reader_expectations">Reader Expectations</a></li>
+<li><a href="#_how_this_book_is_organized">How This Book Is Organized</a></li>
+<li><a href="#_our_promise">Our Promise</a></li>
 </ul>
 </li>
-<li><a href="#_introduction">Introduction</a>
-<ul class="sectlevel1">
-<li><a href="#_truyền_cảm_hứng">Truyền Cảm Hứng</a></li>
-<li><a href="#_motivation">Motivation</a></li>
-<li><a href="#_motivation_2">Motivation</a></li>
+<li><a href="#_how_to_use_this_book">How to Use This Book</a>
+<ul class="sectlevel2">
+<li><a href="#_reading_paths_by_experience_tier">Reading Paths by Experience Tier</a></li>
+<li><a href="#_part_by_part_guide">Part-by-Part Guide</a></li>
+<li><a href="#_code_examples">Code Examples</a></li>
+<li><a href="#_diagrams_and_visuals">Diagrams and Visuals</a></li>
+<li><a href="#_cheat_sheets_and_war_stories">Cheat Sheets and War Stories</a></li>
+<li><a href="#_cross_references">Cross-References</a></li>
+<li><a href="#_what_youll_need">What You’ll Need</a></li>
+<li><a href="#_our_advice">Our Advice</a></li>
+</ul>
+</li>
+<li><a href="#_chapter_1_introduction">1. Chapter 1: Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#_the_role_of_messaging_in_modern_systems">1.1. The Role of Messaging in Modern Systems</a></li>
+<li><a href="#_brokered_vs_brokerless_messaging">1.2. Brokered vs. Brokerless Messaging</a></li>
+<li><a href="#_the_fragmentation_problem">1.3. The Fragmentation Problem</a></li>
+<li><a href="#_enter_omniqueue">1.4. Enter OmniQueue</a></li>
+<li><a href="#_a_simple_example">1.5. A Simple Example</a></li>
+<li><a href="#_who_uses_omniqueue">1.6. Who Uses OmniQueue?</a></li>
+<li><a href="#_what_this_chapter_sets_up">1.7. What This Chapter Sets Up</a></li>
+</ul>
+</li>
+<li><a href="#_core_messaging_concepts">2. Core Messaging Concepts</a>
+<ul class="sectlevel2">
+<li><a href="#_messages_queues_topics_streams">2.1. Messages, Queues, Topics, Streams</a>
+<ul class="sectlevel3">
+<li><a href="#_the_message_structure">2.1.1. The Message Structure</a></li>
+<li><a href="#_queues">2.1.2. Queues</a></li>
+<li><a href="#_topics">2.1.3. Topics</a></li>
+<li><a href="#_streams">2.1.4. Streams</a></li>
+<li><a href="#_comparing_destinations">2.1.5. Comparing Destinations</a></li>
+</ul>
+</li>
+<li><a href="#_brokers_vs_brokerless">2.2. Brokers vs. Brokerless</a>
+<ul class="sectlevel3">
+<li><a href="#_what_is_a_broker">2.2.1. What is a Broker?</a></li>
+<li><a href="#_brokerless_messaging">2.2.2. Brokerless Messaging</a></li>
+<li><a href="#_visual_comparison">2.2.3. Visual Comparison</a></li>
+</ul>
+</li>
+<li><a href="#_delivery_semantics">2.3. Delivery Semantics</a>
+<ul class="sectlevel3">
+<li><a href="#_at_most_once">2.3.1. At-most-once</a></li>
+<li><a href="#_at_least_once">2.3.2. At-least-once</a></li>
+<li><a href="#_exactly_once">2.3.3. Exactly-once</a></li>
+<li><a href="#_omniqueue_perspective">2.3.4. OmniQueue Perspective</a></li>
+</ul>
+</li>
+<li><a href="#_reliability_durability">2.4. Reliability &amp; Durability</a>
+<ul class="sectlevel3">
+<li><a href="#_reliability">2.4.1. Reliability</a></li>
+<li><a href="#_durability">2.4.2. Durability</a></li>
+<li><a href="#_durability_in_omniqueue_context">2.4.3. Durability in OmniQueue Context</a></li>
+</ul>
+</li>
+<li><a href="#_load_balancing_consumer_groups">2.5. Load Balancing &amp; Consumer Groups</a>
+<ul class="sectlevel3">
+<li><a href="#_consumer_groups">2.5.1. Consumer Groups</a></li>
+<li><a href="#_consumer_group_dynamics">2.5.2. Consumer Group Dynamics</a></li>
+<li><a href="#_load_balancing_patterns">2.5.3. Load Balancing Patterns</a></li>
+</ul>
+</li>
+<li><a href="#_pubsub_fanout_vs_point_to_point">2.6. Pub/Sub (Fanout) vs. Point-to-Point</a>
+<ul class="sectlevel3">
+<li><a href="#_point_to_point_p2p">2.6.1. Point-to-Point (P2P)</a></li>
+<li><a href="#_publishsubscribe_fanout">2.6.2. Publish/Subscribe (Fanout)</a></li>
+<li><a href="#_omniqueues_approach">2.6.3. OmniQueue’s Approach</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -2298,187 +2584,1714 @@ print {
 <div class="sect1">
 <h2 id="_preface">Preface</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_why_this_book_exists">Why This Book Exists</h3>
 <div class="paragraph">
-<p>Messaging systems sit at the heart of modern software infrastructure. From microservices that power daily applications to complex data pipelines and real-time analytics, effective communication is essential. Yet, despite their importance, messaging systems are notoriously fragmented. Developers often find themselves navigating multiple incompatible APIs, varied delivery guarantees, and broker-specific quirks.</p>
+<p>In the last decade, messaging systems have become the invisible backbone of modern software.
+From high-frequency trading platforms to e-commerce checkout flows, from IoT telemetry ingestion to social media fanout, <strong>asynchronous message passing</strong> underpins much of the world’s critical software.</p>
 </div>
 <div class="paragraph">
-<p>I&#8217;ve encountered this complexity firsthand, and it led me to ask a simple yet challenging question: Could we unify these diverse messaging systems into a single, elegant abstraction?</p>
+<p>But there’s a catch: the messaging landscape is <strong>fragmented</strong>.
+Each broker — RabbitMQ, Kafka, NATS, ActiveMQ, SQS, and so on — comes with its own API, terminology, quirks, and operational mindset. Switching from one broker to another can mean a complete rewrite of integration code, along with a steep re-learning curve for operations.</p>
 </div>
 <div class="paragraph">
-<p>This is how OmniQueue was born.</p>
+<p><strong>OmniQueue</strong> was born from a simple but ambitious idea:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>“What if there was a single, unified API that could speak to any messaging system — brokered or brokerless — without sacrificing the power and unique features of each?”</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Founder’s Notes
+</div>
 </div>
 <div class="paragraph">
-<p>OmniQueue began as an experiment to bridge the gaps between various messaging brokers—RabbitMQ, Kafka, NATS, AWS SQS, Azure Service Bus, and even brokerless solutions like ZeroMQ. It quickly evolved from a coding project into a broader architectural vision: simplifying message-driven architectures by abstracting away complexity, while preserving flexibility and performance.</p>
+<p>This book is the culmination of that idea.</p>
 </div>
 <div class="paragraph">
-<p>This book captures everything I&#8217;ve learned along the way. It&#8217;s intended to serve not just as a technical manual but as a practical guide, offering you clear explanations, detailed examples, and real-world insights into building unified messaging architectures.</p>
+<p>It’s <strong>both</strong> a deep dive into the theory and practice of messaging systems <strong>and</strong> the definitive guide to OmniQueue — a TypeScript-based, broker-agnostic messaging API.</p>
 </div>
-<div class="paragraph">
-<p>Whether you&#8217;re an engineer dealing daily with messaging complexity, a team lead aiming to streamline your organization&#8217;s messaging infrastructure, or simply curious about how messaging works behind the scenes—this book is for you.</p>
-</div>
-<div class="paragraph">
-<p>Welcome to OmniQueue.</p>
-</div>
-<div class="paragraph">
-<p>Darius Max (@maxubrq)
-== How to Use This Book</p>
 </div>
 <div class="sect2">
 <h3 id="_who_this_book_is_for">Who This Book Is For</h3>
 <div class="paragraph">
-<p>This book is intended for anyone involved or interested in messaging systems—developers, architects, system engineers, tech leads, or even students aspiring to understand and build message-driven architectures. Whether you&#8217;re new to messaging systems or an experienced professional looking to unify or expand your understanding, this guide has something valuable for you.</p>
+<p>This book is written for engineers, architects, and operations teams who:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Work with messaging systems regularly.</p>
+</li>
+<li>
+<p>Need to support multiple brokers across environments.</p>
+</li>
+<li>
+<p>Migrate between brokers due to scaling, cost, or vendor lock-in.</p>
+</li>
+<li>
+<p>Want to abstract messaging complexity without losing control.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We’ve structured the content so that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Beginners (0–2 years)</strong> gain a solid grounding in messaging fundamentals.</p>
+</li>
+<li>
+<p><strong>Intermediate practitioners (2–5 years)</strong> learn deep operational patterns and broker-specific optimizations.</p>
+</li>
+<li>
+<p><strong>Senior engineers (5+ years)</strong> explore high-scale, mission-critical messaging architecture and troubleshooting.</p>
+</li>
+<li>
+<p><strong>OmniQueue Mastery Mode</strong> sections give you direct, in-depth knowledge to extend, tune, and contribute to the OmniQueue project.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_navigating_the_book">Navigating the Book</h3>
+<h3 id="_what_this_book_covers">What This Book Covers</h3>
 <div class="paragraph">
-<p>This book is structured clearly, enabling you to approach it according to your background, needs, and interests:</p>
+<p>We will explore:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>If you&#8217;re new to messaging systems or uncertain about core concepts like queues, topics, delivery semantics, or broker architectures, you should begin with <strong>Part I: Messaging Fundamentals</strong>. This section establishes essential terminology, patterns, and design principles you&#8217;ll need to grasp to benefit fully from the rest of the book.</p>
+<p>Core messaging concepts: queues, topics, routing, delivery semantics, and reliability.</p>
 </li>
 <li>
-<p>If you&#8217;re looking to dive into a specific messaging technology (for example, RabbitMQ, Kafka, AWS SQS, NATS, or others), feel free to jump directly into <strong>Part II: Deep Dive into Messaging Brokers</strong>. Each chapter stands alone, providing comprehensive coverage of individual brokers and their integration with OmniQueue.</p>
+<p>Detailed broker chapters for RabbitMQ, Kafka, NATS JetStream, ActiveMQ Artemis, ZeroMQ, BullMQ, AWS SQS/SNS, Azure Service Bus, and Apache Pulsar.</p>
 </li>
 <li>
-<p>For readers with hands-on experience working with messaging systems in production, <strong>Parts III, IV, and V</strong> cover advanced topics, real-world implementations, and extending OmniQueue. These chapters assume familiarity with practical messaging concepts and address common challenges, advanced patterns, scalability considerations, operational practices, and community contribution.</p>
+<p>OmniQueue’s architecture, design decisions, and implementation patterns.</p>
+</li>
+<li>
+<p>Mapping native broker concepts to OmniQueue’s unified API.</p>
+</li>
+<li>
+<p>Advanced OmniQueue usage: scaling, plugin development, observability, and disaster recovery.</p>
+</li>
+<li>
+<p>Real-world case studies, complete with war stories from production incidents.</p>
+</li>
+<li>
+<p>How to extend and contribute to OmniQueue.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>You can approach the book sequentially, jump to chapters relevant to your current projects, or revisit sections as a reference guide. Use the table of contents and quick-reference appendices to navigate efficiently according to your specific needs and level of experience.
-:sectnums:</p>
+<p>Throughout the book, we’ll balance <strong>conceptual clarity</strong> with <strong>practical hands-on examples</strong>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_why_omniqueue">Why OmniQueue?</h3>
+<div class="paragraph">
+<p>Traditional messaging integrations often fall into one of two traps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Tight coupling to a specific broker.</strong>
+This limits future flexibility, creates vendor lock-in, and complicates migrations.</p>
+</li>
+<li>
+<p><strong>Overly generic abstractions.</strong>
+These hide broker-specific features, leading to lowest-common-denominator APIs.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>OmniQueue aims to solve both problems:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Unified Core API</strong> for sending, receiving, publishing, and subscribing.</p>
+</li>
+<li>
+<p><strong>Broker Adapters</strong> that map directly to native features.</p>
+</li>
+<li>
+<p><strong>Optional Features</strong> for advanced tuning, scaling, and recovery.</p>
+</li>
+<li>
+<p><strong>Plugin Architecture</strong> for extending to new brokers or integrating custom logic.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a_note_on_style">A Note on Style</h3>
+<div class="paragraph">
+<p>This book is written in the spirit of O’Reilly guides:
+technical, clear, and actionable — with just enough narrative to keep you awake during the heavy parts.</p>
+</div>
+<div class="paragraph">
+<p>You’ll see <strong>TypeScript code</strong> for OmniQueue, <strong>Mermaid diagrams</strong> for system flows, and <strong>cheat sheets</strong> for quick reference.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reader_expectations">Reader Expectations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>You don’t need to be a messaging expert — but some familiarity with distributed systems will help.</p>
+</li>
+<li>
+<p>You should be comfortable reading TypeScript and basic CLI commands.</p>
+</li>
+<li>
+<p>Expect real-world complexity: we’ll talk about failures, quirks, and debugging nightmares.</p>
+</li>
+<li>
+<p>We’ll show both the “happy path” and the “when it all goes wrong” path.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_this_book_is_organized">How This Book Is Organized</h3>
+<table class="tableblock frame-all grid-all stretch text-center">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Part</th>
+<th class="tableblock halign-left valign-top">Focus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Messaging fundamentals and OmniQueue core API.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">II</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deep dives into individual brokers with OmniQueue mapping.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">III</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Advanced OmniQueue usage, scaling, and tuning.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IV</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Real-world implementations and case studies.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Extending and contributing to OmniQueue.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Appendices</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Quick references, glossary, and disaster checklists.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_our_promise">Our Promise</h3>
+<div class="paragraph">
+<p>By the end of this book, you’ll be able to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Understand the trade-offs between major messaging systems.</p>
+</li>
+<li>
+<p>Confidently implement broker-agnostic messaging in your projects.</p>
+</li>
+<li>
+<p>Operate and troubleshoot OmniQueue in production.</p>
+</li>
+<li>
+<p>Extend OmniQueue to support new brokers and patterns.</p>
+</li>
+</ul>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Messaging is not just about moving data.
+It’s about shaping the <strong>lifeblood</strong> of your system — reliably, predictably, and with intent.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; From the Authors
 </div>
 </div>
 </div>
 </div>
-<h1 id="_introduction" class="sect0">Introduction</h1>
-<div class="openblock partintro">
+</div>
+<div class="sect1">
+<h2 id="_how_to_use_this_book">How to Use This Book</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This book is both a <strong>reference</strong> and a <strong>journey</strong>.
+You can read it cover-to-cover or jump directly to the sections that matter most to your work.</p>
+</div>
+<div class="paragraph">
+<p>We’ve designed it with multiple entry points, so whether you are brand-new to messaging or a seasoned architect managing a multi-broker fleet, you’ll find value.</p>
+</div>
+<div class="sect2">
+<h3 id="_reading_paths_by_experience_tier">Reading Paths by Experience Tier</h3>
+<div class="paragraph">
+<p>We’ve tagged content for different levels of experience.
+If you identify your tier, you can follow the recommended path:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Beginner (0–2 years)</strong>
+Start with Part I: <strong>Messaging Fundamentals</strong> (Chapters 1–3).
+These chapters introduce core concepts and get you hands-on with OmniQueue quickly.
+Then, read only the broker chapters (Part II) for the systems you’ll use in your current work.</p>
+</li>
+<li>
+<p><strong>Intermediate (2–5 years)</strong>
+You can skim Part I for a refresher, then dive deep into the broker chapters (Part II).
+Pay attention to <strong>War Stories</strong> and <strong>Cheat Sheets</strong> — they’ll save you pain in production.
+Follow with Part III to learn scaling, monitoring, and advanced OmniQueue patterns.</p>
+</li>
+<li>
+<p><strong>Senior Engineer / Architect (5+ years)</strong>
+Jump to the broker chapters you care about most, but don’t skip Part III — it’s packed with operational patterns for high-scale environments.
+Use Part IV’s case studies for inspiration and validation of architectural decisions.</p>
+</li>
+<li>
+<p><strong>OmniQueue Mastery Mode</strong>
+These sections are sprinkled throughout the book for readers who want to extend OmniQueue itself.
+You’ll find them in both broker chapters and advanced sections.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_part_by_part_guide">Part-by-Part Guide</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Part</th>
+<th class="tableblock halign-left valign-top">How to Use It</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Foundation for messaging concepts and OmniQueue basics. Best for new readers.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">II</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Broker-specific knowledge. Each chapter is standalone — read only what you need.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">III</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Advanced OmniQueue usage: scaling, observability, disaster recovery.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IV</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Real-world case studies — learn from actual deployments and failures.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contribution and extension — for those building on or contributing to OmniQueue.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Appendices</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Quick-reference materials, glossary, and operational checklists.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_code_examples">Code Examples</h3>
+<div class="paragraph">
+<p>All OmniQueue examples are in <strong>TypeScript</strong>.
+We assume you have basic familiarity with <code>npm</code>, <code>pnpm</code>, or <code>yarn</code> and Node.js tooling.</p>
+</div>
+<div class="paragraph">
+<p>Code listings are annotated with comments to explain <strong>why</strong> something is done, not just <strong>how</strong>.
+For example:</p>
+</div>
+<div class="listingblock">
 <div class="content">
-<div class="paragraph">
-<p>OmniQueue is a unified messaging abstraction that allows sending and receiving messages across different brokers — such as RabbitMQ, Kafka, NATS, and brokerless transports — using a consistent API.</p>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="c1">// Sending a message with OmniQueue</span>
+<span class="k">await</span> <span class="nx">omni</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span>
+  <span class="na">destination</span><span class="p">:</span> <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1234</span><span class="dl">'</span><span class="p">,</span> <span class="na">status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">confirmed</span><span class="dl">'</span> <span class="p">},</span>
+  <span class="na">group</span><span class="p">:</span> <span class="dl">'</span><span class="s1">order-processing</span><span class="dl">'</span><span class="p">,</span> <span class="c1">// Required for consumers</span>
+  <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// Create destination if it doesn't exist</span>
+<span class="p">});</span></code></pre>
 </div>
-<div class="admonitionblock note">
+</div>
+<div class="paragraph">
+<p>Whenever we compare OmniQueue to a native broker API, we show them side-by-side for clarity.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_diagrams_and_visuals">Diagrams and Visuals</h3>
+<div class="paragraph">
+<p>We use <strong>Mermaid diagrams</strong> for flows, topologies, and message lifecycles.
+These are rendered in the book, but if you’re reading the raw AsciiDoc, you can copy the code into any Mermaid-compatible renderer to visualize it.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cheat_sheets_and_war_stories">Cheat Sheets and War Stories</h3>
+<div class="paragraph">
+<p>At the end of each broker chapter:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Cheat Sheet</strong> — quick reference for commands, configs, metrics, and a <strong>disaster checklist</strong>.</p>
+</li>
+<li>
+<p><strong>War Stories</strong> — short narratives of real-world incidents, failures, and their solutions.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cross_references">Cross-References</h3>
+<div class="paragraph">
+<p>Throughout the book, cross-references (e.g., “see &lt;&lt;\_chapter\_3&gt;&gt;”) help you connect concepts.
+We strongly encourage following them, especially when exploring advanced topics that build on earlier material.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_what_youll_need">What You’ll Need</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Node.js</strong> 18+</p>
+</li>
+<li>
+<p>A package manager (<code>npm</code>, <code>pnpm</code>, or <code>yarn</code>)</p>
+</li>
+<li>
+<p>Docker (optional, but useful for running brokers locally)</p>
+</li>
+<li>
+<p>Basic terminal familiarity</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You don’t need to install every broker at once — we’ll give setup instructions per chapter.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_our_advice">Our Advice</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Don’t just read — run the examples.</strong>
+Messaging is best learned by sending and receiving real messages.</p>
+</li>
+<li>
+<p><strong>Experiment with failure.</strong>
+Kill brokers, drop connections, overload queues — see how systems behave under stress.</p>
+</li>
+<li>
+<p><strong>Adapt patterns to your context.</strong>
+There’s no universal “right” way; use these patterns as starting points.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_chapter_1_introduction">1. Chapter 1: Introduction</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_the_role_of_messaging_in_modern_systems">1.1. The Role of Messaging in Modern Systems</h3>
+<div class="paragraph">
+<p>Messaging is the circulatory system of distributed software.</p>
+</div>
+<div class="paragraph">
+<p>Whether you are processing financial transactions, streaming telemetry from millions of IoT devices, or fanning out notifications to mobile users, <strong>messages</strong> are how your system communicates internally and externally.</p>
+</div>
+<div class="paragraph">
+<p>Unlike synchronous HTTP calls, messaging systems decouple producers and consumers in <strong>time</strong> and <strong>space</strong>.
+This makes them a cornerstone of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Scalability</strong> — handle bursts by buffering messages in queues, logs, or streams.</p>
+</li>
+<li>
+<p><strong>Resilience</strong> — retry failed deliveries without dropping data.</p>
+</li>
+<li>
+<p><strong>Loose coupling</strong> — evolve services independently.</p>
+</li>
+<li>
+<p><strong>Asynchronous workflows</strong> — free services from waiting on each other.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Modern architectures like <strong>microservices</strong>, <strong>event-driven systems</strong>, and <strong>CQRS/ES</strong> (Command Query Responsibility Segregation / Event Sourcing) rely heavily on messaging.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_brokered_vs_brokerless_messaging">1.2. Brokered vs. Brokerless Messaging</h3>
+<div class="paragraph">
+<p>Messaging systems come in two broad categories:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Brokered</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Messages flow through a central server (the broker) that stores, routes, and delivers them.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RabbitMQ, Kafka, NATS JetStream, ActiveMQ Artemis, Azure Service Bus, Apache Pulsar</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Brokerless</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Producers send messages directly to consumers without an intermediary. Often implemented with peer-to-peer sockets.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ZeroMQ, nanomsg</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Brokered systems</strong> offer durability, routing flexibility, and operational control.
+<strong>Brokerless systems</strong> excel in speed, simplicity, and deployment independence.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_fragmentation_problem">1.3. The Fragmentation Problem</h3>
+<div class="paragraph">
+<p>Each broker ecosystem has its <strong>own</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>API shape and naming conventions</p>
+</li>
+<li>
+<p>Delivery semantics (at-most-once, at-least-once, exactly-once)</p>
+</li>
+<li>
+<p>Terminology: <strong>queue</strong> vs <strong>topic</strong>, <strong>exchange</strong> vs <strong>stream</strong>, <strong>subject</strong> vs <strong>channel</strong></p>
+</li>
+<li>
+<p>Operational model and deployment pattern</p>
+</li>
+<li>
+<p>Performance characteristics and tuning knobs</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Moving from RabbitMQ to Kafka isn’t just a config change — it’s often a <strong>rewrite</strong>.
+Even within the same organization, different teams may adopt different brokers for historical or domain-specific reasons.</p>
+</div>
+<div class="paragraph">
+<p>This leads to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Code duplication</strong> — multiple code paths for different brokers.</p>
+</li>
+<li>
+<p><strong>Vendor lock-in</strong> — hard to migrate away.</p>
+</li>
+<li>
+<p><strong>Operational complexity</strong> — separate tooling, metrics, and expertise required.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enter_omniqueue">1.4. Enter OmniQueue</h3>
+<div class="paragraph">
+<p>OmniQueue addresses the fragmentation problem with a <strong>unified, broker-agnostic API</strong> centered on <strong>publish/subscribe with mandatory consumer groups</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Producers <strong>publish</strong> to a <strong>topic</strong>.
+Each <strong>consumer group</strong> subscribed to that topic receives a copy of every message; within a given group, only one consumer processes a given message.</p>
+</div>
+<div class="paragraph">
+<p>Handlers acknowledge with <code>ack()</code> or <code>nack(requeue?: boolean)</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>flowchart LR
+    subgraph Producers
+      P1[Producer A] --&gt;|publish| T[Topic: orders]
+      P2[Producer B] --&gt;|publish| T
+    end
+
+    subgraph Consumers
+      G1[Group: order-service] --&gt;|subscribe| T
+      G2[Group: fraud-check] --&gt;|subscribe| T
+    end
+
+    T --&gt;|fanout copy| C11[Consumer 1 in order-service]
+    T --&gt;|fanout copy| C21[Consumer 1 in fraud-check]
+    T -. work-sharing .-&gt; C12[Consumer 2 in order-service]
+    T -. work-sharing .-&gt; C22[Consumer 2 in fraud-check]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With OmniQueue, your code can switch between brokers with minimal changes, while still leveraging advanced features through <strong>broker adapters</strong>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a_simple_example">1.5. A Simple Example</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">create</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@omniqueue/core</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="dl">'</span><span class="s1">@omniqueue/rabbitmq</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// registers the "rabbitmq" adapter</span>
+
+<span class="c1">// Create and init a broker instance</span>
+<span class="kd">const</span> <span class="nx">broker</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">rabbitmq</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">amqp://localhost</span><span class="dl">'</span> <span class="p">});</span>
+<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
+
+<span class="c1">// Publisher: send one event to the topic "orders"</span>
+<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span>
+  <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">{</span>
+    <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ulid-01JABCDEF...</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">body</span><span class="p">:</span> <span class="p">{</span> <span class="na">orderId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">A123</span><span class="dl">'</span><span class="p">,</span> <span class="na">status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">confirmed</span><span class="dl">'</span> <span class="p">},</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">x-source</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">checkout</span><span class="dl">'</span> <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// lazily create the destination if missing</span>
+    <span class="c1">// createOptions can pass through to the adapter (durable, partitions, etc.)</span>
+  <span class="p">}</span>
+<span class="p">);</span>
+
+<span class="c1">// Subscriber: each GROUP receives a copy; work is shared inside the group.</span>
+<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span>
+  <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
+  <span class="k">async</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Processing order</span><span class="dl">'</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+      <span class="k">await</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">ack</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">await</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">nack</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span> <span class="c1">// requeue on error</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="dl">'</span><span class="s1">order-service</span><span class="dl">'</span><span class="p">,</span>    <span class="c1">// &lt;-- mandatory groupId</span>
+  <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>    <span class="c1">// optional ConsumeOptions</span>
+<span class="p">);</span>
+
+<span class="c1">// ...later, graceful shutdown</span>
+<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Switching to Kafka, NATS, Pulsar, or another supported broker means changing only the adapter import and connection config — your core logic stays the same.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_who_uses_omniqueue">1.6. Who Uses OmniQueue?</h3>
+<div class="paragraph">
+<p>OmniQueue is designed for:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Polyglot microservice environments</strong> — where different teams choose different brokers.</p>
+</li>
+<li>
+<p><strong>Hybrid cloud architectures</strong> — where on-prem and cloud-native brokers must coexist.</p>
+</li>
+<li>
+<p><strong>Migration projects</strong> — moving from one broker to another without downtime.</p>
+</li>
+<li>
+<p><strong>Prototyping and R\&amp;D</strong> — quickly test message flows across multiple systems.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_what_this_chapter_sets_up">1.7. What This Chapter Sets Up</h3>
+<div class="paragraph">
+<p>In the chapters ahead:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Chapter 2</strong> will cover <strong>Core Messaging Concepts</strong> in detail — topics, routing, delivery guarantees, and reliability.</p>
+</li>
+<li>
+<p><strong>Chapter 3</strong> will dissect <strong>OmniQueue Architecture &amp; Core API</strong>, showing exactly how the abstraction is implemented with <code>publish</code>/<code>subscribe</code>.</p>
+</li>
+<li>
+<p><strong>Part II</strong> will then dive deep into individual brokers.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The goal of this introduction is simple:
+Give you the “why” and the “what” before we explore the “how” and “when”.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_core_messaging_concepts">2. Core Messaging Concepts</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_messages_queues_topics_streams">2.1. Messages, Queues, Topics, Streams</h3>
+<div class="paragraph">
+<p>At the heart of any messaging system is the <strong>message</strong>:
+a discrete unit of data that moves from producer to consumer.</p>
+</div>
+<div class="sect3">
+<h4 id="_the_message_structure">2.1.1. The Message Structure</h4>
+<div class="paragraph">
+<p>While brokers differ in terminology and features, most messages contain:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ID</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Uniquely identifies the message.
+For durability and traceability, many teams use ULID or UUID v7. Some brokers provide their own sequence IDs (Kafka offset, Pulsar ledgerId/entryId, etc.).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Body</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The actual payload.
+Often JSON for ease of debugging, but formats like Avro or Protobuf are preferred in high-performance or schema-validated environments.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Headers / Attributes</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metadata about the message (e.g., <code>content-type</code>, source service, trace IDs for distributed tracing, tenant identifiers).
+These can influence routing (e.g., header-based exchange in RabbitMQ) or serve for observability.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>This book is designed for engineers building resilient distributed systems.</p>
+In OmniQueue, <code>body</code> is always JSON-serialisable to ensure adapter compatibility, but you can base64-encode binary payloads if needed.
+</td>
+</tr>
+</table>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_queues">2.1.2. Queues</h4>
+<div class="paragraph">
+<p>A <strong>queue</strong> is a named, ordered collection of messages that delivers each message to exactly one consumer within a given group.
+When a message is acknowledged (<code>ack()</code>), it is removed from the queue (or marked processed).</p>
+</div>
+<div class="paragraph">
+<p><strong>Key characteristics:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>FIFO order</strong> by default, though some brokers allow priority or sharded ordering.</p>
+</li>
+<li>
+<p><strong>Work sharing</strong> — multiple consumers in the same group share the load.</p>
+</li>
+<li>
+<p><strong>Backpressure</strong> — unacknowledged messages accumulate in the queue.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Real-world usage:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Task processing (image rendering, report generation).</p>
+</li>
+<li>
+<p>Decoupling request spikes from downstream processing.</p>
+</li>
+<li>
+<p>Buffering workloads when downstream systems are slow.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_topics">2.1.3. Topics</h4>
+<div class="paragraph">
+<p>A <strong>topic</strong> is a named channel to which producers publish and consumers subscribe.</p>
+</div>
+<div class="paragraph">
+<p><strong>Key characteristics:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Fanout delivery</strong> — every consumer group subscribed to a topic gets a full copy of the message stream.</p>
+</li>
+<li>
+<p><strong>Group semantics</strong> — within a single group, messages are load-balanced to one consumer at a time.</p>
+</li>
+<li>
+<p><strong>Loose coupling</strong> — producers don’t need to know who consumes their messages.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Real-world usage:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Event broadcasting (order events, user activity streams).</p>
+</li>
+<li>
+<p>Multi-service pipelines (analytics, fraud detection, notifications).</p>
+</li>
+<li>
+<p>Event sourcing feeds.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_streams">2.1.4. Streams</h4>
+<div class="paragraph">
+<p>A <strong>stream</strong> is an append-only, immutable sequence of messages stored in durable storage.
+Consumers track their own <strong>offset</strong> (position) and can replay older messages at will.</p>
+</div>
+<div class="paragraph">
+<p>Key characteristics:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Messages persist</strong> for a retention period (e.g., 7 days) or indefinitely.</p>
+</li>
+<li>
+<p><strong>Multiple independent consumers</strong> — each with their own offsets.</p>
+</li>
+<li>
+<p><strong>High throughput</strong> by avoiding message deletion.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Real-world usage:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Audit logging with replay.</p>
+</li>
+<li>
+<p>Rebuilding projections in CQRS systems.</p>
+</li>
+<li>
+<p>Time-series analytics pipelines.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_comparing_destinations">2.1.5. Comparing Destinations</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 30%;">
+<col style="width: 30%;">
+<col style="width: 30%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Delivery Model</th>
+<th class="tableblock halign-left valign-top">Storage &amp; Retention</th>
+<th class="tableblock halign-left valign-top">Replay Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Queue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Point-to-point within a group</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message removed after ack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Topic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Publish/subscribe, fanout to groups</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Broker-controlled, may persist temporarily</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sometimes (depends on broker)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stream</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Publish/subscribe with offset tracking</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Long-term retention in log</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre>flowchart LR
+    subgraph Producer
+      P[Producer] --&gt; Q
+    end
+
+    subgraph Destinations
+      Q[Queue]
+      T[Topic]
+      S[Stream]
+    end
+
+    Q --&gt;|One message to one consumer| C1[Consumer]
+    T --&gt;|Copy to each group| G1[Group A]
+    T --&gt;|Copy to each group| G2[Group B]
+    S --&gt;|Consumers pull by offset| C2[Consumer Offset 120]</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_brokers_vs_brokerless">2.2. Brokers vs. Brokerless</h3>
+<div class="sect3">
+<h4 id="_what_is_a_broker">2.2.1. What is a Broker?</h4>
+<div class="paragraph">
+<p>A <strong>broker</strong> is a dedicated server (or cluster) that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Accepts messages from producers via network protocols (AMQP, Kafka protocol, MQTT, HTTP).</p>
+</li>
+<li>
+<p>Routes them based on metadata (exchange bindings, partition keys, headers).</p>
+</li>
+<li>
+<p>Stores them (in memory, disk, or distributed logs) for durability and later delivery.</p>
+</li>
+<li>
+<p>Delivers them to consumers, tracking acknowledgements.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Examples: RabbitMQ, Kafka, NATS JetStream, ActiveMQ Artemis, Azure Service Bus, Apache Pulsar.</p>
+</div>
+<div class="paragraph">
+<p><strong>Advantages:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Durability</strong> — messages survive restarts or crashes.</p>
+</li>
+<li>
+<p><strong>Routing flexibility</strong> — fanout, topic filters, header matching, partitioning.</p>
+</li>
+<li>
+<p><strong>Operational visibility</strong> — metrics, queues, consumer lag.</p>
+</li>
+<li>
+<p><strong>Security controls</strong> — authentication, authorization, encryption.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Challenges:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Operational cost — needs monitoring, scaling, patching.</p>
+</li>
+<li>
+<p>Latency vs. durability trade-offs — fsyncs, replication.</p>
+</li>
+<li>
+<p>Complexity — tuning partitions, queues, consumers.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_brokerless_messaging">2.2.2. Brokerless Messaging</h4>
+<div class="paragraph">
+<p>In <strong>brokerless</strong> systems, producers send messages directly to consumers without an intermediary server.
+Typically, these use <strong>peer-to-peer sockets</strong> or multicast protocols.</p>
+</div>
+<div class="paragraph">
+<p>Example: ZeroMQ’s PUB/SUB, PUSH/PULL patterns.</p>
+</div>
+<div class="paragraph">
+<p><strong>Advantages:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Ultra-low latency</strong> — no queue persistence or broker hop.</p>
+</li>
+<li>
+<p><strong>No single point of failure</strong> — as long as consumers are reachable.</p>
+</li>
+<li>
+<p><strong>Lightweight deployment</strong> — often just a library in your app.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Challenges:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No inherent durability — offline consumers miss messages.</p>
+</li>
+<li>
+<p>No centralized management — must handle discovery, retries, ordering yourself.</p>
+</li>
+<li>
+<p>Difficult scaling for complex topologies.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_visual_comparison">2.2.3. Visual Comparison</h4>
+<div class="listingblock">
+<div class="content">
+<pre>flowchart TB
+    subgraph Brokered
+      P1 --&gt; B[Broker Cluster]
+      P2 --&gt; B
+      B --&gt; C1
+      B --&gt; C2
+    end
+
+    subgraph Brokerless
+      P3 --&gt; C3
+      P3 --&gt; C4
+    end</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Brokered systems</strong> shine in reliability and complexity management.
+<strong>Brokerless systems</strong> shine in simplicity and speed — but require discipline in application design.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+OmniQueue supports <strong>both</strong> worlds. A <code>@omniqueue/zeromq</code> adapter can connect directly between processes without a broker, while <code>@omniqueue/kafka</code>, <code>@omniqueue/rabbitmq</code>, and others leverage durable, clustered brokers.
 </td>
 </tr>
 </table>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_truyền_cảm_hứng">Truyền Cảm Hứng</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_delivery_semantics">2.3. Delivery Semantics</h3>
 <div class="paragraph">
-<p>Why another messaging library?</p>
+<p>Delivery semantics define <strong>how many times</strong> a message is delivered to a consumer, and under what guarantees.
+They are a cornerstone of messaging design — the choice affects performance, complexity, and data correctness.</p>
+</div>
+<div class="sect3">
+<h4 id="_at_most_once">2.3.1. At-most-once</h4>
+<div class="paragraph">
+<p><strong>Definition:</strong></p>
+</div>
+<div class="paragraph">
+<p>A message is delivered <strong>zero or one time</strong>, but never more than once.
+If the delivery fails, the message is lost — no retries.</p>
+</div>
+<div class="paragraph">
+<p><strong>How it happens:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The broker (or producer in brokerless systems) sends the message without waiting for acknowledgement.</p>
+</li>
+<li>
+<p>No redelivery is attempted if the consumer fails mid-processing.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Pros:</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Every broker has quirks</p>
+<p>Lowest latency — no ack/nack overhead.</p>
 </li>
 <li>
-<p>Interoperability is painful</p>
-</li>
-<li>
-<p>Configuring queues is boilerplate-heavy
-= Introduction</p>
+<p>Simplest implementation.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>OmniQueue is a unified messaging abstraction that allows sending and receiving messages across different brokers — such as RabbitMQ, Kafka, NATS, and brokerless transports — using a consistent API.</p>
+<p><strong>Cons:</strong></p>
 </div>
-<div class="admonitionblock note">
+<div class="ulist">
+<ul>
+<li>
+<p>Data loss possible under failures.</p>
+</li>
+<li>
+<p>Not suitable for critical workflows.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Real-world usage:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Non-critical telemetry where occasional loss is acceptable (e.g., live UI metrics).</p>
+</li>
+<li>
+<p>High-frequency, low-value sensor data.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_at_least_once">2.3.2. At-least-once</h4>
+<div class="paragraph">
+<p><strong>Definition:</strong></p>
+</div>
+<div class="paragraph">
+<p>A message is delivered <strong>one or more times</strong> until it is acknowledged.
+Duplicates may occur.</p>
+</div>
+<div class="paragraph">
+<p><strong>How it happens:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The broker stores the message until it gets an explicit ack from the consumer.</p>
+</li>
+<li>
+<p>If ack is not received within a timeout or connection drops, the broker redelivers.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Pros:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No message loss under normal broker persistence guarantees.</p>
+</li>
+<li>
+<p>The default for most brokers (RabbitMQ, SQS, NATS JetStream).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Cons:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Requires <strong>idempotent</strong> consumers — they must handle duplicates gracefully.</p>
+</li>
+<li>
+<p>Potential extra load from duplicate processing.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Real-world usage:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Payment processing (with idempotency keys).</p>
+</li>
+<li>
+<p>Order event processing.</p>
+</li>
+<li>
+<p>Logging pipelines.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_exactly_once">2.3.3. Exactly-once</h4>
+<div class="paragraph">
+<p><strong>Definition:</strong></p>
+</div>
+<div class="paragraph">
+<p>A message is delivered <strong>exactly one time</strong> — no duplicates, no losses.</p>
+</div>
+<div class="paragraph">
+<p><strong>How it happens:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Requires transactional coordination between producer, broker, and consumer.</p>
+</li>
+<li>
+<p>The broker and consumer commit offsets/state atomically.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Pros:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Simplest for consumers — no deduplication logic.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Cons:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>High complexity, often broker-specific.</p>
+</li>
+<li>
+<p>Lower throughput due to transactional overhead.</p>
+</li>
+<li>
+<p>Often misunderstood — "exactly-once" guarantees are fragile in distributed systems.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Real-world usage:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Financial transaction settlement (Kafka + idempotent producers + transactions).</p>
+</li>
+<li>
+<p>Highly sensitive event processing.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_omniqueue_perspective">2.3.4. OmniQueue Perspective</h4>
+<div class="paragraph">
+<p>OmniQueue does not enforce a delivery semantic by itself — it passes through the broker&#8217;s native behavior.
+However:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>At-least-once is the most common.</p>
+</li>
+<li>
+<p>You can achieve effectively-once delivery by combining at-least-once brokers with idempotent consumer logic.</p>
+</li>
+<li>
+<p>Broker adapters may expose native exactly-once features (e.g., Kafka transactions) via <code>createOptions</code> or broker-specific APIs.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>sequenceDiagram
+    participant P as Producer
+    participant B as Broker
+    participant C as Consumer
+
+    Note over P,C: At-most-once
+    P-&gt;&gt;B: Send message
+    B--&gt;&gt;C: Deliver message
+    C &lt;&lt;--&gt;&gt; B: No ack required
+    Note over B: If delivery fails → lost
+
+    Note over P,C: At-least-once
+    P-&gt;&gt;B: Send message
+    B--&gt;&gt;C: Deliver message
+    C--&gt;&gt;B: Ack message
+    Note over B: No ack? Redeliver
+
+    Note over P,C: Exactly-once
+    P-&gt;&gt;B: Send message (transaction)
+    B--&gt;&gt;C: Deliver message
+    C--&gt;&gt;B: Ack + commit atomically</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reliability_durability">2.4. Reliability &amp; Durability</h3>
+<div class="sect3">
+<h4 id="_reliability">2.4.1. Reliability</h4>
+<div class="paragraph">
+<p>Reliability is the ability of a messaging system to deliver messages as promised, even under faults.
+It depends on:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Acknowledgements</strong> — explicit <code>ack()</code>/<code>nack()</code> calls.</p>
+</li>
+<li>
+<p><strong>Retries</strong> — redelivery on failure.</p>
+</li>
+<li>
+<p><strong>Consumer groups</strong> — work sharing without loss.</p>
+</li>
+<li>
+<p><strong>Dead-letter queues (DLQ)</strong> — holding unprocessable messages for inspection.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Operational tips:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Set sensible retry limits — infinite retries can overload systems.</p>
+</li>
+<li>
+<p>Use DLQs to capture poison messages (malformed or consistently failing).</p>
+</li>
+<li>
+<p>Monitor consumer lag — large lag indicates bottlenecks.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_durability">2.4.2. Durability</h4>
+<div class="paragraph">
+<p>Durability ensures messages survive broker or system restarts.
+This requires <strong>persistent storage</strong> at the broker level.</p>
+</div>
+<div class="paragraph">
+<p>Common strategies:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Disk persistence</strong> — messages are written to disk (RabbitMQ durable queues, Kafka logs).</p>
+</li>
+<li>
+<p><strong>Replication</strong> — messages are stored on multiple nodes (Kafka ISR, Pulsar BookKeeper).</p>
+</li>
+<li>
+<p><strong>Acknowledgement after fsync</strong> — broker only acks after writing to stable storage.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Trade-offs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Durability often increases latency.</p>
+</li>
+<li>
+<p>Replication adds network cost but prevents data loss from node failure.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_durability_in_omniqueue_context">2.4.3. Durability in OmniQueue Context</h4>
+<div class="paragraph">
+<p>OmniQueue’s durability depends entirely on the broker adapter in use:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>RabbitMQ Adapter</strong> — durable queues + persistent messages.</p>
+</li>
+<li>
+<p><strong>Kafka Adapter</strong> — log-based storage with configurable replication factor.</p>
+</li>
+<li>
+<p><strong>NATS JetStream Adapter</strong> — file or memory storage with optional replication.</p>
+</li>
+<li>
+<p><strong>ZeroMQ Adapter</strong> — no built-in durability (application must handle persistence).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can influence durability in OmniQueue via <code>createOptions</code> when calling <code>publish()</code> or <code>subscribe()</code>, passing through broker-specific flags.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span>
+  <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1</span><span class="dl">'</span><span class="p">,</span> <span class="na">body</span><span class="p">:</span> <span class="p">{...},</span> <span class="na">headers</span><span class="p">:</span> <span class="p">{}</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">createOptions</span><span class="p">:</span> <span class="p">{</span> <span class="na">durable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">replicationFactor</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span> <span class="p">}</span>
+<span class="p">);</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>flowchart LR
+    P[Producer] --&gt;|publish| B[Broker Storage]
+    B --&gt;|write| D1[Disk: Log Segment]
+    B --&gt;|replicate| N1[Replica Node A]
+    B --&gt;|replicate| N2[Replica Node B]
+    D1 --&gt;|ack| B
+    B --&gt;|ack| P
+    B --&gt;|deliver| C[Consumer]</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>This book is designed for engineers building resilient distributed systems.</p>
-</div>
+If you don’t configure durability in the broker, OmniQueue can’t “make it durable” — always set it explicitly in <code>createOptions</code> when the workload demands it.
 </td>
 </tr>
 </table>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_motivation">Motivation</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_load_balancing_consumer_groups">2.5. Load Balancing &amp; Consumer Groups</h3>
 <div class="paragraph">
-<p>Why another messaging library?</p>
+<p>In messaging systems, <strong>load balancing</strong> is about distributing work evenly among multiple consumers to improve throughput and avoid overloading any single consumer.</p>
+</div>
+<div class="sect3">
+<h4 id="_consumer_groups">2.5.1. Consumer Groups</h4>
+<div class="paragraph">
+<p>A <strong>consumer group</strong> is a named set of consumers that share the work of processing messages from a topic or queue.</p>
+</div>
+<div class="paragraph">
+<p>Key characteristics:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Every broker has quirks</p>
+<p><strong>Work-sharing</strong>:
+Each message is processed by exactly <strong>one</strong> consumer in the group.</p>
 </li>
 <li>
-<p>Interoperability is painful</p>
+<p><strong>Isolation between groups</strong>:
+Multiple groups can subscribe to the same topic, each getting its <strong>own full copy</strong> of the messages.</p>
 </li>
 <li>
-<p>Configuring queues is boilerplate-heavy
-= Introduction</p>
+<p><strong>Scaling</strong>:
+Adding more consumers to a group increases parallelism; removing consumers reduces throughput but not reliability.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>OmniQueue is a unified messaging abstraction that allows sending and receiving messages across different brokers — such as RabbitMQ, Kafka, NATS, and brokerless transports — using a consistent API.</p>
+<p>OmniQueue enforces <strong>mandatory consumer groups</strong> — every <code>subscribe()</code> call must specify a <code>groupId</code>.
+This makes semantics explicit and avoids accidental fanout to unintended consumers.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
 <div class="paragraph">
-<p>This book is designed for engineers building resilient distributed systems.</p>
+<p>Example with OmniQueue:</p>
 </div>
-</td>
-</tr>
-</table>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span>
+  <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
+  <span class="k">async</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`[Worker] Processing order </span><span class="p">${</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="k">await</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">ack</span><span class="p">();</span>
+  <span class="p">},</span>
+  <span class="dl">'</span><span class="s1">order-service</span><span class="dl">'</span><span class="p">,</span>       <span class="c1">// groupId</span>
+  <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>
+<span class="p">);</span></code></pre>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_motivation_2">Motivation</h2>
-<div class="sectionbody">
+<div class="sect3">
+<h4 id="_consumer_group_dynamics">2.5.2. Consumer Group Dynamics</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>If a consumer in a group fails mid-processing: The broker reassigns its unacknowledged messages to other consumers in the same group.</p>
+</li>
+<li>
+<p>If more consumers join the group: The broker redistributes partitions or message streams to balance the load.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>flowchart LR
+    T[Topic: orders] --&gt;|copy| G1[Group: order-service]
+    G1 --&gt;|split work| C1[Consumer 1]
+    G1 --&gt;|split work| C2[Consumer 2]
+
+    T --&gt;|copy| G2[Group: fraud-check]
+    G2 --&gt;|split work| C3[Consumer 3]
+    G2 --&gt;|split work| C4[Consumer 4]</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_load_balancing_patterns">2.5.3. Load Balancing Patterns</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Static partition assignment</strong> (Kafka, Pulsar):
+Each consumer gets a fixed set of partitions.</p>
+</li>
+<li>
+<p><strong>Dynamic work stealing</strong> (RabbitMQ, NATS JetStream):
+Consumers pull messages as they become available.</p>
+</li>
+<li>
+<p><strong>Broker push with credit flow control</strong>:
+Broker pushes messages but limits in-flight count per consumer.</p>
+</li>
+</ol>
+</div>
 <div class="paragraph">
-<p>Why another messaging library?</p>
+<p>Operational considerations:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Every broker has quirks</p>
+<p>Monitor <strong>consumer lag</strong> per group.</p>
 </li>
 <li>
-<p>Interoperability is painful</p>
+<p>Keep consumer processing times balanced — slow consumers can cause uneven workloads.</p>
 </li>
 <li>
-<p>Configuring queues is boilerplate-heavy</p>
+<p>In idempotent systems, you can temporarily run the same consumer logic in multiple groups for migration or testing.</p>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pubsub_fanout_vs_point_to_point">2.6. Pub/Sub (Fanout) vs. Point-to-Point</h3>
+<div class="sect3">
+<h4 id="_point_to_point_p2p">2.6.1. Point-to-Point (P2P)</h4>
+<div class="paragraph">
+<p>In <strong>point-to-point</strong> messaging:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A message is sent to a <strong>queue</strong>.</p>
+</li>
+<li>
+<p>Exactly one consumer within the target group processes it.</p>
+</li>
+<li>
+<p>Once acknowledged, the message is removed.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Pros:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ensures work is processed only once per group.</p>
+</li>
+<li>
+<p>Easy to reason about load balancing.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Cons:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No automatic duplication to other consumers outside the group.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Real-world usage:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Task queues (image processing jobs).</p>
+</li>
+<li>
+<p>Distributed workers for batch workloads.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_publishsubscribe_fanout">2.6.2. Publish/Subscribe (Fanout)</h4>
+<div class="paragraph">
+<p>In <strong>publish/subscribe</strong> messaging:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Producers send to a <strong>topic</strong>.</p>
+</li>
+<li>
+<p>Each subscribed group gets a <strong>full copy</strong> of each message.</p>
+</li>
+<li>
+<p>Inside each group, messages are load-balanced.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Pros:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Multiple services can independently react to the same event stream.</p>
+</li>
+<li>
+<p>Decouples event producers from consumers.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Cons:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>More storage and network usage if many groups subscribe.</p>
+</li>
+<li>
+<p>Need to manage schema and compatibility carefully.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>flowchart TB
+subgraph Point-to-Point
+P1[Producer] --&gt; Q1[Queue]
+Q1 --&gt;|one message to one consumer in group| C1[Consumer]
+Q1 -.-&gt;|different message| C2[Consumer]
+end
+subgraph Publish/Subscribe
+  P2[Producer] --&gt; T[Topic]
+  T --&gt;|full copy| G1[Group A]
+  T --&gt;|full copy| G2[Group B]
+  G1 --&gt;|split work| C3[Consumer]
+  G1 --&gt;|split work| C4[Consumer]
+  G2 --&gt;|split work| C5[Consumer]
+end</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_omniqueues_approach">2.6.3. OmniQueue’s Approach</h4>
+<div class="paragraph">
+<p>OmniQueue <strong>always</strong> uses publish/subscribe semantics at the API level:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>publish(topic, message, opts?)</code> — send to a topic.</p>
+</li>
+<li>
+<p><code>subscribe(topic, handler, groupId, opts)</code> — join a group to consume messages.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This allows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Point-to-point</strong> — by having only one group for a topic.</p>
+</li>
+<li>
+<p><strong>Fanout</strong> — by having multiple groups subscribed to the same topic.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This design unifies the two models, and the behavior depends on how you name and organize your groups.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="c1">// Point-to-point: single group</span>
+<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="dl">'</span><span class="s1">order-service</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+
+<span class="c1">// Fanout: multiple groups get all events</span>
+<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span> <span class="nx">handler1</span><span class="p">,</span> <span class="dl">'</span><span class="s1">fraud-check</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span> <span class="nx">handler2</span><span class="p">,</span> <span class="dl">'</span><span class="s1">analytics</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span></code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-08 00:37:50 UTC
+Last updated 2025-08-08 02:53:18 UTC
 </div>
 </div>
 </body>
