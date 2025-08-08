@@ -2268,221 +2268,6 @@ print {
 }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-pre.rouge table td { padding: 5px; }
-pre.rouge table pre { margin: 0; }
-pre.rouge .cm {
-  color: #999988;
-  font-style: italic;
-}
-pre.rouge .cp {
-  color: #999999;
-  font-weight: bold;
-}
-pre.rouge .c1 {
-  color: #999988;
-  font-style: italic;
-}
-pre.rouge .cs {
-  color: #999999;
-  font-weight: bold;
-  font-style: italic;
-}
-pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cpf {
-  color: #999988;
-  font-style: italic;
-}
-pre.rouge .err {
-  color: #a61717;
-  background-color: #e3d2d2;
-}
-pre.rouge .gd {
-  color: #000000;
-  background-color: #ffdddd;
-}
-pre.rouge .ge {
-  color: #000000;
-  font-style: italic;
-}
-pre.rouge .gr {
-  color: #aa0000;
-}
-pre.rouge .gh {
-  color: #999999;
-}
-pre.rouge .gi {
-  color: #000000;
-  background-color: #ddffdd;
-}
-pre.rouge .go {
-  color: #888888;
-}
-pre.rouge .gp {
-  color: #555555;
-}
-pre.rouge .gs {
-  font-weight: bold;
-}
-pre.rouge .gu {
-  color: #aaaaaa;
-}
-pre.rouge .gt {
-  color: #aa0000;
-}
-pre.rouge .kc {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kd {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kn {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kp {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kr {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kt {
-  color: #445588;
-  font-weight: bold;
-}
-pre.rouge .k, pre.rouge .kv {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .mf {
-  color: #009999;
-}
-pre.rouge .mh {
-  color: #009999;
-}
-pre.rouge .il {
-  color: #009999;
-}
-pre.rouge .mi {
-  color: #009999;
-}
-pre.rouge .mo {
-  color: #009999;
-}
-pre.rouge .m, pre.rouge .mb, pre.rouge .mx {
-  color: #009999;
-}
-pre.rouge .sa {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .sb {
-  color: #d14;
-}
-pre.rouge .sc {
-  color: #d14;
-}
-pre.rouge .sd {
-  color: #d14;
-}
-pre.rouge .s2 {
-  color: #d14;
-}
-pre.rouge .se {
-  color: #d14;
-}
-pre.rouge .sh {
-  color: #d14;
-}
-pre.rouge .si {
-  color: #d14;
-}
-pre.rouge .sx {
-  color: #d14;
-}
-pre.rouge .sr {
-  color: #009926;
-}
-pre.rouge .s1 {
-  color: #d14;
-}
-pre.rouge .ss {
-  color: #990073;
-}
-pre.rouge .s, pre.rouge .dl {
-  color: #d14;
-}
-pre.rouge .na {
-  color: #008080;
-}
-pre.rouge .bp {
-  color: #999999;
-}
-pre.rouge .nb {
-  color: #0086B3;
-}
-pre.rouge .nc {
-  color: #445588;
-  font-weight: bold;
-}
-pre.rouge .no {
-  color: #008080;
-}
-pre.rouge .nd {
-  color: #3c5d5d;
-  font-weight: bold;
-}
-pre.rouge .ni {
-  color: #800080;
-}
-pre.rouge .ne {
-  color: #990000;
-  font-weight: bold;
-}
-pre.rouge .nf, pre.rouge .fm {
-  color: #990000;
-  font-weight: bold;
-}
-pre.rouge .nl {
-  color: #990000;
-  font-weight: bold;
-}
-pre.rouge .nn {
-  color: #555555;
-}
-pre.rouge .nt {
-  color: #000080;
-}
-pre.rouge .vc {
-  color: #008080;
-}
-pre.rouge .vg {
-  color: #008080;
-}
-pre.rouge .vi {
-  color: #008080;
-}
-pre.rouge .nv, pre.rouge .vm {
-  color: #008080;
-}
-pre.rouge .ow {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .o {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .w {
-  color: #bbbbbb;
-}
-pre.rouge {
-  background-color: #f8f8f8;
-}
-</style>
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
@@ -2927,13 +2712,13 @@ For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="c1">// Sending a message with OmniQueue</span>
-<span class="k">await</span> <span class="nx">omni</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span>
-  <span class="na">destination</span><span class="p">:</span> <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">body</span><span class="p">:</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1234</span><span class="dl">'</span><span class="p">,</span> <span class="na">status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">confirmed</span><span class="dl">'</span> <span class="p">},</span>
-  <span class="na">group</span><span class="p">:</span> <span class="dl">'</span><span class="s1">order-processing</span><span class="dl">'</span><span class="p">,</span> <span class="c1">// Required for consumers</span>
-  <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// Create destination if it doesn't exist</span>
-<span class="p">});</span></code></pre>
+<pre class="rouge highlight"><code data-lang="typescript">// Sending a message with OmniQueue
+await omni.send({
+  destination: 'orders',
+  body: { id: '1234', status: 'confirmed' },
+  group: 'order-processing', // Required for consumers
+  ensure: true, // Create destination if it doesn't exist
+});</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3143,7 +2928,27 @@ Each <strong>consumer group</strong> subscribed to that topic receives a copy of
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>flowchart LR
+<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
+    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
+                    ^
+
+ReferenceError: join is not defined
+    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.require (node:internal/modules/cjs/loader:1487:12)
+    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
+    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
+  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
+}
+
+Node.js v22.17.1
+
+flowchart LR
     subgraph Producers
       P1[Producer A] --&gt;|publish| T[Topic: orders]
       P2[Producer B] --&gt;|publish| T
@@ -3168,44 +2973,44 @@ Each <strong>consumer group</strong> subscribed to that topic receives a copy of
 <h3 id="_a_simple_example">1.5. A Simple Example</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">create</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@omniqueue/core</span><span class="dl">'</span><span class="p">;</span>
-<span class="k">import</span> <span class="dl">'</span><span class="s1">@omniqueue/rabbitmq</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// registers the "rabbitmq" adapter</span>
+<pre class="rouge highlight"><code data-lang="typescript">import { create } from '@omniqueue/core';
+import '@omniqueue/rabbitmq'; // registers the "rabbitmq" adapter
 
-<span class="c1">// Create and init a broker instance</span>
-<span class="kd">const</span> <span class="nx">broker</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">create</span><span class="p">(</span><span class="dl">'</span><span class="s1">rabbitmq</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">amqp://localhost</span><span class="dl">'</span> <span class="p">});</span>
-<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
+// Create and init a broker instance
+const broker = await create('rabbitmq', { url: 'amqp://localhost' });
+await broker.init();
 
-<span class="c1">// Publisher: send one event to the topic "orders"</span>
-<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span>
-  <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
-  <span class="p">{</span>
-    <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ulid-01JABCDEF...</span><span class="dl">'</span><span class="p">,</span>
-    <span class="na">body</span><span class="p">:</span> <span class="p">{</span> <span class="na">orderId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">A123</span><span class="dl">'</span><span class="p">,</span> <span class="na">status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">confirmed</span><span class="dl">'</span> <span class="p">},</span>
-    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">x-source</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">checkout</span><span class="dl">'</span> <span class="p">},</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// lazily create the destination if missing</span>
-    <span class="c1">// createOptions can pass through to the adapter (durable, partitions, etc.)</span>
-  <span class="p">}</span>
-<span class="p">);</span>
+// Publisher: send one event to the topic "orders"
+await broker.publish(
+  'orders',
+  {
+    id: 'ulid-01JABCDEF...',
+    body: { orderId: 'A123', status: 'confirmed' },
+    headers: { 'x-source': 'checkout' },
+  },
+  {
+    ensure: true, // lazily create the destination if missing
+    // createOptions can pass through to the adapter (durable, partitions, etc.)
+  }
+);
 
-<span class="c1">// Subscriber: each GROUP receives a copy; work is shared inside the group.</span>
-<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span>
-  <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
-  <span class="k">async</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="k">try</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Processing order</span><span class="dl">'</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
-      <span class="k">await</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">ack</span><span class="p">();</span>
-    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">await</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">nack</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span> <span class="c1">// requeue on error</span>
-    <span class="p">}</span>
-  <span class="p">},</span>
-  <span class="dl">'</span><span class="s1">order-service</span><span class="dl">'</span><span class="p">,</span>    <span class="c1">// &lt;-- mandatory groupId</span>
-  <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>    <span class="c1">// optional ConsumeOptions</span>
-<span class="p">);</span>
+// Subscriber: each GROUP receives a copy; work is shared inside the group.
+await broker.subscribe(
+  'orders',
+  async (msg) =&gt; {
+    try {
+      console.log('Processing order', msg.body);
+      await msg.ack();
+    } catch (err) {
+      await msg.nack(true); // requeue on error
+    }
+  },
+  'order-service',    // &lt;-- mandatory groupId
+  { ensure: true }    // optional ConsumeOptions
+);
 
-<span class="c1">// ...later, graceful shutdown</span>
-<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span></code></pre>
+// ...later, graceful shutdown
+await broker.close();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3471,7 +3276,27 @@ Consumers track their own <strong>offset</strong> (position) and can replay olde
 </table>
 <div class="listingblock">
 <div class="content">
-<pre>flowchart LR
+<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
+    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
+                    ^
+
+ReferenceError: join is not defined
+    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.require (node:internal/modules/cjs/loader:1487:12)
+    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
+    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
+  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
+}
+
+Node.js v22.17.1
+
+flowchart LR
     subgraph Producer
       P[Producer] --&gt; Q
     end
@@ -3598,7 +3423,27 @@ Typically, these use <strong>peer-to-peer sockets</strong> or multicast protocol
 <h4 id="_visual_comparison">2.2.3. Visual Comparison</h4>
 <div class="listingblock">
 <div class="content">
-<pre>flowchart TB
+<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
+    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
+                    ^
+
+ReferenceError: join is not defined
+    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.require (node:internal/modules/cjs/loader:1487:12)
+    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
+    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
+  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
+}
+
+Node.js v22.17.1
+
+flowchart TB
     subgraph Brokered
       P1 --&gt; B[Broker Cluster]
       P2 --&gt; B
@@ -3845,7 +3690,27 @@ However:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sequenceDiagram
+<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
+    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
+                    ^
+
+ReferenceError: join is not defined
+    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.require (node:internal/modules/cjs/loader:1487:12)
+    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
+    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
+  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
+}
+
+Node.js v22.17.1
+
+sequenceDiagram
     participant P as Producer
     participant B as Broker
     participant C as Consumer
@@ -3976,16 +3841,36 @@ This requires <strong>persistent storage</strong> at the broker level.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span>
-  <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
-  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1</span><span class="dl">'</span><span class="p">,</span> <span class="na">body</span><span class="p">:</span> <span class="p">{...},</span> <span class="na">headers</span><span class="p">:</span> <span class="p">{}</span> <span class="p">},</span>
-  <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">createOptions</span><span class="p">:</span> <span class="p">{</span> <span class="na">durable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">replicationFactor</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span> <span class="p">}</span>
-<span class="p">);</span></code></pre>
+<pre class="rouge highlight"><code data-lang="typescript">await broker.publish(
+  'orders',
+  { id: '1', body: {...}, headers: {} },
+  { ensure: true, createOptions: { durable: true, replicationFactor: 3 } }
+);</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>flowchart LR
+<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
+    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
+                    ^
+
+ReferenceError: join is not defined
+    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.require (node:internal/modules/cjs/loader:1487:12)
+    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
+    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
+  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
+}
+
+Node.js v22.17.1
+
+flowchart LR
     P[Producer] --&gt;|publish| B[Broker Storage]
     B --&gt;|write| D1[Disk: Log Segment]
     B --&gt;|replicate| N1[Replica Node A]
@@ -4047,15 +3932,15 @@ This makes semantics explicit and avoids accidental fanout to unintended consume
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span>
-  <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
-  <span class="k">async</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`[Worker] Processing order </span><span class="p">${</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
-    <span class="k">await</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">ack</span><span class="p">();</span>
-  <span class="p">},</span>
-  <span class="dl">'</span><span class="s1">order-service</span><span class="dl">'</span><span class="p">,</span>       <span class="c1">// groupId</span>
-  <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>
-<span class="p">);</span></code></pre>
+<pre class="rouge highlight"><code data-lang="typescript">await broker.subscribe(
+  'orders',
+  async (msg) =&gt; {
+    console.log(`[Worker] Processing order ${msg.body.id}`);
+    await msg.ack();
+  },
+  'order-service',       // groupId
+  { ensure: true }
+);</code></pre>
 </div>
 </div>
 </div>
@@ -4073,7 +3958,27 @@ This makes semantics explicit and avoids accidental fanout to unintended consume
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>flowchart LR
+<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
+    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
+                    ^
+
+ReferenceError: join is not defined
+    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.require (node:internal/modules/cjs/loader:1487:12)
+    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
+    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
+  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
+}
+
+Node.js v22.17.1
+
+flowchart LR
     T[Topic: orders] --&gt;|copy| G1[Group: order-service]
     G1 --&gt;|split work| C1[Consumer 1]
     G1 --&gt;|split work| C2[Consumer 2]
@@ -4223,7 +4128,27 @@ Broker pushes messages but limits in-flight count per consumer.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>flowchart TB
+<pre>Failed to generate image: mmdc failed: /home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14
+    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
+                    ^
+
+ReferenceError: join is not defined
+    at Object.&lt;anonymous&gt; (/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs:14:21)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.require (node:internal/modules/cjs/loader:1487:12)
+    at module.exports (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/import-fresh/index.js:33:91)
+    at loadJsSync (/home/runner/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/cosmiconfig/dist/loaders.js:17:12) {
+  filepath: '/home/runner/work/omniqueue-book/omniqueue-book/.puppeteerrc.cjs'
+}
+
+Node.js v22.17.1
+
+flowchart TB
 subgraph Point-to-Point
 P1[Producer] --&gt; Q1[Queue]
 Q1 --&gt;|one message to one consumer in group| C1[Consumer]
@@ -4276,12 +4201,12 @@ end</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="c1">// Point-to-point: single group</span>
-<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="dl">'</span><span class="s1">order-service</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+<pre class="rouge highlight"><code data-lang="typescript">// Point-to-point: single group
+await broker.subscribe('orders', handler, 'order-service', { ensure: true });
 
-<span class="c1">// Fanout: multiple groups get all events</span>
-<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span> <span class="nx">handler1</span><span class="p">,</span> <span class="dl">'</span><span class="s1">fraud-check</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
-<span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span> <span class="nx">handler2</span><span class="p">,</span> <span class="dl">'</span><span class="s1">analytics</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span></code></pre>
+// Fanout: multiple groups get all events
+await broker.subscribe('orders', handler1, 'fraud-check', { ensure: true });
+await broker.subscribe('orders', handler2, 'analytics', { ensure: true });</code></pre>
 </div>
 </div>
 </div>
@@ -4291,7 +4216,7 @@ end</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-08 02:53:18 UTC
+Last updated 2025-08-08 07:06:30 UTC
 </div>
 </div>
 </body>
