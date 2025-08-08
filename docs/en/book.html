@@ -2956,7 +2956,8 @@ This makes them a cornerstone of:</p>
 <div class="paragraph">
 <p>Messaging systems come in two broad categories:</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
+<table id="table-brokered-brokerless" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Brokered Vs Brokerless</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -3044,10 +3045,11 @@ Each <strong>consumer group</strong> subscribed to that topic receives a copy of
 <div class="paragraph">
 <p>Handlers acknowledge with <code>ack()</code> or <code>nack(requeue?: boolean)</code>.</p>
 </div>
-<div class="imageblock kroki">
+<div id="fig-a-look-on-topic-messaging" class="imageblock kroki">
 <div class="content">
-<img src="images/overview-diag-8bdac522ef0e3db1a564af0bb0d6c9c313dc393e613889706fb41591ac599055.png" alt="overview-diag" width="600" height="600">
+<img src="images/a-look-on-topic-messaging-90446a0dbe817bb5fbf10b12c17d84c4c4a46bcff4aa6a1d20c5fed0ad67a2b7.png" alt="A look on &quot;topic&quot; messaging" width="600" height="600">
 </div>
+<div class="title">Figure 1. A look on "topic" messaging</div>
 </div>
 <div class="paragraph">
 <p>With OmniQueue, your code can switch between brokers with minimal changes, while still leveraging advanced features through <strong>broker adapters</strong>.</p>
@@ -3055,7 +3057,7 @@ Each <strong>consumer group</strong> subscribed to that topic receives a copy of
 </div>
 <div class="sect2">
 <h3 id="_a_simple_example">1.5. A Simple Example</h3>
-<div class="listingblock">
+<div id="code-a-look-on-omniqueue-code" class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">create</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@omniqueue/core</span><span class="dl">'</span><span class="p">;</span>
 <span class="k">import</span> <span class="dl">'</span><span class="s1">@omniqueue/rabbitmq</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// registers the "rabbitmq" adapter</span>
@@ -3162,7 +3164,8 @@ a discrete unit of data that moves from producer to consumer.</p>
 <div class="paragraph">
 <p>While brokers differ in terminology and features, most messages contain:</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
+<table id="table-message-components" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Message components</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 66.6667%;">
@@ -3322,7 +3325,8 @@ Consumers track their own <strong>offset</strong> (position) and can replay olde
 </div>
 <div class="sect3">
 <h4 id="_comparing_destinations">2.1.5. Comparing Destinations</h4>
-<table class="tableblock frame-all grid-all stretch">
+<table id="table-queue-vs-topic-vs-stream" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Queue Vs Topic Vs Stream</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 30%;">
@@ -3358,10 +3362,11 @@ Consumers track their own <strong>offset</strong> (position) and can replay olde
 </tr>
 </tbody>
 </table>
-<div class="imageblock kroki">
+<div id="ch2-queue-topic-stream" class="imageblock kroki">
 <div class="content">
-<img src="images/ch2-queue-topic-stream-8ce909e9db837aa20c45e22dfe6b63143e5fde48605c9bc49a533b4cb085a49b.png" alt="ch2-queue-topic-stream">
+<img src="images/ch2-queue-topic-stream-3232893687c00609a034f04c308e601610cee4fbedea36963ab57deca899c23b.png" alt="Queue, Topic, Stream">
 </div>
+<div class="title">Figure 2. Queue, Topic, Stream</div>
 </div>
 </div>
 </div>
@@ -3471,10 +3476,11 @@ Typically, these use <strong>peer-to-peer sockets</strong> or multicast protocol
 </div>
 <div class="sect3">
 <h4 id="_visual_comparison">2.2.3. Visual Comparison</h4>
-<div class="imageblock kroki">
+<div id="ch2-broker-vs-brokerless" class="imageblock kroki">
 <div class="content">
-<img src="images/ch2-broker-vs-brokerless-525503497e9d26c917421514a90624025137d0f06577bc2e923cdd23b7b37a4a.png" alt="ch2-broker-vs-brokerless">
+<img src="images/ch2-broker-vs-brokerless-a010235679bf318d118d4430e7fc7893e95fff1dbcabea5cdadbd064d15ab92f.png" alt="Brokered Vs Brokerless">
 </div>
+<div class="title">Figure 3. Brokered Vs Brokerless</div>
 </div>
 <div class="paragraph">
 <p><strong>Brokered systems</strong> shine in reliability and complexity management.
@@ -3707,10 +3713,11 @@ However:</p>
 </li>
 </ul>
 </div>
-<div class="imageblock kroki">
+<div id="ch2-delivery-semantics" class="imageblock kroki">
 <div class="content">
-<img src="images/ch2-delivery-semantics-f5f486d33cc314159e8f2f781d185210d171c6f0442a4db6de859bab41097d6c.png" alt="ch2-delivery-semantics">
+<img src="images/ch2-delivery-semantics-c50a3ba1b95ec8b2ae04cc36e52fc2cf168107f552c4e48a1201e177a56b1928.png" alt="Delivery Semantics">
 </div>
+<div class="title">Figure 4. Delivery Semantics</div>
 </div>
 </div>
 </div>
@@ -3818,7 +3825,7 @@ This requires <strong>persistent storage</strong> at the broker level.</p>
 <div class="paragraph">
 <p>Example:</p>
 </div>
-<div class="listingblock">
+<div id="code-omniqueue-publish" class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="typescript"><span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nf">publish</span><span class="p">(</span>
   <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
@@ -3827,10 +3834,11 @@ This requires <strong>persistent storage</strong> at the broker level.</p>
 <span class="p">);</span></code></pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div id="ch2-durability-lifecycle" class="imageblock kroki">
 <div class="content">
-<img src="images/ch2-durability-lifecycle-bf299d74b156c04fa2459d99210ec9a4bb4d790ba2151345e64713f1c43989c5.png" alt="ch2-durability-lifecycle">
+<img src="images/ch2-durability-lifecycle-f0d09b73513fbc76b9b4daa1bbede8cc1a90741f8bb42d5e3f3414bc86530631.png" alt="Durability Lifecycle">
 </div>
+<div class="title">Figure 5. Durability Lifecycle</div>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -3882,7 +3890,7 @@ This makes semantics explicit and avoids accidental fanout to unintended consume
 <div class="paragraph">
 <p>Example with OmniQueue:</p>
 </div>
-<div class="listingblock">
+<div id="code-example-subcribe" class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="typescript"><span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span>
   <span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span>
@@ -3908,10 +3916,11 @@ This makes semantics explicit and avoids accidental fanout to unintended consume
 </li>
 </ul>
 </div>
-<div class="imageblock kroki">
+<div id="ch2-consumer-group-dynamics" class="imageblock kroki">
 <div class="content">
-<img src="images/ch2-consumer-group-dynamics-61bcc280df772621d8eb3fbe08a088beab5ca200d73085ac7bab4ebb9c019806.png" alt="ch2-consumer-group-dynamics">
+<img src="images/ch2-consumer-group-dynamics-b2e9ee7ca1ba3fd07829cfc0f82d3acfdf4f70fba92d4f3bbab8a575ec006a48.png" alt="Consumer Group Dynamics">
 </div>
+<div class="title">Figure 6. Consumer Group Dynamics</div>
 </div>
 </div>
 <div class="sect3">
@@ -4051,10 +4060,11 @@ Broker pushes messages but limits in-flight count per consumer.</p>
 </li>
 </ul>
 </div>
-<div class="imageblock kroki">
+<div id="ch2-pubsub-vs-p2p" class="imageblock kroki">
 <div class="content">
-<img src="images/ch2-pubsub-vs-p2p-0d62350ea7397746b93b1f0244c759bad27c0a44cdc3a8d9d13a26a3e9a201b1.png" alt="ch2-pubsub-vs-p2p">
+<img src="images/ch2-pubsub-vs-p2p-9728cc4b6912e05b4513b53211dee708e51a33b25f5be511d9b0bf68a13b6d05.png" alt="Pubsub Vs P2P">
 </div>
+<div class="title">Figure 7. Pubsub Vs P2P</div>
 </div>
 </div>
 <div class="sect3">
@@ -4091,7 +4101,7 @@ Broker pushes messages but limits in-flight count per consumer.</p>
 <div class="paragraph">
 <p>Example:</p>
 </div>
-<div class="listingblock">
+<div id="code-example-multiple-subcribe" class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="typescript"><span class="c1">// Point-to-point: single group</span>
 <span class="k">await</span> <span class="nx">broker</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">orders</span><span class="dl">'</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="dl">'</span><span class="s1">order-service</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">ensure</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
@@ -4108,7 +4118,7 @@ Broker pushes messages but limits in-flight count per consumer.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-08 07:59:00 UTC
+Last updated 2025-08-08 08:50:46 UTC
 </div>
 </div>
 </body>
