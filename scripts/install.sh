@@ -42,7 +42,8 @@ sudo wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd
 sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
 
 echo "==> Installing Mermaid CLI (optional)..."
-sudo npm install puppeteer
+sudo npm -g install puppeteer
+npx  puppeteer browsers install chrome-headless-shell
 sudo npm install -g @mermaid-js/mermaid-cli
 
 echo "==> Setup complete!"
