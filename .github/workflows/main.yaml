@@ -77,6 +77,11 @@ jobs:
         with:
           chrome-version: stable
 
+      - name: Echo Chrome path (debug)
+        run: |
+          echo "CHROME_PATH=$CHROME_PATH"
+          ls -l "$CHROME_PATH" || true
+
       # Make CHROME_PATH available to later steps as PUPPETEER_EXECUTABLE_PATH
       - name: Export Chrome path for Puppeteer
         run: |
@@ -109,9 +114,14 @@ jobs:
           ls -l "$CHROME_PATH" || true
 
       - name: Build (English)
+        env: 
+          # pass Chrome directly into the step; skip $GITHUB_ENV indirection
+          PUPPETEER_EXECUTABLE_PATH: ${{ env.CHROME_PATH }}
         run: ./scripts/build.en.sh production
 
       - name: Build (Vietnamese)
+        env:
+            PUPPETEER_EXECUTABLE_PATH: ${{ env.CHROME_PATH }}
         run: ./scripts/build.vi.sh production
 
       - name: Prepare GitHub Pages index

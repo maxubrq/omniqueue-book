@@ -23,33 +23,39 @@ THEME_DIR="theme"
 THEME="$THEME_DIR/oreilly-theme.yml"
 FONTS_DIR="$THEME_DIR/fonts"
 
-# Ensure Puppeteer knows which Chromium to use (works in CI too)
-# Ensure Puppeteer knows which Chrome to use (works in CI too)
+# -------------------------
+# Browser: MUST be injected by CI step:
+#   env:
+#     PUPPETEER_EXECUTABLE_PATH: ${{ env.CHROME_PATH }}
+# -------------------------
 if [[ -z "${PUPPETEER_EXECUTABLE_PATH:-}" ]]; then
-  if command -v npx &>/dev/null; then
-    CHROME_PATH="$(npx --yes @puppeteer/browsers path chrome 2>/dev/null || true)"
-    if [[ -n "$CHROME_PATH" && -x "$CHROME_PATH" ]]; then
-      export PUPPETEER_EXECUTABLE_PATH="$CHROME_PATH"
-      log "Using Chrome at $PUPPETEER_EXECUTABLE_PATH"
-    else
-      CHROMIUM_PATH="$(npx --yes @puppeteer/browsers path chromium 2>/dev/null || true)"
-      if [[ -n "$CHROMIUM_PATH" && -x "$CHROMIUM_PATH" ]]; then
-        export PUPPETEER_EXECUTABLE_PATH="$CHROMIUM_PATH"
-        log "Using Chromium at $PUPPETEER_EXECUTABLE_PATH"
-      else
-        warn "PUPPETEER_EXECUTABLE_PATH not set and no browser path found via puppeteer. Mermaid may fail."
-      fi
-    fi
-  else
-    warn "npx not available; cannot auto-detect browser path."
-  fi
+  err "PUPPETEER_EXECUTABLE_PATH is empty. In CI, pass it from CHROME_PATH in the build step env."
+  exit 1
+fi
+if [[ ! -x "$PUPPETEER_EXECUTABLE_PATH" ]]; then
+  err "PUPPETEER_EXECUTABLE_PATH is not an executable: $PUPPETEER_EXECUTABLE_PATH"
+  exit 1
+fi
+log "Using browser: $PUPPETEER_EXECUTABLE_PATH"
+
+# -------------------------
+# Puppeteer config (absolute path so asciidoctor-diagram finds it)
+# -------------------------
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+PUPPETEER_CFG="${REPO_ROOT}/.puppeteerrc.cjs"
+if [[ ! -f "$PUPPETEER_CFG" ]]; then
+  warn "Puppeteer config not found at ${PUPPETEER_CFG}; proceeding without it."
+  MERMAID_OPTS="--executablePath=${PUPPETEER_EXECUTABLE_PATH}"
+else
+  MERMAID_OPTS="--executablePath=${PUPPETEER_EXECUTABLE_PATH} --puppeteerConfigFile=${PUPPETEER_CFG}"
 fi
 
 log "${BOLD}Building (${ENV}) → ${OUT_DIR}${RESET}"
 mkdir -p "$OUT_DIR/en"
 
-MERMAID_OPTS="--executablePath=${PUPPETEER_EXECUTABLE_PATH:-} --puppeteerConfigFile=.puppeteerrc.cjs"
-
+# -------------------------
+# HTML
+# -------------------------
 log "HTML (asciidoctor + diagram)"
 asciidoctor \
   -r asciidoctor-diagram \
@@ -61,6 +67,9 @@ asciidoctor \
   -o "$OUT_DIR/en/book.html" "$SRC"
 ok "HTML → $OUT_DIR/en/book.html"
 
+# -------------------------
+# PDF
+# -------------------------
 log "PDF (asciidoctor-pdf + diagram)"
 asciidoctor-pdf \
   -r asciidoctor-diagram \
@@ -70,7 +79,11 @@ asciidoctor-pdf \
   -a pdf-fontsdir="$FONTS_DIR" \
   -a imagesoutdir="$OUT_DIR/en/images" \
   -o "$OUT_DIR/en/book.pdf" "$SRC"
+ok "PDF → $OUT_DIR/en/book.pdf"
 
+# -------------------------
+# EPUB
+# -------------------------
 log "EPUB3"
 asciidoctor-epub3 \
   -a source-highlighter=rouge \

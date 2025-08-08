@@ -1,10 +1,13 @@
 // .puppeteerrc.cjs
-const { join } = require('path');
-
-// .puppeteerrc.cjs
 module.exports = {
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
-    headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'],
+  headless: 'new',
+  args: [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-gpu',
+    '--disable-dev-shm-usage',
+    '--disable-extensions',
+    '--disable-software-rasterizer',
+    '--no-zygote',
+  ],
 };
-
