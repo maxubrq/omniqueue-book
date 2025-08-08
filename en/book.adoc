@@ -38,5 +38,7 @@ By the end of this part, you’ll not only understand *how* to send, receive, an
 --
 
 include::chapters/01-intro.adoc[]
+
 include::chapters/02-core-message-concepts.adoc[]
+
 include::chapters/03-omniqueue-architecture-core-api.adoc[]

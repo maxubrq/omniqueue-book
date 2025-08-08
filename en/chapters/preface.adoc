@@ -20,6 +20,8 @@ This book is the culmination of that idea.
 
 It’s *both* a deep dive into the theory and practice of messaging systems **and** the definitive guide to OmniQueue — a TypeScript-based, broker-agnostic messaging API.
 
+<<<
+
 === Who This Book Is For
 
 This book is written for engineers, architects, and operations teams who:
@@ -49,6 +51,8 @@ We will explore:
 - How to extend and contribute to OmniQueue.
 
 Throughout the book, we’ll balance *conceptual clarity* with *practical hands-on examples*.
+
+<<<
 
 === Why OmniQueue?
 
@@ -80,6 +84,8 @@ You’ll see **TypeScript code** for OmniQueue, **Mermaid diagrams** for system 
 - Expect real-world complexity: we’ll talk about failures, quirks, and debugging nightmares.
 - We’ll show both the “happy path” and the “when it all goes wrong” path.
 
+<<<
+   
 === How This Book Is Organized
 
 [.text-center]

@@ -24,6 +24,8 @@ These can influence routing (e.g., header-based exchange in RabbitMQ) or serve f
 
 TIP: In OmniQueue, `body` is always JSON-serialisable to ensure adapter compatibility, but you can base64-encode binary payloads if needed.
 
+<<<
+
 ==== Queues
 
 A **queue** is a named, ordered collection of messages that delivers each message to exactly one consumer within a given group.  
@@ -56,6 +58,8 @@ A **topic** is a named channel to which producers publish and consumers subscrib
 - Event broadcasting (order events, user activity streams).
 - Multi-service pipelines (analytics, fraud detection, notifications).
 - Event sourcing feeds.
+
+<<<
 
 ==== Streams
 
@@ -146,6 +150,8 @@ Example: ZeroMQ’s PUB/SUB, PUSH/PULL patterns.
 - **No single point of failure** — as long as consumers are reachable.
 - **Lightweight deployment** — often just a library in your app.
 
+<<<
+
 *Challenges:*
 
 - No inherent durability — offline consumers miss messages.
@@ -176,6 +182,8 @@ flowchart TB
 **Brokerless systems** shine in simplicity and speed — but require discipline in application design.
 
 TIP: OmniQueue supports *both* worlds. A `@omniqueue/zeromq` adapter can connect directly between processes without a broker, while `@omniqueue/kafka`, `@omniqueue/rabbitmq`, and others leverage durable, clustered brokers.
+
+<<<
 
 === Delivery Semantics
 
@@ -208,6 +216,8 @@ If the delivery fails, the message is lost — no retries.
 
 - Non-critical telemetry where occasional loss is acceptable (e.g., live UI metrics).
 - High-frequency, low-value sensor data.
+
+<<<
 
 ==== At-least-once
 
@@ -299,6 +309,8 @@ sequenceDiagram
     C-->>B: Ack + commit atomically
 ----
 
+<<<
+  
 === Reliability & Durability
 
 ==== Reliability
