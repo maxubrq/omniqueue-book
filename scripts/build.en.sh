@@ -66,7 +66,7 @@ asciidoctor \
   -a rouge-theme=github \
   -a stylesheet=../theme/default-theme.css \
   -a imagesoutdir="$OUT_IMAGES" \
-  -a imagesdir="$OUT_IMAGES" \
+  -a imagesdir="images/images" \
   "${KROKI_ATTRS[@]}" \
   -o "$OUT_EN_DIR/book.html" "$SRC"
 ok "HTML → $OUT_EN_DIR/book.html"
