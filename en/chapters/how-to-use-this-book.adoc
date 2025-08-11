@@ -28,7 +28,7 @@ If you identify your tier, you can follow the recommended path:
   These sections are sprinkled throughout the book for readers who want to extend OmniQueue itself.  
   You’ll find them in both broker chapters and advanced sections.
 
-<<<
+
 
 === Part-by-Part Guide
 
@@ -64,7 +64,7 @@ await omni.send({
 
 Whenever we compare OmniQueue to a native broker API, we show them side-by-side for clarity.
 
-<<<
+
 
 === Diagrams and Visuals
 
@@ -92,7 +92,7 @@ We strongly encourage following them, especially when exploring advanced topics 
 
 You don’t need to install every broker at once — we’ll give setup instructions per chapter.
 
-<<<
+
   
 === Our Advice
 

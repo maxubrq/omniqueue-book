@@ -9,18 +9,32 @@ From high-frequency trading platforms to e-commerce checkout flows, from IoT tel
 But there’s a catch: the messaging landscape is *fragmented*.  
 Each broker — RabbitMQ, Kafka, NATS, ActiveMQ, SQS, and so on — comes with its own API, terminology, quirks, and operational mindset. Switching from one broker to another can mean a complete rewrite of integration code, along with a steep re-learning curve for operations.
 
-**OmniQueue** was born from a simple but ambitious idea:
+**OmniQueue** was born from a simple but ambitious idea — one that came out of necessity rather than theory.
+
+=== The Origin Story
+
+I was working on a data-intensive project where we used both Kafka and RabbitMQ.  
+Kafka handled client communications; RabbitMQ managed internal process communication.  
+They coexisted peacefully — until we introduced **timeout** and **dead letter** mechanisms.
+
+Suddenly, the differences between the two became painful. Kafka and RabbitMQ had entirely different approaches to timeouts and dead letters. We patched things up with custom code for each broker, and it worked… for the moment.
+
+Then the user base grew. RabbitMQ’s persistent storage started causing significant delays in timeout handling. We needed a solution. Enter **ActiveMQ Artemis** — a third broker in the mix. The system kept working, but the code was now an entangled mess of broker-specific logic.
+
+A year later, the company partnered with Microsoft. This meant moving from AWS to Azure.  
+We had to rewrite all that messaging code *again*, including embedded business logic.  
+This time, I was frustrated. I kept thinking:
 
 [quote, Founder’s Notes]
 ____
-“What if there was a single, unified API that could speak to any messaging system — brokered or brokerless — without sacrificing the power and unique features of each?”
+"I wish there were a unified API for messaging — one I could use to switch between brokers seamlessly, so I could spend my time on business logic instead of broker plumbing."
 ____
 
-This book is the culmination of that idea.
+I looked for such a tool. I didn’t find one.  
+So I built it. That’s how **OmniQueue** was born.
 
+This book is the culmination of that journey:  
 It’s *both* a deep dive into the theory and practice of messaging systems **and** the definitive guide to OmniQueue — a TypeScript-based, broker-agnostic messaging API.
-
-<<<
 
 === Who This Book Is For
 
@@ -52,8 +66,6 @@ We will explore:
 
 Throughout the book, we’ll balance *conceptual clarity* with *practical hands-on examples*.
 
-<<<
-
 === Why OmniQueue?
 
 Traditional messaging integrations often fall into one of two traps:
@@ -84,8 +96,6 @@ You’ll see **TypeScript code** for OmniQueue, **Mermaid diagrams** for system 
 - Expect real-world complexity: we’ll talk about failures, quirks, and debugging nightmares.
 - We’ll show both the “happy path” and the “when it all goes wrong” path.
 
-<<<
-   
 === How This Book Is Organized
 
 [.text-center]

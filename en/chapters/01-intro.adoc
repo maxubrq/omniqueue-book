@@ -16,7 +16,7 @@ This makes them a cornerstone of:
 
 Modern architectures like **microservices**, **event-driven systems**, and **CQRS/ES** (Command Query Responsibility Segregation / Event Sourcing) rely heavily on messaging.
 
-<<<
+
 
 === Brokered vs. Brokerless Messaging
 
@@ -85,7 +85,7 @@ flowchart LR
 
 With OmniQueue, your code can switch between brokers with minimal changes, while still leveraging advanced features through *broker adapters*.
 
-<<<
+
   
 === A Simple Example
 
