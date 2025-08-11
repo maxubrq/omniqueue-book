@@ -2784,6 +2784,7 @@ pre.rouge .gs {
 <li><a href="#_preface">Preface</a>
 <ul class="sectlevel2">
 <li><a href="#_why_this_book_exists">Why This Book Exists</a></li>
+<li><a href="#_the_origin_story">The Origin Story</a></li>
 <li><a href="#_who_this_book_is_for">Who This Book Is For</a></li>
 <li><a href="#_what_this_book_covers">What This Book Covers</a></li>
 <li><a href="#_why_omniqueue">Why OmniQueue?</a></li>
@@ -2931,12 +2932,31 @@ From high-frequency trading platforms to e-commerce checkout flows, from IoT tel
 Each broker — RabbitMQ, Kafka, NATS, ActiveMQ, SQS, and so on — comes with its own API, terminology, quirks, and operational mindset. Switching from one broker to another can mean a complete rewrite of integration code, along with a steep re-learning curve for operations.</p>
 </div>
 <div class="paragraph">
-<p><strong>OmniQueue</strong> was born from a simple but ambitious idea:</p>
+<p><strong>OmniQueue</strong> was born from a simple but ambitious idea — one that came out of necessity rather than theory.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_origin_story">The Origin Story</h3>
+<div class="paragraph">
+<p>I was working on a data-intensive project where we used both Kafka and RabbitMQ.
+Kafka handled client communications; RabbitMQ managed internal process communication.
+They coexisted peacefully — until we introduced <strong>timeout</strong> and <strong>dead letter</strong> mechanisms.</p>
+</div>
+<div class="paragraph">
+<p>Suddenly, the differences between the two became painful. Kafka and RabbitMQ had entirely different approaches to timeouts and dead letters. We patched things up with custom code for each broker, and it worked… for the moment.</p>
+</div>
+<div class="paragraph">
+<p>Then the user base grew. RabbitMQ’s persistent storage started causing significant delays in timeout handling. We needed a solution. Enter <strong>ActiveMQ Artemis</strong> — a third broker in the mix. The system kept working, but the code was now an entangled mess of broker-specific logic.</p>
+</div>
+<div class="paragraph">
+<p>A year later, the company partnered with Microsoft. This meant moving from AWS to Azure.
+We had to rewrite all that messaging code <strong>again</strong>, including embedded business logic.
+This time, I was frustrated. I kept thinking:</p>
 </div>
 <div class="quoteblock">
 <blockquote>
 <div class="paragraph">
-<p>“What if there was a single, unified API that could speak to any messaging system — brokered or brokerless — without sacrificing the power and unique features of each?”</p>
+<p>"I wish there were a unified API for messaging — one I could use to switch between brokers seamlessly, so I could spend my time on business logic instead of broker plumbing."</p>
 </div>
 </blockquote>
 <div class="attribution">
@@ -2944,12 +2964,13 @@ Each broker — RabbitMQ, Kafka, NATS, ActiveMQ, SQS, and so on — comes with i
 </div>
 </div>
 <div class="paragraph">
-<p>This book is the culmination of that idea.</p>
+<p>I looked for such a tool. I didn’t find one.
+So I built it. That’s how <strong>OmniQueue</strong> was born.</p>
 </div>
 <div class="paragraph">
-<p>It’s <strong>both</strong> a deep dive into the theory and practice of messaging systems <strong>and</strong> the definitive guide to OmniQueue — a TypeScript-based, broker-agnostic messaging API.</p>
+<p>This book is the culmination of that journey:
+It’s <strong>both</strong> a deep dive into the theory and practice of messaging systems <strong>and</strong> the definitive guide to OmniQueue — a TypeScript-based, broker-agnostic messaging API.</p>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_who_this_book_is_for">Who This Book Is For</h3>
@@ -3025,7 +3046,6 @@ Each broker — RabbitMQ, Kafka, NATS, ActiveMQ, SQS, and so on — comes with i
 <div class="paragraph">
 <p>Throughout the book, we’ll balance <strong>conceptual clarity</strong> with <strong>practical hands-on examples</strong>.</p>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_why_omniqueue">Why OmniQueue?</h3>
@@ -3092,7 +3112,6 @@ technical, clear, and actionable — with just enough narrative to keep you awak
 </li>
 </ul>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_how_this_book_is_organized">How This Book Is Organized</h3>
@@ -3212,7 +3231,6 @@ You’ll find them in both broker chapters and advanced sections.</p>
 </li>
 </ul>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_part_by_part_guide">Part-by-Part Guide</h3>
@@ -3279,7 +3297,6 @@ For example:</p>
 <div class="paragraph">
 <p>Whenever we compare OmniQueue to a native broker API, we show them side-by-side for clarity.</p>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_diagrams_and_visuals">Diagrams and Visuals</h3>
@@ -3332,7 +3349,6 @@ We strongly encourage following them, especially when exploring advanced topics 
 <div class="paragraph">
 <p>You don’t need to install every broker at once — we’ll give setup instructions per chapter.</p>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_our_advice">Our Advice</h3>
@@ -3395,7 +3411,6 @@ This makes them a cornerstone of:</p>
 <div class="paragraph">
 <p>Modern architectures like <strong>microservices</strong>, <strong>event-driven systems</strong>, and <strong>CQRS/ES</strong> (Command Query Responsibility Segregation / Event Sourcing) rely heavily on messaging.</p>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_brokered_vs_brokerless_messaging">1.2. Brokered vs. Brokerless Messaging</h3>
@@ -3500,7 +3515,6 @@ Each <strong>consumer group</strong> subscribed to that topic receives a copy of
 <div class="paragraph">
 <p>With OmniQueue, your code can switch between brokers with minimal changes, while still leveraging advanced features through <strong>broker adapters</strong>.</p>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_a_simple_example">1.5. A Simple Example</h3>
@@ -3653,7 +3667,6 @@ In OmniQueue, <code>body</code> is always JSON-serialisable to ensure adapter co
 </tr>
 </table>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 <div class="sect3">
 <h4 id="_queues">2.1.2. Queues</h4>
@@ -3731,7 +3744,6 @@ When a message is acknowledged (<code>ack()</code>), it is removed from the queu
 </li>
 </ul>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 <div class="sect3">
 <h4 id="_streams">2.1.4. Streams</h4>
@@ -3906,7 +3918,6 @@ Typically, these use <strong>peer-to-peer sockets</strong> or multicast protocol
 </li>
 </ul>
 </div>
-<div style="page-break-after: always;"></div>
 <div class="paragraph">
 <p><strong>Challenges:</strong></p>
 </div>
@@ -3948,7 +3959,6 @@ OmniQueue supports <strong>both</strong> worlds. A <code>@omniqueue/zeromq</code
 </tr>
 </table>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect2">
@@ -4018,7 +4028,6 @@ If the delivery fails, the message is lost — no retries.</p>
 </li>
 </ul>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 <div class="sect3">
 <h4 id="_at_least_once">2.3.2. At-least-once</h4>
@@ -4171,7 +4180,6 @@ However:</p>
 </div>
 <div class="title">Figure 4. Delivery Semantics</div>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect2">
@@ -5521,7 +5529,7 @@ Understanding this flow helps in debugging end-to-end issues, such as “message
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-08 11:13:59 UTC
+Last updated 2025-08-11 07:12:08 UTC
 </div>
 </div>
 </body>
